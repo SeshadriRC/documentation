@@ -15,7 +15,7 @@ data:
 <img width="720" height="596" alt="image" src="https://github.com/user-attachments/assets/b00af82c-30f7-43fc-8101-b7445344aa21" />
 
 
-- Now mount the configMap in pod using envfrom method.
+## mount the configmap using envFrom
 
 [refer-yaml](https://github.com/SeshadriRC/documentation/blob/main/kubernetes/ConfigMap-Secrets-Env/deploy-config.yml)
 
@@ -26,4 +26,17 @@ data:
 <img width="881" height="797" alt="image" src="https://github.com/user-attachments/assets/5822fcb5-4b8a-4cbe-9b85-be893cfa317c" />
 <img width="748" height="407" alt="image" src="https://github.com/user-attachments/assets/3f4403c7-9b06-4cf3-8583-cd60e97efbf8" />
 <img width="538" height="190" alt="image" src="https://github.com/user-attachments/assets/8cdc2129-caeb-4d74-8079-139cb6c74db7" />
+
+## ConfigMap as a volumemounts
+
+[yaml](https://github.com/SeshadriRC/documentation/blob/main/kubernetes/ConfigMap-Secrets-Env/deploy-config-volumemount.yml)
+
+- it didn't display the latest value
+<img width="1650" height="513" alt="image" src="https://github.com/user-attachments/assets/253cbe04-d548-435d-a022-b0a26a6f491d" />
+
+- Also below it created a file for PAGE_TITLE. so as we said before if we use env variable in configmap then envfrom is the best option. This volumemount option is best suited if incase we created configmap as file.
+
+## ConfigMap as a file
+
+<img width="893" height="312" alt="image" src="https://github.com/user-attachments/assets/ae040163-25b4-463b-97df-52b3d65ced79" />
 
