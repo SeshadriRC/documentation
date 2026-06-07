@@ -197,5 +197,62 @@ Kubernetes will always continue checking according to `periodSeconds`. The purpo
 
 > Startup probes typically use a higher `failureThreshold` because some applications require more time to initialize. A higher threshold prevents Kubernetes from restarting the container prematurely while the application is still starting. Once the startup probe succeeds, it stops running and the liveness and readiness probes take over.
 
+---
+# Sequence
+
+Not exactly.
+
+The sequence is better understood as:
+
+```text
+Startup Probe
+      ↓
+(success)
+      ↓
+Liveness Probe + Readiness Probe
+      ↓
+(run in parallel)
+```
+
+### Detailed Flow
+
+```text
+Container Starts
+       ↓
+Startup Probe Runs
+       ↓
+Startup Successful?
+   ├─ No → Keep Checking
+   └─ Yes
+       ↓
+Startup Probe Stops
+       ↓
+Readiness Probe Starts
+Liveness Probe Starts
+       ↓
+Both Run Continuously
+```
+
+### What each probe does
+
+* **Startup Probe**
+
+  * Runs only during startup.
+  * Prevents premature liveness failures.
+  * Stops permanently after first success.
+
+* **Readiness Probe**
+
+  * Determines whether the pod should receive traffic.
+  * Can change between Ready and Not Ready throughout the pod's life.
+
+* **Liveness Probe**
+
+  * Determines whether the application is healthy.
+  * Restarts the container if it keeps failing.
+
+### Interview Answer
+
+> The sequence is: **Startup Probe first**. Once it succeeds, Kubernetes enables both **Liveness Probe and Readiness Probe**, which then run independently and continuously. Liveness checks whether the application is healthy, while Readiness checks whether it is ready to receive traffic.
 
 ---
