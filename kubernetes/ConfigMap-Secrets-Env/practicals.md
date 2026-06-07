@@ -12,3 +12,8 @@ metadata:
 data:
   PAGE_TITLE: "Title from ConfigMap"
 ```
+<img width="720" height="596" alt="image" src="https://github.com/user-attachments/assets/b00af82c-30f7-43fc-8101-b7445344aa21" />
+
+
+- Now mount the configMap in pod using envfrom method.
+
