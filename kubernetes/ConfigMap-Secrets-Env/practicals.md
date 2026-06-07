@@ -17,7 +17,7 @@ data:
 
 - Now mount the configMap in pod using envfrom method.
 
-[refer-yaml](https://github.com/SeshadriRC/documentation/blob/main/kubernetes/ConfigMap-Secrets-Env/configmap.yml)
+[refer-yaml](https://github.com/SeshadriRC/documentation/blob/main/kubernetes/ConfigMap-Secrets-Env/deploy-config.yml)
 
 <img width="1737" height="886" alt="image" src="https://github.com/user-attachments/assets/42ba5c82-0549-44ed-9527-8794341020f4" />
 
