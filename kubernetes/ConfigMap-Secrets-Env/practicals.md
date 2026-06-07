@@ -21,3 +21,9 @@ data:
 
 <img width="1737" height="886" alt="image" src="https://github.com/user-attachments/assets/42ba5c82-0549-44ed-9527-8794341020f4" />
 
+- Now login to the pod
+
+<img width="881" height="797" alt="image" src="https://github.com/user-attachments/assets/5822fcb5-4b8a-4cbe-9b85-be893cfa317c" />
+<img width="748" height="407" alt="image" src="https://github.com/user-attachments/assets/3f4403c7-9b06-4cf3-8583-cd60e97efbf8" />
+<img width="538" height="190" alt="image" src="https://github.com/user-attachments/assets/8cdc2129-caeb-4d74-8079-139cb6c74db7" />
+
