@@ -22,3 +22,9 @@ kubectl scale replicaset my-replicaset -- replicas=5
 ```
 
 ---
+
+**4. What is the purpose of matching labels in a ReplicaSet?**
+
+In Kubernetes, the matching labels in a ReplicaSet are crucial because they define which Pods the ReplicaSet is responsible for managing.
+
+---
