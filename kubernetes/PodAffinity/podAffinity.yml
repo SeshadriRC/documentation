@@ -23,7 +23,7 @@ spec:
                 operator: In
                 values:
                 - redis
-            topologyKey: kubernetes.io/hostname
+            topologyKey: kubernetes.io/hostname  # tells Kubernetes to apply the affinity/anti-affinity rule at the node level, using each node's hostname.
       containers:
       - name: kubectl
         image: bitnami/kubectl:latest
