@@ -1,3 +1,4 @@
+# created by me, so first try required. then you can try this yml
 apiVersion: apps/v1
 kind: Deployment
 metadata:
