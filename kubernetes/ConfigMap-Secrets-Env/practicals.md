@@ -36,7 +36,9 @@ data:
 
 - Also below it created a file for PAGE_TITLE. so as we said before if we use env variable in configmap then envfrom is the best option. This volumemount option is best suited if incase we created configmap as file.
 
+<img width="893" height="312" alt="image" src="https://github.com/user-attachments/assets/ae040163-25b4-463b-97df-52b3d65ced79" />
+
 ## ConfigMap as a file
 
-<img width="893" height="312" alt="image" src="https://github.com/user-attachments/assets/ae040163-25b4-463b-97df-52b3d65ced79" />
+<img width="1037" height="668" alt="image" src="https://github.com/user-attachments/assets/91fc417a-f53b-44f5-bf4b-d39ac02c236e" />
 
