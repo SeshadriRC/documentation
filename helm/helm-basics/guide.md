@@ -199,4 +199,44 @@ Helm makes Kubernetes application management easier, safer, and more scalable.
 It is an essential tool for DevOps engineers working with Kubernetes.
 
 
+---
+# Practicals
+
+```bash
+# Below are the commands used
+helm install my-app .            # you need to be in the location where templates directory is there
+helm ls
+helm upgrade my-app .  --values values.yaml
+helm history my-app
+```
+
+**Install helm app**
+
+<img width="862" height="557" alt="image" src="https://github.com/user-attachments/assets/d39fd0bf-3e71-4092-a478-454c7db88cb9" />
+
+
+<img width="1297" height="635" alt="image" src="https://github.com/user-attachments/assets/d648b99b-bf52-4df4-89a3-4262b315a209" />
+
+
+- able to access the application
+
+<img width="1792" height="912" alt="image" src="https://github.com/user-attachments/assets/a2a8a74d-ee32-4066-8f92-8b9cd37abab8" />
+
+**Now upgrade the replica values to 3 from 5**
+
+<img width="1380" height="356" alt="image" src="https://github.com/user-attachments/assets/863bf2c1-5a84-4f0d-a3ba-e1016ce019aa" />
+
+<img width="982" height="532" alt="image" src="https://github.com/user-attachments/assets/fd90b7c8-8fde-4746-a801-11a939d9cd74" />
+
+<img width="1362" height="497" alt="image" src="https://github.com/user-attachments/assets/95abe3bb-321e-432e-97be-387c1a6ce96b" />
+
+**Now use the wrong image, so that it won't work and we can rollback**
+
+<img width="1021" height="603" alt="image" src="https://github.com/user-attachments/assets/88297326-e7d8-4f3f-b4e2-5b4032d22f0a" />
+
+<img width="1208" height="333" alt="image" src="https://github.com/user-attachments/assets/3fdc2229-e363-4497-a3f7-d9c31e514112" />
+
+**Rollback to Revision 1**
+
+<img width="1228" height="517" alt="image" src="https://github.com/user-attachments/assets/1f5bbe32-090a-49ab-a963-b4afb0df35d4" />
 
