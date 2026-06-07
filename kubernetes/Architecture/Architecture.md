@@ -2,6 +2,7 @@
 
 - It contains master node and worker node.
 - The applications that we are deploying it will get deployed in the worker node only.
+- worker nodes are managed by the components present in the master node, since woker node is controlled by master node, we can call master node as controlplane and we can call worker node as dataplane.
 
 **API Server**
 
