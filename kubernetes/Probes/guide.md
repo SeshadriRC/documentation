@@ -101,3 +101,101 @@ Starts Receiving User Requests
 > Readiness Probe determines whether an application is ready to serve traffic; until it succeeds, Kubernetes keeps the pod out of the Service endpoints and does not send user requests to it.
 
 ---
+
+### Startup Probe
+
+<img width="1116" height="557" alt="image" src="https://github.com/user-attachments/assets/d0fde7f5-0bc7-4c91-978c-bbc25edf4a24" />
+
+
+> Some applications take a long time to start. For example, a Java application may take 1 minute or more to initialize, load dependencies, and establish database connections. If a liveness probe starts checking the application before it has finished starting, the probe may fail repeatedly, causing Kubernetes to restart the container continuously even though the application is still starting normally.
+>
+> To solve this problem, Kubernetes provides a **Startup Probe**. When a startup probe is configured, Kubernetes runs only the startup probe during application startup. The liveness and readiness probes are disabled until the startup probe succeeds.
+>
+> Once the application starts successfully and the startup probe passes, Kubernetes stops running the startup probe. After that, the readiness probe and liveness probe begin their normal operation.
+
+```yaml id="k5g1ji"
+startupProbe:
+  httpGet:
+    path: /health          # Endpoint used to verify application startup
+    port: 80              # Application listening port
+
+  failureThreshold: 30    # Maximum failed attempts before container restart
+  periodSeconds: 5        # Check every 5 seconds
+```
+
+### How this works
+
+```text id="h8eqyj"
+Application Starts
+       ↓
+Startup Probe Runs
+       ↓
+Application Ready?
+   ├─ No → Keep Checking
+   └─ Yes
+       ↓
+Startup Probe Stops
+       ↓
+Readiness Probe Starts
+       ↓
+Liveness Probe Starts
+       ↓
+Normal Operation
+```
+
+### Example
+
+```yaml id="y0t38c"
+failureThreshold: 30
+periodSeconds: 5
+```
+
+Maximum startup time allowed:
+
+```text id="0v1e0m"
+30 × 5 = 150 seconds
+```
+
+Kubernetes will wait up to **150 seconds** for the application to start before restarting the container.
+
+### One-Line Interview Answer
+
+> A Startup Probe is used for slow-starting applications. It delays liveness and readiness checks until the application has started successfully, preventing unnecessary container restarts during startup.
+
+A more accurate way to explain it is:
+
+> For a **Startup Probe**, the `failureThreshold` is usually set higher because some applications take a long time to start. Kubernetes allows the startup probe to fail a certain number of times before deciding that the application startup has failed. If the `failureThreshold` is too low, Kubernetes may restart the container even though the application is still starting normally.
+>
+> For example:
+>
+> ```yaml
+> startupProbe:
+>   httpGet:
+>     path: /health
+>     port: 80
+>   failureThreshold: 30
+>   periodSeconds: 5
+> ```
+>
+> Kubernetes will allow:
+>
+> ```text
+> 30 × 5 = 150 seconds
+> ```
+>
+> for the application to start. If the startup probe still fails after 150 seconds, Kubernetes assumes the startup has failed and restarts the container.
+
+### Important clarification
+
+This part is not quite correct:
+
+> "if we don't give failureThreshold, then continuously it will be checking the application status"
+
+Kubernetes will always continue checking according to `periodSeconds`. The purpose of a higher `failureThreshold` is **not to stop continuous checking**, but to **give the application more time before Kubernetes declares startup failure and restarts the container**.
+
+### Interview Answer
+
+> Startup probes typically use a higher `failureThreshold` because some applications require more time to initialize. A higher threshold prevents Kubernetes from restarting the container prematurely while the application is still starting. Once the startup probe succeeds, it stops running and the liveness and readiness probes take over.
+
+
+---
