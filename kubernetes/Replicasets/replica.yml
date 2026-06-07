@@ -1,0 +1,26 @@
+apiVersion: apps/v1
+kind: ReplicaSet
+
+metadata:
+  name: simplybyte-calculator-rs
+  labels:
+    app: calculator
+
+spec:
+  replicas: 3
+
+  selector:
+    matchLabels:
+      project: calculator
+
+  template:
+    metadata:
+      labels:
+        project: calculator
+
+    spec:
+      containers:
+      - name: simply-byte-calculator
+        image: simplebyte/simplybyte-calculator
+        ports:
+        - containerPort: 5000
