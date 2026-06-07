@@ -18,7 +18,7 @@ spec:
     spec:
       containers:
         - name: calculator-app
-          image: simplebyte/simplybyte-calculator:1.0
+          image: simplebyte/simplybyte-calculator:2.0
           ports:
             - containerPort: 5000
           envFrom:
