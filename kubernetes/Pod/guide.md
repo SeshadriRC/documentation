@@ -1,3 +1,4 @@
+- Pods are ephemeral in nature.
 - all container will be running inside the container
 - pod will provide the required network, storage to container, so that container can run
 
