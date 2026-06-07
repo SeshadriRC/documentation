@@ -15,7 +15,8 @@ spec:
     spec:
       affinity:
         podAffinity:
-          requiredDuringSchedulingIgnoredDuringExecution:
+          requiredDuringSchedulingIgnoredDuringExecution:  # A mandatory rule; the pod will not be scheduled unless the condition is satisfied.
+          #preferredDuringSchedulingIgnoredDuringExecution → A soft preference; the scheduler tries to satisfy the condition, but will still schedule the pod elsewhere if necessary.
           - labelSelector:
               matchExpressions:
               - key: app            # we are giving label of redis.yml
