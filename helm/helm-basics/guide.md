@@ -54,6 +54,20 @@ my-chart/
 - **values.yaml** – Default configuration values
 - **templates/** – Kubernetes resource templates
 
+
+```yml
+replicas: 10
+image: simplebyte/simplybyte-calculator:2.0
+port: 5000
+
+simplybyteService:         # nothing but a alias name for Service
+   type: NodePort
+   port: 80
+   targetPort: 5000
+   nodePort: 30081
+
+
+```
 ---
 
 ## Helm Templates
