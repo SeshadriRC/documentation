@@ -79,5 +79,50 @@ spec:
 
 <img width="1145" height="647" alt="image" src="https://github.com/user-attachments/assets/90b846b0-b896-4d5b-b0ab-e4b4f138702c" />
 
-- Assume if database is having multiple replicas. ( DB-1 and DB-2 )
+- Assume if database is having multiple pod replicas. ( DB-1 and DB-2 ), mysql is installed on both the pods
 - Now user doing same process, as he is creating user. This time details is stored in one of the (DB-1).
+- Again user trying to access the facebook login page with creds. But this time service routed the traffic to second pod (DB-2). But there creds are not there. so to address this issue we are using Headless service type.
+- So whenever we are sending request, it should go to only one pod. In that scenario we will use headless type service
+
+<img width="1176" height="647" alt="image" src="https://github.com/user-attachments/assets/d72bdced-8407-4390-8b0b-a4f3ba8bbb0e" />
+
+```yaml
+apiVersion: v1
+kind: Service
+metadata:
+  name: my-headless-service
+
+spec: 
+  clusterIP: None   # ClusterIP as none, so headless will get created.
+  selector:
+    app: my-app
+
+  ports:
+    - port: 80
+      targetPort: 8080
+```
+
+## External Service
+
+- we saw the scenarios where we are accessing the cluster from outside.
+- here we will see how to access the resource outside from the inside.
+
+<img width="1106" height="582" alt="image" src="https://github.com/user-attachments/assets/15312b0b-bc10-4b74-b181-b0e75fa01d72" />
+
+- suppose we need to use weather api where it has details of weather. But it is present outiside the cluster, in that scenario we will use external name service.
+
+<img width="1072" height="546" alt="image" src="https://github.com/user-attachments/assets/a3974da5-6f0c-48c0-a3df-b624f8aaf001" />
+
+```yml
+apiVersion: v1
+kind: Service
+metadata:
+  name: my-external-service
+
+spec:
+  type: ExternalName
+  externalName: api.weather.com
+
+  ports:
+    - port: 80
+```
