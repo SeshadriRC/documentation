@@ -54,7 +54,31 @@ my-chart/
 - **values.yaml** – Default configuration values
 - **templates/** – Kubernetes resource templates
 
+**templates/deployments.yml**
 
+```yml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Release.Name }}-deployment                # Release.Name ( it will pickup the name from helm install <releass-name>
+spec:
+  replicas: {{ .Values.replicas }}                    # it will pick the values from values.yml file
+  selector:
+    matchLabels:
+      app: {{ .Release.Name }}
+  template:
+    metadata:
+      labels:
+        app: {{ .Release.Name }}
+    spec:
+      containers:
+        - name: {{ .Release.Name }}
+          image: {{ .Values.image }}
+          ports:
+            - containerPort: {{ .Values.port }}
+```
+
+**values.yml**
 ```yml
 replicas: 10
 image: simplebyte/simplybyte-calculator:2.0
@@ -65,8 +89,6 @@ simplybyteService:         # nothing but a alias name for Service
    port: 80
    targetPort: 5000
    nodePort: 30081
-
-
 ```
 ---
 
