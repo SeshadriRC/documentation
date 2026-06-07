@@ -11,6 +11,9 @@
 
 <img width="1060" height="602" alt="image" src="https://github.com/user-attachments/assets/6cbde509-53ec-409c-8749-ed35d0af192a" />
 
+<img width="1035" height="412" alt="image" src="https://github.com/user-attachments/assets/dc3c1fe5-b276-4314-bb56-4fb5ad13768d" />
+
+
 - It will maintain the state of the containers.
 - how this is checking ---> By use of desired state and actual state
 - If in case 2 is desired but 1 is missing, then it will inform to API server that 1 container is missing
