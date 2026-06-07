@@ -16,12 +16,19 @@
 
 - so same like this way, we are passing environment variables to the pod which is running the application using configmaps and secrets. Then pod will pass those values to the application.
 
-- Here we are passing env variable one by one in configmap
+- Here we are passing env variable one by one in configmap. so it will create file for every env variable
 
 <img width="1162" height="475" alt="image" src="https://github.com/user-attachments/assets/68b994fb-80c4-4a73-9b2b-09bc959a3aa0" />
 
-- What if we have 50+ env variables, then we need to use configmap as a file
+- What if we have 50+ env variables, then we need to use configmap as a file. Here it will create one file and inside that it will create files for all env variables.
 
 ```bash
 kubectl create configmap simplybyte-configmap-from-file --from-file=application.yml
 ```
+
+- we can attach mutiple pods to the single configmap
+- There are two ways how we can use configmap in pods
+- use envFrom if we wrote the configmap manually
+  <img width="1148" height="420" alt="image" src="https://github.com/user-attachments/assets/edc6a173-b760-4d9e-8791-b26f023b989b" />
+- we can use volumemounts if we create the configmap as file. if we use this 
+  <img width="956" height="457" alt="image" src="https://github.com/user-attachments/assets/383e8cab-9ec5-453f-ac1f-0e2b23c65876" />
