@@ -18,7 +18,7 @@ spec:
           requiredDuringSchedulingIgnoredDuringExecution:
           - labelSelector:
               matchExpressions:
-              - key: app
+              - key: app            # we are giving label of redis.yml
                 operator: In
                 values:
                 - redis
