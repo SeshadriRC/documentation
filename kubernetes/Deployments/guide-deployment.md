@@ -1,0 +1,3 @@
+- We are going for deployment because of rolling update and rollback feature.
+- We deploy the applications using deployment only
+- Suppose as
