@@ -148,13 +148,21 @@ This approach is **recommended for databases in Kubernetes**.
     kubectl apply -f deployment.yml
     kubectl apply -f service.yml
 
+
+<img width="1410" height="562" alt="image" src="https://github.com/user-attachments/assets/698a3be3-25e8-4e1b-817e-eb6d5864ddfb" />
+
 To Access Backend through Node Port:
 
     http://localhost:30080
+    
+<img width="922" height="331" alt="image" src="https://github.com/user-attachments/assets/e9ef2370-7e3a-4d48-90e9-42b7bfba26c0" />
+
 
 To Check if the service is alive:
 
     http://localhost:30080/health
+<img width="862" height="186" alt="image" src="https://github.com/user-attachments/assets/1ccf4cef-2c67-40d1-a7c0-27ee35cb9ecc" />
+
 
 Check logs:
 
