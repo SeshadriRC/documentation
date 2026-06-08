@@ -171,6 +171,10 @@ Check logs:
 <img width="1917" height="280" alt="image" src="https://github.com/user-attachments/assets/413b5910-c669-4de4-a1e5-f5a6fd8c5ce2" />
 
 - we can see added connection, so it sucessfully established connection with mysql
+- Also after deploying backend, automatically table is created by springboot, so this confirms it established connection successfully.
+
+<img width="462" height="281" alt="image" src="https://github.com/user-attachments/assets/aed88fe2-b5b8-4e53-aa65-0bb9c892c78b" />
+
 ---
 
 ## Step 4: Frontend Deployment
