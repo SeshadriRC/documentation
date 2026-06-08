@@ -24,7 +24,7 @@ kind: Ingress
 metadata:
   name: app-ingress
   annotations:
-    nginx.ingress.kubernetes.io/ssl-redirect: "true"
+    nginx.ingress.kubernetes.io/ssl-redirect: "true"   # Kubernetes provides annotations that allow us to configure additional security features in Ingress.
 spec:
   ingressClassName: nginx      # here we need to mention whether its a ingress/trafiek/haproxy
   tls:                         # we are doing SSL termination
