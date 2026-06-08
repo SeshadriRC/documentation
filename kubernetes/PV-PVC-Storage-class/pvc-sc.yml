@@ -3,7 +3,7 @@ kind: PersistentVolumeClaim
 metadata:
   name: simplybyte-pvc
 spec:
-  storageClassName: simplybyte-storage-classsimplybyte-storage-class
+  storageClassName: simplybyte-storage-class
   accessModes:
     - ReadWriteOnce
   resources:
