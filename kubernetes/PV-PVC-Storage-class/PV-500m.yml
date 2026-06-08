@@ -1,11 +1,12 @@
 apiVersion: v1
-kind: PersistentVolumeClaim
+kind: PersistentVolume
 metadata:
-  name: simplybyte-pvc
+  name: simplybyte-pv
 spec:
-  storageClassName: ""
+  capacity:
+    storage: 500Mi
   accessModes:
     - ReadWriteOnce
-  resources:
-    requests:
-      storage: 500Mi
+  persistentVolumeReclaimPolicy: Delete
+  hostPath:
+    path: /tmp/my-data
