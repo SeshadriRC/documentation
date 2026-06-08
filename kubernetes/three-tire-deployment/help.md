@@ -160,6 +160,9 @@ Check logs:
 
     kubectl logs <backend-pod-name>
 
+<img width="1917" height="280" alt="image" src="https://github.com/user-attachments/assets/413b5910-c669-4de4-a1e5-f5a6fd8c5ce2" />
+
+- we can see added connection, so it sucessfully established connection with mysql
 ---
 
 ## Step 4: Frontend Deployment
