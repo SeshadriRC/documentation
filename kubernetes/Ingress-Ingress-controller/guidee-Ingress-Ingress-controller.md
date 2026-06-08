@@ -24,11 +24,11 @@ metadata:
   annotations:
     nginx.ingress.kubernetes.io/ssl-redirect: "true"
 spec:
-  ingressClassName: nginx
-  tls:
-    - hosts:
-        - simplybyte.com
-      secretName: app-tls
+  ingressClassName: nginx      # here we need to mention whether its a ingress/trafiek/haproxy
+  tls:                         # we are doing SSL termination
+    - hosts:               
+        - simplybyte.com       # mention the hostname for which we need to do ssl termination
+      secretName: app-tls      # ssl termination requires key, so we need to pass the key as a secret
   defaultBackend:
     service:
       name: simplybyte-frontend
@@ -60,3 +60,29 @@ spec:
 **Host based routing**
 
 - if domain is `simplybyte.com` then route it to this service. it can also use subdomain like `api.simplybyte.com`
+
+- But in realtime they will combine both host and path based routing and write the rule like below. so it needs to satisfy the condition `simplybyte.com/backend`
+
+<img width="638" height="270" alt="image" src="https://github.com/user-attachments/assets/be325799-caca-4035-b008-2aa5a0f92ad2" />
+
+**Default Backend**
+- If none of the rule is matching, then it should use Default backend.
+
+---
+
+- For production grade application SSL termination is mandatory.
+
+<img width="715" height="188" alt="image" src="https://github.com/user-attachments/assets/3bc317be-ddd1-40dd-8d58-e2dc38dfbc6d" />
+
+<img width="730" height="370" alt="image" src="https://github.com/user-attachments/assets/faae1cf8-7d4c-4363-85a8-92831be9e5d5" />
+
+- All this work is done by the Nginx ingress controller
+
+<img width="1132" height="642" alt="image" src="https://github.com/user-attachments/assets/b165dfc5-c942-481b-a494-72f4d0d4b3b8" />
+
+<img width="1127" height="607" alt="image" src="https://github.com/user-attachments/assets/542d2b9e-6694-4adc-aadf-81044a7e8267" />
+
+- Nginx ingress controller will do the work as per the mentioned Nginx ingress resource.
+- Other alternative tools are below
+
+<img width="1143" height="642" alt="image" src="https://github.com/user-attachments/assets/25cf160c-ac5a-4695-9ac6-6c277e62e04c" />
