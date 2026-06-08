@@ -97,7 +97,7 @@ JDBC URL:
 
 The backend Spring Boot application connects to MySQL using the following JDBC URL:
 
-    jdbc:mysql://mysql-0.mysql:3306/simplybyte
+    jdbc:mysql://simplybyte-mysql-0.mysql:3306/simplybyte
 
 Let’s break this down part by part.
 
@@ -113,11 +113,11 @@ Let’s break this down part by part.
 
 ---
 
-### `mysql-0.mysql`
+### `simplybyte-mysql-0.mysql`
 
 This is the **Kubernetes DNS name** of the MySQL pod.
 
-- `mysql-0`  
+- `simplybyte-mysql-0`  
   First pod created by the MySQL StatefulSet.
 
 - `mysql`  
@@ -132,7 +132,7 @@ Kubernetes automatically resolves this internally, so no IP address is required.
 |----|----|
 | jdbc | Java database connection |
 | mysql | Database type |
-| mysql-0 | StatefulSet pod name |
+| simplybyte-mysql-0 | StatefulSet pod name |
 | mysql | Headless service name |
 | 3306 | MySQL port |
 | simplybyte | Database name |
