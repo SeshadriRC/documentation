@@ -5,7 +5,7 @@ metadata:
   labels:
     app: mysql
 spec:
-  serviceName: mysql
+  serviceName: mysql       # name of the headless service, as its a stateful application we need to use this service
   replicas: 1
   selector:
     matchLabels:
