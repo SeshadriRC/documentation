@@ -57,11 +57,14 @@ Verify:
 
     kubectl get pods
 
+
+<img width="1907" height="523" alt="image" src="https://github.com/user-attachments/assets/b3a73006-4014-4567-9595-f5a2a1d7eea9" />
+
 ---
 
 ## Step 2: Verify MySQL
 
-    kubectl exec -it mysql-0 -- sh
+    kubectl exec -it simplybyte-mysql-0 -- sh
     mysql -u root -p
 
 Password:
