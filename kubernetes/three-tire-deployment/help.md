@@ -1,8 +1,11 @@
 # Three Tier Application Deployment – Kubernetes (Local)
 
+<img width="1060" height="423" alt="image" src="https://github.com/user-attachments/assets/450d4bda-71c4-4f6d-b848-a0973367fd8b" />
+
+
 ## Architecture
 - MySQL Database (StatefulSet + Headless Service)
-- Spring Boot Backend (Deployment + NodePort)
+- Spring Boot java Backend (Deployment + NodePort)
 - Frontend UI (Deployment + NodePort)
 
 ---
