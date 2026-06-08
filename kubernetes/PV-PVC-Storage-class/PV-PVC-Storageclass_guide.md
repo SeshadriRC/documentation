@@ -88,3 +88,5 @@ allowVolumeExpansion: true
 **What is Reclaim Policy**
 
 - Assume PV and PVC got bounded. if we delete the PVC then it should delete PV or not, thats decided by reclaim policy
+
+<img width="930" height="426" alt="image" src="https://github.com/user-attachments/assets/37417382-3c5c-400d-a198-dfdda03b5e7d" />
