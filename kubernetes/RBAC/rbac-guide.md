@@ -32,6 +32,8 @@ That is exactly what RBAC does.
 RBAC = **Role Based Access Control**  
 Access is decided based on Roles.
 
+<img width="1190" height="613" alt="image" src="https://github.com/user-attachments/assets/b0b6e173-3f89-457f-88f4-e058406df661" />
+
 ---
 
 ## Another Problem RBAC Solves
