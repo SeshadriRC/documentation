@@ -1,3 +1,5 @@
+- First of all nginx controller is deprecated, which means we won't get any security updates from them. Now companies are slowly migrating to Kubernetes gateway API. Only nginx ingress controller is deprecated, remaining controllers like Trafeik and Ha-proxy is available.
+
 <img width="1140" height="665" alt="image" src="https://github.com/user-attachments/assets/aece231e-e83c-4a29-9c8c-68635f4aac50" />
 
 - Assume we want to access frontend and backend pod , in realtime we won't use NodePort, its only for testing purposes.
