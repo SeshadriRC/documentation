@@ -29,9 +29,9 @@ spec:
             - name: MYSQL_DATABASE          # In env variable section of docker page, you will get it. also for this env, we given value directly.
               value: simplybyte
           volumeMounts:
-            - name: mysql-data
-              mountPath: /var/lib/mysql
-  volumeClaimTemplates:
+            - name: mysql-data              # Name of the volume
+              mountPath: /var/lib/mysql     # Data stored in mysql will be stored in this location only
+  volumeClaimTemplates:                     # It will create a PVC/PV automatically
     - metadata:
         name: mysql-data
       spec:
