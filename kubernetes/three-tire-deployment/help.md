@@ -202,6 +202,22 @@ Frontend URL:
 
     http://localhost:30081
 
+<img width="1918" height="985" alt="image" src="https://github.com/user-attachments/assets/ef367050-424d-4e15-85ba-c2f12f602930" />
+
+- Create a new user
+
+   - first name: seshadri, last name: R C, Email: seshace@gmail.com, password: sesha123
+
+<img width="937" height="673" alt="image" src="https://github.com/user-attachments/assets/56237453-434a-4c72-b385-5a61a970537f" />
+
+- for me it not worked, i will troubleshoot later. below pic is from youtube
+
+<img width="1277" height="577" alt="image" src="https://github.com/user-attachments/assets/ef7a232b-07ad-4c1a-b160-83ffce760bd9" />
+
+- inside the db we can see , it showing the user details
+
+<img width="802" height="268" alt="image" src="https://github.com/user-attachments/assets/a1d16f37-b42c-44a7-be78-7168025701b8" />
+
 ---
 
 ## Kubernetes Concepts Covered
