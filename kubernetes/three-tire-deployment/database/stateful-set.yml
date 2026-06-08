@@ -21,12 +21,12 @@ spec:
           ports:
             - containerPort: 3306
           env:
-            - name: MYSQL_ROOT_PASSWORD
+            - name: MYSQL_ROOT_PASSWORD      # In env variable section of docker page, you will get it
               valueFrom:
                 secretKeyRef:
                   name: mysql-secret
                   key: mysql-root-password
-            - name: MYSQL_DATABASE
+            - name: MYSQL_DATABASE          # In env variable section of docker page, you will get it
               value: simplybyte
           volumeMounts:
             - name: mysql-data
