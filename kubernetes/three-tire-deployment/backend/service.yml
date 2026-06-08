@@ -7,7 +7,7 @@ spec:
   selector:
     app: simplybyte-backend
   ports:
-    - port: 8090          
-      targetPort: 8090    
-      nodePort: 30080    
+    - port: 8090           # if anyone inside cluster need to access, then they will use this port
+      targetPort: 8090     
+      nodePort: 30080      # if anyone outside cluster neeed to access, they they need to use this port
       protocol: TCP
