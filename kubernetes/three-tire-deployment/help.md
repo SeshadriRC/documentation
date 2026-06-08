@@ -190,7 +190,7 @@ Check logs:
 
     kubectl exec -it <frontend-pod-name> -- sh
 
-    cat /usr/share/nginx/html/config.json
+    cat /usr/share/nginx/html/assets/config.json
 
 ---
 
