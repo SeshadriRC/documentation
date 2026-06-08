@@ -1,0 +1,1 @@
+- Create the deployment without any serviceaccount. use this [yaml](https://github.com/SeshadriRC/documentation/blob/main/kubernetes/RBAC/deployment-nosa.yml)
