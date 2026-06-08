@@ -24,8 +24,8 @@ spec:
             - name: MYSQL_ROOT_PASSWORD      # In env variable section of docker page, you will get it
               valueFrom:
                 secretKeyRef:
-                  name: mysql-secret
-                  key: mysql-root-password
+                  name: mysql-secret         # name of the secret
+                  key: mysql-root-password   # in secret file we can see this key
             - name: MYSQL_DATABASE          # In env variable section of docker page, you will get it. also for this env, we given value directly.
               value: simplybyte
           volumeMounts:
