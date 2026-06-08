@@ -192,6 +192,8 @@ Check logs:
 
     cat /usr/share/nginx/html/assets/config.json
 
+<img width="1606" height="545" alt="image" src="https://github.com/user-attachments/assets/d1cb204c-c97f-4d32-9381-7c54aee07022" />
+
 ---
 
 ## Access Application
