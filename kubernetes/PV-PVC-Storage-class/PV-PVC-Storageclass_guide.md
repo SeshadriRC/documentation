@@ -45,11 +45,46 @@ spec:
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
-  name: my-persistent-volume-claim
+  name: my-ebs-pvc
 spec:
   accessModes:
     - ReadWriteOnce
+  storageClassName: aws-ebs-sc
   resources:
     requests:
-      storage: 5Gi
+      storage: 10Gi
 ```
+
+- So once PVC got created, it will find the PV and it will bind to it. This process is called volume binding.
+- Now we need to bind the PVC to a pod, so automatically PV will get binded.
+- Suppose assume we created a PVC to claim 1GB, but available volume is of 2GB. It will bind in this case, however 2GB is higher than the requested one.
+
+  <img width="882" height="360" alt="image" src="https://github.com/user-attachments/assets/4d2905b9-3637-4039-92b1-413d9a451a46" />
+
+- Suppose assume we created a PVC to claim 1GB, but volume available is 500 MB. Then nothing will happen PV will not get binded
+
+ <img width="1083" height="443" alt="image" src="https://github.com/user-attachments/assets/de0dc6ac-3249-4342-99d7-7342c2f3d463" />
+
+- So to solve this problem kubernetes has another resource which is called StorageClass. PV will get created automatically  by the StorageClass as per the requirement by PVC, This is called Dynamic Provisioning.
+
+<img width="1077" height="501" alt="image" src="https://github.com/user-attachments/assets/894031af-3f63-48ee-b814-225031adeaa5" />
+
+- While creating Stroage class , we need to tell whether PV should created in AWS or Host. then it will take care
+
+```yml
+apiVersion: storage.k8s.io/v1
+kind: StorageClass
+metadata:
+  name: aws-ebs-sc
+provisioner: kubernetes.io/ebs.csi.aws.com
+parameters:
+  type: gp3
+reclaimPolicy: Delete                  # It will delete the PV if we delete PVC
+# reclaimPolicy: Retain                # It will retain the PV if we delete PVC 
+volumeBindingMode: WaitForFirstConsumer
+allowVolumeExpansion: true
+```
+
+**What is Reclaim Policy**
+
+- Assume PV and PVC got bounded. if we delete the PVC then it should delete PV or not, thats decided by reclaim policy
