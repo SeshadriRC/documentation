@@ -87,11 +87,11 @@ To view all tables:
 
 ## MySQL DNS Used by Backend
 
-    mysql-0.mysql
+    simplybyte-mysql-0.mysql                   # simplybyte-mysql-0 --> pod name, mysql - headless service name
 
 JDBC URL:
 
-    jdbc:mysql://mysql-0.mysql:3306/simplybyte
+    jdbc:mysql://simplybyte-mysql-0.mysql:3306/simplybyte             # simplybyte - name of the database
 
 ## MySQL JDBC URL Explanation
 
