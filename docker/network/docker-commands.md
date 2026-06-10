@@ -50,4 +50,16 @@ docker stop <container-id>
 # remove the container
 docker rm <container-id>
 
+# create the volume
+docker volume create mycalcvolume
+
+# list the volume
+docker volume ls
+
+# To see where the files got stored in the volume
+docker volume inspect mycalcvolume
+
+# To attach a volume to the container
+docker run -p 80:8080 -v mycalculatorvolume:/data calculator:latest
+
 ```
