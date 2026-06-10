@@ -15,7 +15,7 @@ WORKDIR /app
 
 # Copy package.json and package-lock.json (if present)
 # This helps Docker cache the dependency installation layer
-COPY package*.json ./
+COPY package*.json .
 
 # Install all dependencies mentioned in package.json
 RUN npm install
