@@ -8,6 +8,36 @@ In this demo, we clearly show:
 * How **network isolation** works using **custom Docker networks**
 * Why containers in **different networks cannot talk to each other**
 
+
+- Docker container will be running in separate namespace and host will be in separate namespace. so to address this issue we will be creating virtual eth, so that both container and host can able to communicate.
+
+<img width="903" height="600" alt="image" src="https://github.com/user-attachments/assets/8f326800-96b3-4435-8352-645b7ddc3647" />
+
+<img width="747" height="585" alt="image" src="https://github.com/user-attachments/assets/6d15e71f-2970-4734-a03f-b145e074633e" />
+
+- If in case we ran another container, then for that also we need to create a veth
+
+<img width="667" height="546" alt="image" src="https://github.com/user-attachments/assets/81a98637-2e7f-43cf-8d84-ee94eb2f177d" />
+
+
+- So instead of that we can create a bridge. Bridge is almost same like wifi, where wifi will connect all the devices in the same network. so another name of bridge is docker0 , we can call it as `docker0` bridge.
+- Same like wifi, where ip's will get assigned to each devices using router. same like that from bridge network, ip's will get assigned  to each containers.
+
+<img width="1018" height="563" alt="image" src="https://github.com/user-attachments/assets/a212702b-c9b2-4963-9ed3-788bd2757c0e" />
+
+- Below is the range of bridge networking
+
+<img width="832" height="572" alt="image" src="https://github.com/user-attachments/assets/269b0fef-7ec4-4a01-8300-1124342d7821" />
+
+- facebook and insta is a different product, both should not get communication. so to address this we will be creating a separate network.
+
+<img width="783" height="546" alt="image" src="https://github.com/user-attachments/assets/d1109a4e-9abe-4d7a-814d-fbdb465e421b" />
+
+- containers got isolated
+
+<img width="752" height="562" alt="image" src="https://github.com/user-attachments/assets/3782cabd-5088-4b5c-8f40-4f81857e338e" />
+
+
 ---
 
 ## 📌 Prerequisites
