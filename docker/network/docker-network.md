@@ -190,7 +190,7 @@ docker run -d \
 docker run -d -p 8090:8090 \
   --name simplybyte_backend \
   --network A \
-  -e SPRING_DATASOURCE_URL=jdbc:mysql://172.18.0.2:3306/simplybyte \
+  -e SPRING_DATASOURCE_URL=jdbc:mysql:<container-name>:3306/simplybyte \
   simplybyte/simplybyte-backend:1.0
 ```
 
