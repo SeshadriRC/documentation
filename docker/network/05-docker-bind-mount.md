@@ -4,6 +4,7 @@
 
 - So by using bind mount we can solve this problem. It will directly store the files in local system directory.
 - Below is the command where we will give the local system directory and mount with container directory.
+- so whatever files in the Downloads will be visible inside the container.
 
 ```bash
 docker run -p 80:8080 -v C:\Downloads:/data calculatorapp:latest
