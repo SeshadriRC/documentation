@@ -179,7 +179,7 @@ docker run -d -p 8090:8090 \
 ❌ Backend **cannot connect** to MySQL because:
 
 * MySQL is in **Network A**
-* Backend is in **Network B**
+* Backend is in **Network B** , so both are in different subnets
 * Docker networks are **isolated by default**
 
 👉 This proves **Docker network isolation**.
