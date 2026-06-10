@@ -38,6 +38,29 @@ In this demo, we clearly show:
 <img width="752" height="562" alt="image" src="https://github.com/user-attachments/assets/3782cabd-5088-4b5c-8f40-4f81857e338e" />
 
 
+### Three types of network
+
+**1. Bridge -> It is a default network**
+
+- This is the default bridge type, please refer above for the detailed explanation.
+- In most cases, the bridge network is used when deploying applications in Docker.
+
+<img width="1062" height="535" alt="image" src="https://github.com/user-attachments/assets/2ccaa87c-fdce-4214-b6be-196688a0b293" />
+
+**2. Host**
+
+- Directly we can access from the host.
+- But here the drawback is port conflict, support instagram runs on 8080, and facebook try to use 8080 then there will be a port conflict.
+- In Bridge network it uses a port mapping.
+
+<img width="982" height="582" alt="image" src="https://github.com/user-attachments/assets/91311af6-e3ee-424b-9012-919c8c8ba220" />
+
+
+**3. None**
+
+- No one can able to connect this container. And container cannot access the outside world. This will be used whenever we want to do testing and no connection from outside.
+<img width="827" height="590" alt="image" src="https://github.com/user-attachments/assets/78b45919-b3ac-4191-8e0b-1f5180cb8dcb" />
+
 ---
 
 ## 📌 Prerequisites
