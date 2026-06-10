@@ -8,6 +8,7 @@ docker build -t <image-name> -f <docker-file-location>
 
 # run the container
 docker run -p hostport:container-port <docker-image-name>
+docker run -p 80:8080 --name=calculatorapp simplybyte/calculator
 
 # list the running containers
 docker ps
