@@ -64,4 +64,7 @@ docker run -p 80:8080 -v mycalculatorvolume:/data calculator:latest
 
 # Bind mount creation command
 docker run -p 80:8080 -v C:\Downloads:/data calculatorapp:latest
+
+# exec to the container
+docker exec -it <container-id>  /bin/bash
 ```
