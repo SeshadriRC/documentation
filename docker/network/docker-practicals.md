@@ -69,3 +69,5 @@ docker run -p 9003:5000 --name=my-calc calculator-new
 - image pushed
 
 <img width="941" height="491" alt="image" src="https://github.com/user-attachments/assets/c6e8e39c-6bef-417e-bbc0-1f4b1ee410f7" />
+
+<img width="1918" height="868" alt="image" src="https://github.com/user-attachments/assets/50e38dfd-3a43-4b4d-8792-4b3d1eb71b01" />
