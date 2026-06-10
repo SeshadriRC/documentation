@@ -68,4 +68,16 @@ docker run -p 80:8080 -v C:\Downloads:/data calculatorapp:latest
 
 # exec to the container
 docker exec -it <container-id>  /bin/bash
+
+# docker inspect
+docker inspect <container-id>
+
+# list the network
+docker network ls
+
+# network create
+docker network create A
+
+# it will show login succeeded if incasse we logged in
+docker login
 ```
