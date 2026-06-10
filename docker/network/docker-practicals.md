@@ -57,3 +57,15 @@ docker run -p 9003:5000 --name=my-calc calculator-new
 <img width="557" height="150" alt="image" src="https://github.com/user-attachments/assets/848240b7-eab3-4996-8c33-8d9913cca35b" />
 
 <img width="1238" height="287" alt="image" src="https://github.com/user-attachments/assets/22dbc624-fa50-4489-9efa-5eadc9aeda06" />
+
+## Push the docker image to the docker hub
+
+- Created a repository called my-calc.
+
+<img width="1915" height="490" alt="image" src="https://github.com/user-attachments/assets/8394a550-6bf4-4949-ba90-519bf1b79a13" />
+
+<img width="1917" height="966" alt="image" src="https://github.com/user-attachments/assets/b9b97f4e-aab5-478f-9b03-c70afdcbd9c5" />
+
+- image pushed
+
+<img width="941" height="491" alt="image" src="https://github.com/user-attachments/assets/c6e8e39c-6bef-417e-bbc0-1f4b1ee410f7" />
