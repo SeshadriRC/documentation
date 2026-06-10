@@ -62,4 +62,6 @@ docker volume inspect mycalcvolume
 # To attach a volume to the container
 docker run -p 80:8080 -v mycalculatorvolume:/data calculator:latest
 
+# Bind mount creation command
+docker run -p 80:8080 -v C:\Downloads:/data calculatorapp:latest
 ```
