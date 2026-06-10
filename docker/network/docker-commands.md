@@ -22,6 +22,7 @@ docker login
 
 # push the docker image
 docker push <repo-name>/<image-name>
+docker push sesharc/my-calc:v1
 
 # tag the image with repository name
 docker tag <image-name> <repository-name>/<image-name>
