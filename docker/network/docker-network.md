@@ -113,11 +113,24 @@ docker run -d \
 ### Run Backend Container
 
 ```bash
+`docker inspect mysql-db` and check the IPAddress
+```
+
+```bash
 docker run -d -p 8090:8090 \
   --name simplybyte_backend \
   -e SPRING_DATASOURCE_URL=jdbc:mysql://172.18.0.2:3306/simplybyte \
   simplybyte/simplybyte-backend:1.0
 ```
+
+```bash
+# by seeing the logs of spring boot container, we can see it got connected with DB
+docker logs <springboot-container>
+```
+
+<img width="1917" height="712" alt="image" src="https://github.com/user-attachments/assets/5f1c4e22-a817-4db0-a96b-bd08b2f4d0b4" />
+
+
 
 ✅ Both containers are in the **default bridge network**, so they can communicate using IP address.
 
