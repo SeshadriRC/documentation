@@ -37,7 +37,7 @@ sudo apt update
 sudo apt install ansible -y
 ```
 
-- Create a user in control node.
+- Create a `ansible` user in target node.
 
 ```bash
 sudo useradd -m ansible
