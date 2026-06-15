@@ -15,5 +15,8 @@ chown
 top
 zip
 unzip
+netstat -tulnp | grep 9000    # used to display listening ports
+ss -tulnp | grep 9000         # modern usage of netstat
+nc -zv 10.1.1.20 9000  # connectivity test
 
 ```
