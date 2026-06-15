@@ -1,6 +1,6 @@
 **1. Basic terraform EC2 Yaml**
 
-```yml
+```hcl
 provider "aws" {
   region = "ap-south-1"
 }
@@ -16,3 +16,5 @@ resource "aws_instance" "web" {
   }
 }
 ```
+
+---
