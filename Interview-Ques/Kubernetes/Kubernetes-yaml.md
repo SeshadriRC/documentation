@@ -1,0 +1,16 @@
+**Basic Pod yaml**
+
+```yaml
+apiVersion: v1
+kind: Pod
+
+metadata:
+  name: nginx-pod
+
+spec:
+  containers:
+    - name: nginx
+      image: nginx
+      ports:
+        - containerPort: 80
+```
