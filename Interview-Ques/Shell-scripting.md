@@ -186,3 +186,17 @@ for file in *; do
     fi
 done
 ```
+
+---
+
+8. check whether the current directory contains files or not
+
+```bash
+if [ -z "$(ls -A)" ]; then
+    echo "Directory is empty"
+else
+    echo "Directory is not empty"
+fi
+```
+
+---
