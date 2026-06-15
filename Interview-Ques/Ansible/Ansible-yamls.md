@@ -1,5 +1,6 @@
 1. Install nginx on a ubuntu.
 
+```yaml
 ---
 - name: Install and start nginx
   hosts: all
@@ -18,7 +19,9 @@
         name: nginx
         state: started
         enabled: yes
----
+
+```
+
 ```bash
 Explanation:
 
