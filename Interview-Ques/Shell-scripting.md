@@ -170,3 +170,19 @@ done
 ```
 
 ---
+
+7. If you want to check each file in the current directory and identify whether the file has content or is empty, use:
+
+
+```bash
+#!/bin/bash
+for file in *; do
+    if [ -f "$file" ]; then
+        if [ -s "$file" ]; then
+            echo "$file → Not Empty"
+        else
+            echo "$file → Empty"
+        fi
+    fi
+done
+```
