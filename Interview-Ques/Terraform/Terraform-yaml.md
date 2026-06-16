@@ -95,3 +95,11 @@ Interview answer:
 > **Use `count` for identical multiple resources, use `for_each` when each resource has different values/configurations.**
 
 ---
+
+**3. Terraform backend configuration**
+
+
+[refer](https://github.com/SeshadriRC/terraform-zero-to-hero/tree/main/Day-4)
+
+
+---
