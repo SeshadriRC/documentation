@@ -777,3 +777,192 @@ One-line interview explanation:
 
 
 ---
+
+11. What is trap command in linux ?
+
+`trap` in shell scripting is used to **catch signals/events and execute a command or function automatically**.
+
+Think of it like:
+
+> “If something happens (CTRL+C, script exit, termination), run this cleanup code.”
+
+Syntax:
+
+```bash id="d0mqh9"
+trap 'command' SIGNAL
+```
+
+or
+
+```bash id="w8w3su"
+trap function_name SIGNAL
+```
+
+
+## Example 1 — Catch CTRL+C
+
+Script:
+
+```bash id="xx4l5o"
+#!/bin/bash
+
+cleanup() {
+    echo "Cleaning temporary files..."
+}
+
+trap cleanup INT
+
+echo "Running..."
+
+while true
+do
+sleep 1
+done
+```
+
+Run:
+
+```bash id="j68f7n"
+./test.sh
+```
+
+Press:
+
+```text id="syv54n"
+CTRL+C
+```
+
+Output:
+
+```text id="ymh8yq"
+Cleaning temporary files...
+```
+
+Without `trap`:
+
+Script simply stops.
+
+
+## Example 2 — Auto delete temp file
+
+```bash id="fzb40g"
+#!/bin/bash
+
+touch temp.txt
+
+trap "rm -f temp.txt" EXIT
+
+echo "Processing..."
+```
+
+After script exits:
+
+```text id="1jw95e"
+temp.txt deleted
+```
+
+
+## Your namespace deletion script
+
+You had:
+
+```bash id="e3v6mp"
+trap cleanup_branch INT TERM
+```
+
+and:
+
+```bash id="6jlwmw"
+cleanup_branch() {
+
+git checkout master
+
+git branch -D "$branch_name"
+
+git reset --hard origin/master
+}
+```
+
+Meaning:
+
+If user:
+
+```text id="hzjlwm"
+CTRL+C
+```
+
+or process gets terminated:
+
+Execute:
+
+```text id="h7bz0r"
+Switch to master
+Delete temporary branch
+Restore repo state
+```
+
+This prevents half-completed Git changes.
+
+
+## Common trap signals
+
+| Signal | Meaning            |
+| ------ | ------------------ |
+| INT    | Interrupt (CTRL+C) |
+| TERM   | Terminate          |
+| EXIT   | Script exits       |
+| HUP    | Terminal closed    |
+| ERR    | Command failure    |
+
+Examples:
+
+### Run on exit
+
+```bash id="2ixkga"
+trap cleanup EXIT
+```
+
+
+### Run on command failure
+
+```bash id="jjlwmr"
+trap cleanup ERR
+```
+
+
+### Run on CTRL+C
+
+```bash id="3vugjv"
+trap cleanup INT
+```
+
+# Real DevOps use cases
+
+### Cleanup temp files
+
+```bash id="0i8vxv"
+trap 'rm -rf /tmp/build' EXIT
+```
+
+
+### Rollback deployment
+
+```bash id="1m7qil"
+trap rollback ERR
+```
+
+
+### Logout cluster automatically
+
+```bash id="p0j57q"
+trap "oc logout" EXIT
+```
+
+
+### Interview explanation
+
+> `trap` is used in shell scripting to capture signals such as interruption, termination, or script exit and execute cleanup or rollback logic. In my project, I used `trap` to automatically restore the Git repository state and delete temporary branches if the script was interrupted.`
+
+
+
+---
