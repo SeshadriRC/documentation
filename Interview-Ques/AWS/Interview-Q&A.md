@@ -89,3 +89,12 @@ With Transit Gateway:
 Interview one-liner:
 
 > **Transit Gateway acts like a network router that centrally connects multiple VPCs and on-premises networks without creating many VPC peering connections.**
+
+---
+
+4. NACL and SG
+
+[refer](https://github.com/SeshadriRC/Devops-Learnings/blob/main/My-Learnings/Networking/Security-Group-and-NACL.md)
+
+
+---
