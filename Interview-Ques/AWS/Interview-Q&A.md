@@ -98,3 +98,10 @@ Interview one-liner:
 
 
 ---
+
+5. Refer below topics in repo
+
+- day 4,5,7,8
+- [repo](https://github.com/SeshadriRC/Devops-Concepts/tree/main)
+
+---
