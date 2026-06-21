@@ -62,7 +62,7 @@ cd ~/.ssh
 
 # we will see both private and public. we need to deploy only public key in the target servers. why we are using this concept --> due to passwordless, run below command before deploying, it will ask the password
 
-ssh ansible@<target_host>
+ssh ansible@<target_host>  -> only on-prem it will show denied, in cloud it never authenticates it self
 
 ```
 
@@ -71,8 +71,22 @@ ssh ansible@<target_host>
 ```bash
 # first time only it will ask the password, once given key will get added
 
-ssh-copy-id -i id_rsa.pub ansible@<target_host>
+ssh-copy-id -i id_rsa.pub ansible@<target_host>   -> onprem
+
 
 # Again test it , you can able to login
 ssh ansible@<target_hosts>
+
+
+# AWS
+
+sesha@LAPTOP-QMBUJPPJ:~/.ssh$ ssh-copy-id -f "-o IdentityFile first-ec2.pem" ubuntu@15.207.110.14
+/usr/bin/ssh-copy-id: INFO: Source of key(s) to be installed: "/home/sesha/.ssh/id_rsa.pub"
+
+Number of key(s) added: 1
+
+Now try logging into the machine, with:   "ssh -o ' IdentityFile first-ec2.pem' 'ubuntu@15.207.110.14'"
+and check to make sure that only the key(s) you wanted were added.
+
+
 ```
