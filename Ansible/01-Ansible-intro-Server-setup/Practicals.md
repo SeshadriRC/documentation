@@ -69,7 +69,7 @@ ansible@192.168.56.11's password:
 
 ```
 
-- There are 2 ways to deploy the public key , one is manually copying the public key from `id_rsa.pub` and another is `ssh-copy-id` command. here we will use `ssh-copy-id`
+- There are 2 ways to deploy the public key , one is manually copying the public key from `id_rsa.pub` and another is `ssh-copy-id` command. here we will use `ssh-copy-id`. `ssh-cpy-id` worked for centos but for ubuntu not worked so i manually copied `id_rsa.pub` to `authorized_keys` of ubuntu.
 
 ```bash
 # first time only it will ask the password, once given key will get added
@@ -97,6 +97,12 @@ Last login: Sun Jun 21 08:28:08 2026
 [ansible@node1 .ssh]$ cat authorized_keys
 ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQCqP51Orubib+PPillrCWzTq4OSfe39SzFCGiSM41Ky/GtJAtPfdwOib/Lrio1zyuTCa462lhAZHEtFGdS07c81pI3o6ZUVA+ikRmDq+l4M8FCS1buu3xEh7xPB0O8XNO24KCPlGRDDkp9oIA5kXqWYNDtzM5MEKDhDgfcZ9vqQIT51KIcIyEiRfi8Y5drGVXnCJEzTYWZ/MnKC0/U/JSrEpFKWGAUOY9MJcvNX3nsWyf/mqZtAbThOZRFWi2a/ubH94OYdYDnWahP77TIdz4N5BIEF2VmVXVOnUDVIy8JQSeD3i29Pfgew7fwlVP74Yaspb4uLEdTV/joPJJV7mhtFnv8dT+F/OSHfoxrX3k/2XpMOk8CVoYVXkMjFcaMDS0ulYeckAyJFa9+e/ELaJDjRDc2zZzWLRtKFVAanqWgOcWiw+eNBKEvwacLgBlzZOBFIhz2gZL52USQ14gQ9nbiQnMFJdBiJo+UjUdoVeLrT/a3j5jBodQIRmYy3ocJ50L8= sesha@LAPTOP-QMBUJPPJ
 
-
+## below is for ubuntu
+$ ls -ld .ssh
+drwx------ 2 ansible ansible 4096 Jun 21 08:58 .ssh
+$ cd .ssh
+$ ls -lrth
+total 4.0K
+-rw------- 1 ansible ansible 575 Jun 21 08:58 authorized_keys
 
 ```
