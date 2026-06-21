@@ -62,7 +62,10 @@ cd ~/.ssh
 
 # we will see both private and public. we need to deploy only public key in the target servers. why we are using this concept --> due to passwordless, run below command before deploying, it will ask the password
 
-ssh ansible@<target_host>  -> only on-prem it will show denied, in cloud it never authenticates it self
+sesha@LAPTOP-QMBUJPPJ:~/.ssh$ ssh ansible@192.168.56.11
+ansible@192.168.56.11's password:
+
+
 
 ```
 
@@ -73,20 +76,27 @@ ssh ansible@<target_host>  -> only on-prem it will show denied, in cloud it neve
 
 ssh-copy-id -i id_rsa.pub ansible@<target_host>   -> onprem
 
+sesha@LAPTOP-QMBUJPPJ:~/.ssh$ ssh-copy-id -i id_rsa.pub ansible@192.168.56.11
+/usr/bin/ssh-copy-id: INFO: Source of key(s) to be installed: "id_rsa.pub"
+/usr/bin/ssh-copy-id: INFO: attempting to log in with the new key(s), to filter out any that are already installed
+/usr/bin/ssh-copy-id: INFO: 1 key(s) remain to be installed -- if you are prompted now it is to install the new keys
+ansible@192.168.56.11's password:
+
+Number of key(s) added: 1
+
+Now try logging into the machine, with:   "ssh 'ansible@192.168.56.11'"
+and check to make sure that only the key(s) you wanted were added.
 
 # Again test it , you can able to login
 ssh ansible@<target_hosts>
 
+sesha@LAPTOP-QMBUJPPJ:~/.ssh$ ssh ansible@192.168.56.11
+Last login: Sun Jun 21 08:28:08 2026
+[ansible@node1 ~]$
 
-# AWS
+[ansible@node1 .ssh]$ cat authorized_keys
+ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQCqP51Orubib+PPillrCWzTq4OSfe39SzFCGiSM41Ky/GtJAtPfdwOib/Lrio1zyuTCa462lhAZHEtFGdS07c81pI3o6ZUVA+ikRmDq+l4M8FCS1buu3xEh7xPB0O8XNO24KCPlGRDDkp9oIA5kXqWYNDtzM5MEKDhDgfcZ9vqQIT51KIcIyEiRfi8Y5drGVXnCJEzTYWZ/MnKC0/U/JSrEpFKWGAUOY9MJcvNX3nsWyf/mqZtAbThOZRFWi2a/ubH94OYdYDnWahP77TIdz4N5BIEF2VmVXVOnUDVIy8JQSeD3i29Pfgew7fwlVP74Yaspb4uLEdTV/joPJJV7mhtFnv8dT+F/OSHfoxrX3k/2XpMOk8CVoYVXkMjFcaMDS0ulYeckAyJFa9+e/ELaJDjRDc2zZzWLRtKFVAanqWgOcWiw+eNBKEvwacLgBlzZOBFIhz2gZL52USQ14gQ9nbiQnMFJdBiJo+UjUdoVeLrT/a3j5jBodQIRmYy3ocJ50L8= sesha@LAPTOP-QMBUJPPJ
 
-sesha@LAPTOP-QMBUJPPJ:~/.ssh$ ssh-copy-id -f "-o IdentityFile first-ec2.pem" ubuntu@15.207.110.14
-/usr/bin/ssh-copy-id: INFO: Source of key(s) to be installed: "/home/sesha/.ssh/id_rsa.pub"
-
-Number of key(s) added: 1
-
-Now try logging into the machine, with:   "ssh -o ' IdentityFile first-ec2.pem' 'ubuntu@15.207.110.14'"
-and check to make sure that only the key(s) you wanted were added.
 
 
 ```
