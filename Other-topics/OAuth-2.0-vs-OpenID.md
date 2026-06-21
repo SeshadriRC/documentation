@@ -5,6 +5,8 @@
 - Callback URL
 - Authorization
 - OAuth
+- Scope
+- Access token
 
 
 ---
@@ -43,3 +45,33 @@
 
 
 ---
+
+## Authorization/OAuth
+
+- Authorization determines what things a user is allowed to do in a system.
+- Assume we designed a photo editor application, where whenever user edited the photo and saved it, then it should store photo in the **google drive**
+- How this application will access the google drive. we can't give google creds to the application, if it knows it can do anything on our google drive. This is not a secured approach
+- So we need to give permission only for the upload and not for other activities.
+- **Scope** - we are mentioning right delete, upload . this is called scope. upload is a scope , delete is a scope
+- So here we dont want to provide creds, we need to use same approach as `connect with gdrive`. Here google will ask us the question, can we give permission to the app to upload the file, we need to give yes. This is called **OAuth**
+- So whenever we click `allow` then our application will send a request to `OAuth` server and in that request it will mention the scope(nothing but permissions) details as well.
+- Then now after authentication with google. google will send the token to the application that is called **Access token**.
+- So in future application will use this token and authenticate with google, so this token has details about all the privileges as well.
+- **OAuth** --> OAuth allows to give permission to an application to access specific resources without sharing their login credentials.
+- **OpenID connect will come under the OAuth.**
+- Initially, OAuth was created and used only for authorization purposes **OAuth 1.0**. but developers started using it for authentication. But this is not a good practice, To solve this issue, OpenID Connect (OIDC) was introduced separately for authentication in **OAuth 2.0**
+- As Outh 1.0 is slow and complexx, currently all applications using **OAuth 2.0**
+
+---
+**Scope**
+<img width="1073" height="387" alt="image" src="https://github.com/user-attachments/assets/2e516e95-816b-400c-b5f9-55981cbb29e2" />
+
+---
+
+**Outh**
+
+<img width="1181" height="651" alt="image" src="https://github.com/user-attachments/assets/a7b8e6c3-b6cc-4273-86c7-c87f3959cc53" />
+
+<img width="817" height="595" alt="image" src="https://github.com/user-attachments/assets/59258e83-6e80-45e5-866f-0a60cfa1ccc2" />
+
+<img width="790" height="345" alt="image" src="https://github.com/user-attachments/assets/0df8ccde-949d-495e-abbc-e71057b5cb4a" />
