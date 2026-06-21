@@ -22,6 +22,35 @@ sudo visudo
 
 # Add below root user
 ansible ALL=(ALL:ALL) NOPASSWD: ALL  --> This ALL indicates, user has all the privilege to execute all the commands
+
+
+# first without adding i checked below
+sudo ls
+$ sudo ls
+sudo: I'm sorry ansible. I'm afraid I can't do that
+
+# Then after that i added below
+ansible ALL=(ALL:ALL) ALL   --> but it asked password
+ubuntu@ip-172-31-2-88:~$ sudo su - ansible
+$ ls
+$ sudo ls
+[sudo: authenticate] Password:
+
+$ whoami
+ansible
+$ sudo whoami
+[sudo: authenticate] Password:
+
+# Now add entire line, so that it won't ask password
+ubuntu@ip-172-31-2-88:~$ sudo cat /etc/sudoers | grep ansible
+ansible ALL=(ALL:ALL) NOPASSWD: ALL
+ubuntu@ip-172-31-2-88:~$ sudo su - ansible
+$ lss
+-sh: 1: lss: not found
+$ ls
+$ sudo whoami
+root
+
 ```
 
 - Generate `sshkey pairs`, here im using my owner username `sesha `
