@@ -15,6 +15,8 @@ Skipped_ns=()
 
 echo "Input file exists"
 
+# exit 1 means terminate the script and return a failure status to the operating system.
+
 if [[ ! -f "$csv_file" ]]; then
     echo "CSV file not found: $csv_file"
     exit 1
@@ -32,6 +34,7 @@ if [[ ! -d "$repo_path" ]]; then
     exit 1
 fi
 
+# || - or operator --> Execute right side only if left side fails.
 cd "$repo_path" || {
     echo "Failed to change directory"
     exit 1
@@ -54,7 +57,7 @@ git pull origin master || {
 ########################################################
 # Step 4: Create branch
 ########################################################
-
+# Displays prompt + reads input in one command.
 read -p "Enter new git sub-branch: " branch_name
 
 git checkout -b "$branch_name" || {
@@ -75,6 +78,7 @@ git checkout master
 
 git branch -D "$branch_name"
 
+# Discard all local changes and make your current branch exactly match origin/master (remote master branch).
 git reset --hard origin/master
 
 echo "Branch deleted"
@@ -86,13 +90,15 @@ exit 1
 ########################################################
 # Trap interruption
 ########################################################
-
+# If the script receives INT (interrupt) or TERM (terminate), execute the function cleanup_branch before exiting. INT - ctrl+c , TERM - terminated suddenly
 trap cleanup_branch INT TERM
 
 
 ########################################################
 # Step 5: Process CSV
 ########################################################
+
+# xargs is being used mainly to trim leading and trailing spaces.
 
 echo "Namespace deletion started"
 
