@@ -1,7 +1,10 @@
 #!/bin/bash
+# -e If any command returns non-zero → script stops.
+# -u Treat unset variables as errors
+# o pipefail - fail pipeline if any command fails
 set -euo pipefail
 
-# --- Cluster API mapping ---
+# --- Cluster API mapping --- create a key value map
 declare -A CLUSTER_API_MAP
 CLUSTER_API_MAP["aws-uswest2-apps-1ab-1"]="https://api.aws-uswest2-apps-1ab-1.ocpdev.us-west-2.ac.discoverfinancial.com:6443"
 CLUSTER_API_MAP["aws-useast1-apps-prod-1"]="https://api.aws-useast1-apps-prod-1.ocpprd.us-east-1.ac.discoverfinancial.com:6443"
@@ -38,12 +41,12 @@ continue
 fi
 
 api_url="${CLUSTER_API_MAP[$cluster] :- }"
-if [[ -z "Sapi_url" ]]; then
+if [[ -z "$api_url" ]]; then
 echo "No API URL mapping for cluster 'Scluster'. Skipping."
 continue
 fi
 
-echo "Logging into cluster: Scluster (Sapi_ur1)"
+echo "Logging into cluster: $cluster ($api_url)"
 oc logout &>/dev/null || true
 oc login "$api_url" -- web
 while ! oc whoami &>/dev/null; do sleep 5; done
