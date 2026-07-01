@@ -96,3 +96,43 @@ ENV PYTHONPATH=/python-lib
 
 CMD ["/usr/bin/python3","/app/app.py"]
 ```
+
+**Maven**
+
+
+```bash
+FROM maven:3.9-eclipse-temurin-17
+
+WORKDIR /app
+
+COPY . .
+
+RUN mvn clean package
+
+CMD ["java", "-jar", "target/my-java-app-1.0.jar"]
+```
+
+**multistage**
+
+```bash
+# Build stage
+FROM maven:3.9-eclipse-temurin-17 AS builder
+
+WORKDIR /app
+
+COPY . .
+
+RUN mvn clean package
+
+# Runtime stage
+FROM eclipse-temurin:17-jre
+
+WORKDIR /app
+
+COPY --from=builder \
+/app/target/*.jar \
+app.jar
+
+CMD ["java","-jar","app.jar"]
+
+```
