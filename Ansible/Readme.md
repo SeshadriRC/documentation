@@ -12,11 +12,16 @@
 
 - [Ansible gather Facts](https://spacelift.io/blog/ansible-facts)
 
-module: debug, assert, group_by, setup, set_fact
-parameters: fail_msg
+**module:** debug, assert, group_by, setup, set_fact
 
-debug:
-Ansible module used to display information
+- debug is a Ansible module used to display information
+- set_fact is an Ansible module. Its job is to create a new variable (fact) during playbook execution.
+
+
+**parameters:** fail_msg, key
+
+- The key parameter is used by the group_by module to specify the name of the group that Ansible should create.
+
 
 | Module        | Common Parameters                 |
 | ------------- | --------------------------------- |
@@ -29,8 +34,7 @@ Ansible module used to display information
 | `group_by`    | `key`                             |
 
 
-The key parameter is used by the group_by module to specify the name of the group that Ansible should create.
 
-- set_fact is an Ansible module. Its job is to create a new variable (fact) during playbook execution.
+
 
 ---
