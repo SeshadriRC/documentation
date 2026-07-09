@@ -1,4 +1,8 @@
-"The developer pushes code to Git, which triggers Jenkins through a webhook. Jenkins checks out the source code, performs the Maven build, executes unit tests, generates code coverage reports, and runs SonarQube analysis. Jenkins waits for the SonarQube Quality Gate result. If the Quality Gate passes, it packages the application, builds the Docker image, optionally performs an image vulnerability scan, pushes the image to Harbor, updates the Helm chart with the new image tag, deploys the application to Kubernetes/OpenShift using Helm, verifies the rollout, performs smoke tests, and finally monitors the application using Prometheus and Grafana."
+The developer pushes code to Git, which triggers Jenkins through a webhook. Jenkins checks out the source code, performs the Maven build, executes unit tests, generates code coverage reports, and runs SonarQube analysis. Jenkins waits for the SonarQube Quality Gate result. If the Quality Gate passes, it packages the application, builds the Docker image, optionally performs an image vulnerability scan, pushes the image to Harbor, updates the Helm chart with the new image tag, deploys the application to Kubernetes/OpenShift using Helm, verifies the rollout, performs smoke tests, and finally monitors the application using Prometheus and Grafana.
+
+<img width="1918" height="828" alt="image" src="https://github.com/user-attachments/assets/f7000a92-b1d0-424c-8ca7-82b7e07045aa" />
+
+- The payload URL is the webhook endpoint exposed by the receiving application. For Jenkins, it's typically https://<jenkins-url>/github-webhook/, and for Argo CD it's https://<argocd-url>/api/webhook. The webhook secret is not provided by GitHub; we generate a secure random string ourselves, configure it in the GitHub webhook settings, and configure the same secret in Jenkins or Argo CD so incoming webhook requests can be authenticated and verified.
 
 ```
 Developer
