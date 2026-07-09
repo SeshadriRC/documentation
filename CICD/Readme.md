@@ -78,141 +78,230 @@ Alertmanager Sends Alerts
 
 ```bash
 pipeline {
+
     agent any
 
     environment {
+
         APP_NAME = "product-catalog"
+
         IMAGE_TAG = "${BUILD_NUMBER}"
-        DOCKER_IMAGE = "harbor.company.com/dev/${APP_NAME}:${IMAGE_TAG}"
+
+        IMAGE = "harbor.company.com/dev/${APP_NAME}:${IMAGE_TAG}"
+
+        GITOPS_REPO = "git@github.com:company/gitops.git"
+
     }
 
     tools {
+
         maven "Maven-3.9"
+
         jdk "JDK-17"
+
     }
 
     stages {
 
-        stage('Checkout Source Code') {
+        stage('Checkout Source') {
+
             steps {
+
                 git branch: 'main',
                     url: 'https://github.com/company/product-catalog.git'
+
             }
+
         }
 
         stage('Compile') {
+
             steps {
+
                 sh 'mvn clean compile'
+
             }
+
         }
 
-        stage('Unit Tests') {
+        stage('Unit Test') {
+
             steps {
+
                 sh 'mvn test'
+
             }
+
             post {
+
                 always {
+
                     junit '**/target/surefire-reports/*.xml'
+
                 }
+
             }
+
         }
 
-        stage('Code Coverage') {
+        stage('JaCoCo Coverage') {
+
             steps {
+
                 sh 'mvn jacoco:report'
+
             }
+
         }
 
         stage('SonarQube Analysis') {
+
             steps {
+
                 withSonarQubeEnv('SonarQube') {
+
                     sh 'mvn sonar:sonar'
+
                 }
+
             }
+
         }
 
         stage('Quality Gate') {
+
             steps {
+
                 timeout(time: 10, unit: 'MINUTES') {
+
                     waitForQualityGate abortPipeline: true
+
                 }
+
             }
+
         }
 
-        stage('Package Application') {
+        stage('Package') {
+
             steps {
+
                 sh 'mvn package -DskipTests'
+
             }
+
+        }
+
+        stage('Upload Artifact to JFrog') {
+
+            steps {
+
+                sh '''
+
+                jf rt upload target/*.jar \
+                libs-release-local/
+
+                '''
+
+            }
+
         }
 
         stage('Build Docker Image') {
+
             steps {
+
                 sh """
-                docker build -t ${DOCKER_IMAGE} .
+
+                docker build \
+                -t ${IMAGE} .
+
                 """
+
             }
+
         }
 
-        stage('Image Security Scan') {
+        stage('Trivy Scan') {
+
             steps {
+
                 sh """
-                trivy image ${DOCKER_IMAGE}
+
+                trivy image \
+                --severity HIGH,CRITICAL \
+                ${IMAGE}
+
                 """
+
             }
+
         }
 
         stage('Push Image to Harbor') {
+
             steps {
-                withCredentials([usernamePassword(
-                    credentialsId: 'harbor-creds',
-                    usernameVariable: 'USERNAME',
-                    passwordVariable: 'PASSWORD'
-                )]) {
+
+                withCredentials([
+
+                    usernamePassword(
+
+                        credentialsId: 'harbor-creds',
+
+                        usernameVariable: 'USERNAME',
+
+                        passwordVariable: 'PASSWORD'
+
+                    )
+
+                ]) {
 
                     sh """
+
                     docker login harbor.company.com \
-                      -u $USERNAME \
-                      -p $PASSWORD
+                    -u $USERNAME \
+                    -p $PASSWORD
 
-                    docker push ${DOCKER_IMAGE}
+                    docker push ${IMAGE}
+
                     """
+
                 }
+
             }
+
         }
 
-        stage('Update Helm Values') {
-            steps {
-                sh """
-                sed -i 's/tag:.*/tag: ${IMAGE_TAG}/' helm/values.yaml
-                """
-            }
-        }
+        stage('Update GitOps Repository') {
 
-        stage('Deploy to Kubernetes/OpenShift') {
             steps {
-                sh """
-                helm upgrade --install product-catalog \
-                    helm/ \
-                    --namespace production
-                """
-            }
-        }
 
-        stage('Verify Deployment') {
-            steps {
-                sh """
-                kubectl rollout status deployment/product-catalog \
-                -n production
-                """
-            }
-        }
+                dir('gitops') {
 
-        stage('Smoke Test') {
-            steps {
-                sh """
-                curl -f http://product-catalog.company.com/actuator/health
-                """
+                    git branch: 'main',
+                        url: "${GITOPS_REPO}"
+
+                    sh """
+
+                    sed -i 's/tag:.*/tag: ${IMAGE_TAG}/' \
+                    product-catalog/values.yaml
+
+                    git config user.name Jenkins
+
+                    git config user.email jenkins@company.com
+
+                    git add .
+
+                    git commit -m "Updated image tag to ${IMAGE_TAG}"
+
+                    git push origin main
+
+                    """
+
+                }
+
             }
+
         }
 
     }
@@ -220,17 +309,25 @@ pipeline {
     post {
 
         success {
-            echo "Deployment Successful."
+
+            echo "CI Pipeline Completed"
+
         }
 
         failure {
-            echo "Deployment Failed."
+
+            echo "Pipeline Failed"
+
         }
 
         always {
+
             cleanWs()
+
         }
+
     }
+
 }
 
 ```
