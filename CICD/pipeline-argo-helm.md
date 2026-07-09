@@ -306,3 +306,44 @@ pipeline {
 }
 
 ```
+
+# ArgoCD
+
+```
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: product-catalog
+
+spec:
+
+  project: default
+
+  source:
+
+    repoURL: https://github.com/company/gitops.git
+
+    targetRevision: main
+
+    path: product-catalog
+
+    helm:
+
+      valueFiles:
+
+      - values.yaml
+
+  destination:
+
+    server: https://kubernetes.default.svc
+
+    namespace: production
+
+  syncPolicy:
+
+    automated:
+
+      prune: true
+
+      selfHeal: true
+```
