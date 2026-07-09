@@ -78,261 +78,68 @@ Alertmanager Sends Alerts
 
 ---
 
-**Pipeline**
+**Plugins**
+
+| **Plugin**                    | **Purpose**                                                    | **Mandatory?** |
+| ----------------------------- | -------------------------------------------------------------- | -------------- |
+| Pipeline                      | Executes the Jenkinsfile (Declarative Pipeline)                | ✅ Yes          |
+| Git Plugin                    | Clones source code from GitHub                                 | ✅ Yes          |
+| GitHub Plugin                 | Integrates GitHub and supports webhooks                        | ✅ Yes          |
+| Credentials Plugin            | Stores GitHub, Harbor, JFrog, SonarQube credentials securely   | ✅ Yes          |
+| Credentials Binding Plugin    | Injects credentials into the pipeline as environment variables | ✅ Yes          |
+| JUnit Plugin                  | Publishes unit test reports                                    | ✅ Yes          |
+| JaCoCo Plugin                 | Publishes code coverage reports                                | ✅ Yes          |
+| SonarQube Scanner Plugin      | Runs SonarQube analysis and checks Quality Gate                | ✅ Yes          |
+| Workspace Cleanup Plugin      | Cleans the Jenkins workspace after the build                   | ✅ Yes          |
+| Pipeline Utility Steps Plugin | Reads/writes YAML, JSON, properties files                      | ⭐ Recommended  |
+| SSH Agent Plugin              | Accesses Git repositories over SSH (e.g., GitOps repo)         | ⭐ Recommended  |
+| Email Extension Plugin        | Sends build success/failure email notifications                | Optional       |
+| Slack Notification Plugin     | Sends Slack notifications                                      | Optional       |
+| ANSI Color Plugin             | Adds colored console logs                                      | Optional       |
+| Timestamper Plugin            | Adds timestamps to console logs                                | Optional       |
+| Build Timeout Plugin          | Stops long-running builds automatically                        | Optional       |
+| Blue Ocean Plugin             | Modern pipeline visualization UI                               | Optional       |
+| JFrog Artifactory Plugin      | Integrates Jenkins with JFrog (not needed if using JFrog CLI)  | Optional       |
+
+---
+
+**Tools**
+
+| **Plugin**                    | **Purpose**                                                    | **Mandatory?** |
+| ----------------------------- | -------------------------------------------------------------- | -------------- |
+| Pipeline                      | Executes the Jenkinsfile (Declarative Pipeline)                | ✅ Yes          |
+| Git Plugin                    | Clones source code from GitHub                                 | ✅ Yes          |
+| GitHub Plugin                 | Integrates GitHub and supports webhooks                        | ✅ Yes          |
+| Credentials Plugin            | Stores GitHub, Harbor, JFrog, SonarQube credentials securely   | ✅ Yes          |
+| Credentials Binding Plugin    | Injects credentials into the pipeline as environment variables | ✅ Yes          |
+| JUnit Plugin                  | Publishes unit test reports                                    | ✅ Yes          |
+| JaCoCo Plugin                 | Publishes code coverage reports                                | ✅ Yes          |
+| SonarQube Scanner Plugin      | Runs SonarQube analysis and checks Quality Gate                | ✅ Yes          |
+| Workspace Cleanup Plugin      | Cleans the Jenkins workspace after the build                   | ✅ Yes          |
+| Pipeline Utility Steps Plugin | Reads/writes YAML, JSON, properties files                      | ⭐ Recommended  |
+| SSH Agent Plugin              | Accesses Git repositories over SSH (e.g., GitOps repo)         | ⭐ Recommended  |
+| Email Extension Plugin        | Sends build success/failure email notifications                | Optional       |
+| Slack Notification Plugin     | Sends Slack notifications                                      | Optional       |
+| ANSI Color Plugin             | Adds colored console logs                                      | Optional       |
+| Timestamper Plugin            | Adds timestamps to console logs                                | Optional       |
+| Build Timeout Plugin          | Stops long-running builds automatically                        | Optional       |
+| Blue Ocean Plugin             | Modern pipeline visualization UI                               | Optional       |
+| JFrog Artifactory Plugin      | Integrates Jenkins with JFrog (not needed if using JFrog CLI)  | Optional       |
+
+### Tools to install on the Jenkins Agent (Not Plugins)
+
+| **Tool**  | **Purpose**                                   |
+| --------- | --------------------------------------------- |
+| Git       | Source code checkout                          |
+| JDK 17    | Java runtime for Maven builds                 |
+| Maven     | Build Spring Boot application                 |
+| Docker    | Build Docker images                           |
+| Trivy     | Scan Docker images for vulnerabilities        |
+| Helm      | Package and manage Kubernetes deployments     |
+| kubectl   | Interact with Kubernetes/OpenShift cluster    |
+| JFrog CLI | Upload JAR/WAR artifacts to JFrog Artifactory |
+
+---
 
-```bash
-pipeline {
 
-    agent any
-
-    environment {
-
-        APP_NAME = "product-catalog"
-
-        IMAGE_TAG = "${BUILD_NUMBER}"
-
-        IMAGE = "harbor.company.com/dev/${APP_NAME}:${IMAGE_TAG}"
-
-        GITOPS_REPO = "git@github.com:company/gitops.git"
-
-    }
-
-    tools {
-
-        maven "Maven-3.9"
-
-        jdk "JDK-17"
-
-    }
-
-    stages {
-
-        stage('Checkout Source') {
-
-            steps {
-
-                git branch: 'main',
-                    url: 'https://github.com/company/product-catalog.git'
-
-            }
-
-        }
-
-        stage('Compile') {
-
-            steps {
-
-                sh 'mvn clean compile'
-
-            }
-
-        }
-
-        stage('Unit Test') {
-
-            steps {
-
-                sh 'mvn test'
-
-            }
-
-            post {
-
-                always {
-
-                    junit '**/target/surefire-reports/*.xml'
-
-                }
-
-            }
-
-        }
-
-        stage('JaCoCo Coverage') {
-
-            steps {
-
-                sh 'mvn jacoco:report'
-
-            }
-
-        }
-
-        stage('SonarQube Analysis') {
-
-            steps {
-
-                withSonarQubeEnv('SonarQube') {
-
-                    sh 'mvn sonar:sonar'
-
-                }
-
-            }
-
-        }
-
-        stage('Quality Gate') {
-
-            steps {
-
-                timeout(time: 10, unit: 'MINUTES') {
-
-                    waitForQualityGate abortPipeline: true
-
-                }
-
-            }
-
-        }
-
-        stage('Package') {
-
-            steps {
-
-                sh 'mvn package -DskipTests'
-
-            }
-
-        }
-
-        stage('Upload Artifact to JFrog') {
-
-            steps {
-
-                sh '''
-
-                jf rt upload target/*.jar \
-                libs-release-local/
-
-                '''
-
-            }
-
-        }
-
-        stage('Build Docker Image') {
-
-            steps {
-
-                sh """
-
-                docker build \
-                -t ${IMAGE} .
-
-                """
-
-            }
-
-        }
-
-        stage('Trivy Scan') {
-
-            steps {
-
-                sh """
-
-                trivy image \
-                --severity HIGH,CRITICAL \
-                ${IMAGE}
-
-                """
-
-            }
-
-        }
-
-        stage('Push Image to Harbor') {
-
-            steps {
-
-                withCredentials([
-
-                    usernamePassword(
-
-                        credentialsId: 'harbor-creds',
-
-                        usernameVariable: 'USERNAME',
-
-                        passwordVariable: 'PASSWORD'
-
-                    )
-
-                ]) {
-
-                    sh """
-
-                    docker login harbor.company.com \
-                    -u $USERNAME \
-                    -p $PASSWORD
-
-                    docker push ${IMAGE}
-
-                    """
-
-                }
-
-            }
-
-        }
-
-        stage('Update GitOps Repository') {
-
-            steps {
-
-                dir('gitops') {
-
-                    git branch: 'main',
-                        url: "${GITOPS_REPO}"
-
-                    sh """
-
-                    sed -i 's/tag:.*/tag: ${IMAGE_TAG}/' \
-                    product-catalog/values.yaml
-
-                    git config user.name Jenkins
-
-                    git config user.email jenkins@company.com
-
-                    git add .
-
-                    git commit -m "Updated image tag to ${IMAGE_TAG}"
-
-                    git push origin main
-
-                    """
-
-                }
-
-            }
-
-        }
-
-    }
-
-    post {
-
-        success {
-
-            echo "CI Pipeline Completed"
-
-        }
-
-        failure {
-
-            echo "Pipeline Failed"
-
-        }
-
-        always {
-
-            cleanWs()
-
-        }
-
-    }
-
-}
-
-```
 
