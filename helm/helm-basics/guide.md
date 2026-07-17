@@ -109,8 +109,10 @@ image: {{ .Values.image.repository }}:{{ .Values.image.tag }}
 
 To install an application using Helm:
 
-```
+```bash
 helm install my-app ./my-chart
+
+helm upgrade --install myapp ./mychart -n dev
 ```
 
 Helm will:
