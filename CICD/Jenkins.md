@@ -4,6 +4,9 @@
 3. Jenkins job
 4. Triggers and its types
 5. Plugins
+6. Master / Slave configuration
+    - Multiple Agents
+    - Jenkins Executors
 
 ---
 
@@ -130,5 +133,51 @@ Role-Based Authorization Strategy Plugin → Controls who can access Jenkins and
 One-Line Interview Answer
 
 "Plugins extend Jenkins functionality and integrate it with external tools and services."
+
+---
+
+### 6. Master / Slave configuration
+
+Manage Jenkins --> Nodes -> New node( we created slave EC2 in aws )
+
+<img width="940" height="427" alt="image" src="https://github.com/user-attachments/assets/51087e50-0d60-44bb-bc41-353a71acfe15" />
+
+<img width="940" height="638" alt="image" src="https://github.com/user-attachments/assets/c40f700a-f37d-41bc-bbbd-792eb356e681" />
+
+<img width="940" height="528" alt="image" src="https://github.com/user-attachments/assets/b09de55f-bd6e-45e8-abc6-34df8594ca36" />
+
+**Add new creds**
+
+<img width="940" height="545" alt="image" src="https://github.com/user-attachments/assets/57c105d3-7fd1-4d66-9db2-3f4b6425e0c6" />
+
+**Private key add**
+
+<img width="940" height="554" alt="image" src="https://github.com/user-attachments/assets/1a530809-c536-44e3-b784-fdf548677302" />
+
+<img width="940" height="664" alt="image" src="https://github.com/user-attachments/assets/5f476147-17ce-4194-8894-39b8bb4293c5" />
+
+<img width="940" height="270" alt="image" src="https://github.com/user-attachments/assets/5c642e85-58c9-410d-bd53-25a97531e93c" />
+
+**To run only on the slave**
+
+<img width="940" height="547" alt="image" src="https://github.com/user-attachments/assets/30f9c841-d82a-48f2-bd7e-3c60f76f5162" />
+
+
+**[Multiple agents](https://www.jenkins.io/doc/book/pipeline/jenkinsfile/#using-multiple-agents)**
+
+#### Jenkins Executors
+
+An Executor is a slot available on a Jenkins node (master/controller or agent) that allows Jenkins to run a build/job.
+The number of executors determines how many builds can run concurrently on a node. If all executors are busy, additional jobs are placed in the Jenkins queue until an executor becomes available.
+Q: What happens if a node has only 1 executor?
+A: Only one build can run at a time on that node. Any additional builds will wait in the queue until the running job completes.
+
+
+Suppose an agent has: Executors: 3
+Jenkins can run: 
+Job-A
+Job-B
+Job-C
+
 
 ---
