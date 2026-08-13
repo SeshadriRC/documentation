@@ -9,6 +9,11 @@
     - Jenkins Executors
 
 7. Pipeline and its Types
+8. Error Handling
+9. Environment Variables
+10. Parameterized Job
+11. Jenkins Credentials
+12. Parallel jobs
 ---
 
 ### 1. Jenkins
@@ -245,4 +250,187 @@ node {
     }
 }
 ```
+---
+### 8. Error Handling
+
+- Error handling in Jenkins Pipeline ensures that failures are handled gracefully, notifications are sent, and cleanup actions are executed even when a stage fails.
+
+1. post Block
+
+The post section executes actions after the pipeline or stage completes.
+
+```
+post {
+    success {
+        echo "Build Successful"
+    }
+    failure {
+        echo "Build Failed"
+    }
+    always {
+        echo "This always runs"
+    }
+}
+```
+Explanation
+
+success → Runs only if the pipeline succeeds.
+
+failure → Runs only if the pipeline fails.
+
+always → Runs regardless of success or failure.
+
+✅ Interview Answer:
+
+ "The post block is used to perform actions after pipeline execution. Common conditions are success, failure, and always for handling notifications, cleanup, and reporting."
+
+
+2. catchError Function
+
+Used to catch errors and continue pipeline execution.
+
+```
+stage('Test') {
+    steps {
+        catchError(buildResult: 'UNSTABLE', stageResult: 'FAILURE') {
+            sh 'exit 1'
+        }
+    }
+}
+```
+
+What Happens?
+
+- Command fails.
+- Pipeline does not stop immediately.
+- Build can be marked as UNSTABLE or FAILURE.
+- Remaining stages can continue.
+
+✅ Interview Answer:
+
+ "catchError allows Jenkins to capture errors without immediately terminating the pipeline, enabling controlled failure handling and execution of subsequent stages."
+
+---
+### 9. Environment Variables
+
+Environment variables in Jenkins are reusable key-value pairs that provide configuration values to jobs and pipelines without hardcoding them. They help avoid hardcoding values such as application names, URLs, build numbers, and environment-specific settings.
+
+1. Define Custom Environment Variables
+
+```
+pipeline {
+    agent any
+
+    environment {
+        NAME = "Seshadri"
+    }
+
+    stages {
+        stage('Test') {
+            steps {
+                echo "Hello ${NAME}"
+            }
+        }
+    }
+}
+
+```
+
+2. Built-in Jenkins Environment Variables
+
+```
+BUILD_NUMBER
+BUILD_ID
+JOB_NAME
+WORKSPACE
+BUILD_URL
+JENKINS_URL
+GIT_BRANCH
+NODE_NAME
+```
+
+---
+### 10. Parameterized Job
+
+- A Parameterized Job allows users to pass inputs such as String, Choice, and Boolean values when triggering a Jenkins build, making the job flexible and reusable.
+
+Common Parameter Types
+
+1. String Parameter
+
+- Used to accept text input from the user.
+
+<img width="1157" height="569" alt="image" src="https://github.com/user-attachments/assets/9dbdcd8d-1a7e-4c83-abeb-747055b7e013" />
+
+2. Choice Parameter
+
+- Provides a dropdown list of predefined values.
+
+<img width="1101" height="640" alt="image" src="https://github.com/user-attachments/assets/709ef07d-f4b0-4506-a139-b9ee9ea6378a" />
+
+3. Boolean Parameter
+
+- Provides a checkbox with true/false values.
+
+<img width="1070" height="570" alt="image" src="https://github.com/user-attachments/assets/d0359847-3bf8-4883-bbbc-a638488d6ae5" />
+
+In a deployment pipeline:
+
+- String → Application version (2.1.0)
+- Choice → Environment (DEV, QA, PROD)
+- Boolean → Run tests (true/false)
+
+---
+
+### 11. Jenkins Credentials
+
+- Credentials in Jenkins are used to securely store sensitive information such as usernames, passwords, API tokens, SSH keys, and certificates. They help prevent hardcoding secrets in Jenkins jobs and pipelines.
+
+- withCredentials Function - The withCredentials step is used to securely access Jenkins credentials within a pipeline.
+
+---
+
+### 12. Parallel jobs
+
+Parallel Jobs allow multiple Jenkins stages or tasks to execute simultaneously, reducing the overall CI/CD pipeline execution time.
+
+
+```
+stage('Parallel Tasks') {
+    parallel {
+        stage('Unit Test') {
+            steps {
+                sh 'mvn test'
+            }
+        }
+
+        stage('Sonar Scan') {
+            steps {
+                sh 'sonar-scanner'
+            }
+        }
+
+        stage('Security Scan') {
+            steps {
+                sh 'trivy fs .'
+            }
+        }
+    }
+}
+
+```
+
+Real-Time Example
+
+In a DevOps pipeline after the build stage:
+
+- Unit Tests
+- SonarQube Scan
+- SAST Scan (Checkov/Snyk)
+- Dependency Scan
+
+can all run in parallel, reducing pipeline time from 20 minutes to 8 minutes.
+
+
+
 ---
