@@ -2,6 +2,9 @@
 
 
 The status code is often your first troubleshooting clue.
-502 → inspect the upstream response
-503 → inspect availability/capacity
-504 → inspect latency and timeouts
+
+- 502 → inspect the upstream response
+
+- 503 → inspect availability/capacity
+
+- 504 → inspect latency and timeouts
