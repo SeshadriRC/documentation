@@ -85,7 +85,9 @@ Commonly used for integrations with third-party tools and automation scripts.
 Starts a job automatically after another job completes successfully.
 Useful for creating dependent workflows such as Build → Test → Deploy.
 
-Additional Common Trigger 5. Poll SCM
+Additional Common Trigger 
+
+5. Poll SCM
 
 Jenkins periodically checks the source code repository for changes.
 If changes are detected, Jenkins triggers a build.
