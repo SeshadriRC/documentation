@@ -3,6 +3,7 @@
 2. Weather
 3. Jenkins job
 4. Triggers and its types
+5. Plugins
 
 ---
 
@@ -97,5 +98,27 @@ Jenkins supports multiple triggers such as Webhook, Poll SCM, Scheduled (Build P
  
 ---
 
+### 5. Plugins
+
+Interview Answer (2 Lines)
+
+Plugins in Jenkins are extensions that add new features and integrations to Jenkins. They enable Jenkins to work with tools like Git, Docker, Maven, Kubernetes, SonarQube, and cloud platforms.
+
+Real-Time Example
+
+In a CI/CD pipeline, we use:
+
+Git Plugin → Fetch code from GitHub/GitLab
+Maven Plugin → Build Java applications
+Docker Plugin → Build Docker images
+Kubernetes Plugin → Deploy applications to Kubernetes
+SonarQube Plugin → Perform code quality analysis
+Pipeline Stage View Plugin → Provides a visual representation of Pipeline stages and their status.
+SSH Build Agents Plugin → Allows Jenkins Master/Controller to connect to and execute jobs on remote servers (agents) via SSH.
+Role-Based Authorization Strategy Plugin → Controls who can access Jenkins and what actions they can perform.
+
+One-Line Interview Answer
+
+"Plugins extend Jenkins functionality and integrate it with external tools and services."
 
 ---
