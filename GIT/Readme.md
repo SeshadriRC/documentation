@@ -2,7 +2,7 @@
 2. Contents of a Git repo
 3. How to push to a remote repo ?
 
-- Commands
+- [Commands](#Commands)
 ---
 
 ### 1. What is Git
