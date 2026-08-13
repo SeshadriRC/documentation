@@ -2,15 +2,17 @@
 1. What is jenkins
 2. Weather
 3. Jenkins job
+4. Triggers and its types
 
+---
 
-### Jenkins
+### 1. Jenkins
 - Jenkins is an open-source automation tool used to build, test, and deploy applications as part of a CI/CD pipeline.
 - It helps automate the software delivery process, reducing manual effort and enabling faster, reliable releases.
 
 ---
 
-### Weather
+### 2. Weather
 
 In Jenkins, Weather is a visual indicator on a job/dashboard that shows the overall health of recent builds.
 
@@ -24,7 +26,7 @@ Jenkins Weather is a health metric that represents the stability of a job based 
  
 ---
 
-### Jenkins Job
+### 3. Jenkins Job
 
 Interview Answer (2 Lines)
 
@@ -44,5 +46,54 @@ Folder – Organizes multiple jobs.
 Interview Follow-up:
  Q: What is the difference between a Jenkins Job and a Pipeline?
  A: A Job is the execution unit in Jenkins, while a Pipeline is a type of job that defines the CI/CD workflow as code using a Jenkinsfile.
+
+---
+
+### 4. Triggers and its types
+
+Interview Answer (2 Lines)
+
+A Trigger in Jenkins is an event or condition that automatically starts a Jenkins job or pipeline. It eliminates manual execution by running builds based on code changes, schedules, API calls, or other job completions.
+
+Simple Example
+
+When a developer pushes code to GitHub, a Webhook Trigger automatically starts the Jenkins pipeline to build, test, and deploy the application.
+
+One-Liner for Interview
+
+"A trigger is a mechanism that tells Jenkins when to execute a job or pipeline automatically."
+
+**Types of Triggers in Jenkins (Interview Answer)**
+
+1. Webhook Trigger
+
+The source code repository (GitHub, GitLab, Bitbucket, etc.) directly notifies Jenkins when code is pushed.
+Enables immediate pipeline execution and is commonly used in CI/CD.
+
+2. Build Periodically Trigger
+
+Runs jobs at predefined times using a cron schedule.
+Useful for nightly builds, backups, health checks, and maintenance tasks.
+
+3. Trigger Builds Remotely
+
+Allows a Jenkins job to be triggered through a URL, API call, or external application.
+Commonly used for integrations with third-party tools and automation scripts.
+
+4. Upstream/Downstream Trigger
+
+Starts a job automatically after another job completes successfully.
+Useful for creating dependent workflows such as Build → Test → Deploy.
+
+Additional Common Trigger 5. Poll SCM
+
+Jenkins periodically checks the source code repository for changes.
+If changes are detected, Jenkins triggers a build.
+2-Line Interview Answer
+
+Jenkins supports multiple triggers such as Webhook, Poll SCM, Scheduled (Build Periodically), Remote Trigger, and Upstream/Downstream triggers. These triggers help automate CI/CD pipelines based on code changes, schedules, API calls, or the completion of other jobs.
+ 
+---
+
 
 ---
