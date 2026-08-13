@@ -109,13 +109,23 @@ Real-Time Example
 In a CI/CD pipeline, we use:
 
 Git Plugin → Fetch code from GitHub/GitLab
+
 Maven Plugin → Build Java applications
+
 Docker Plugin → Build Docker images
+
 Kubernetes Plugin → Deploy applications to Kubernetes
+
 SonarQube Plugin → Perform code quality analysis
+
 Pipeline Stage View Plugin → Provides a visual representation of Pipeline stages and their status.
+
 SSH Build Agents Plugin → Allows Jenkins Master/Controller to connect to and execute jobs on remote servers (agents) via SSH.
+
 Role-Based Authorization Strategy Plugin → Controls who can access Jenkins and what actions they can perform.
+
+   - Role creation
+   - Pattern matching
 
 One-Line Interview Answer
 
