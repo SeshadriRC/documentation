@@ -8,6 +8,7 @@
     - Multiple Agents
     - Jenkins Executors
 
+7. Pipeline and its Types
 ---
 
 ### 1. Jenkins
@@ -169,7 +170,9 @@ Manage Jenkins --> Nodes -> New node( we created slave EC2 in aws )
 
 An Executor is a slot available on a Jenkins node (master/controller or agent) that allows Jenkins to run a build/job.
 The number of executors determines how many builds can run concurrently on a node. If all executors are busy, additional jobs are placed in the Jenkins queue until an executor becomes available.
+
 Q: What happens if a node has only 1 executor?
+
 A: Only one build can run at a time on that node. Any additional builds will wait in the queue until the running job completes.
 
 
@@ -179,5 +182,50 @@ Job-A
 Job-B
 Job-C
 
+
+---
+
+### 7. Pipeline
+
+- A Jenkins Pipeline is CI/CD as code, defining the stages required to build, test, and deploy an application automatically
+
+- In my project, whenever code is pushed to GitHub, the Jenkins pipeline automatically builds the application, runs unit tests, performs SonarQube and security scans, creates a Docker image, and deploys it to Kubernetes.
+
+Types of Pipelines
+
+**Declarative Pipeline**
+
+- Uses a structured syntax.
+- Easier to read and maintain.
+- Most commonly used and its recently introduced ( before 9 years )
+
+**Scripted Pipeline**
+
+- Written using Groovy scripting.
+- More flexible for complex workflows. Scripted pipeline is old way, its very complex. we will use this pipeline for more logic, we can build our own custom solutions
+
+**Declarative Pipeline**
+
+pipeline {
+    agent any
+
+    stages {
+        stage('Build') {
+            steps {
+                echo 'Building..'
+            }
+        }
+        stage('Test') {
+            steps {
+                echo 'Testing..'
+            }
+        }
+        stage('Deploy') {
+            steps {
+                echo 'Deploying....'
+            }
+        }
+    }
+}
 
 ---
