@@ -206,6 +206,7 @@ Types of Pipelines
 
 **Declarative Pipeline**
 
+```
 pipeline {
     agent any
 
@@ -227,5 +228,21 @@ pipeline {
         }
     }
 }
+```
 
+**Scripted Pipeline**
+
+```
+node {
+    stage('Build') {
+        echo 'Building....'
+    }
+    stage('Test') {
+        echo 'Testing....'
+    }
+    stage('Deploy') {
+        echo 'Deploying....'
+    }
+}
+```
 ---
