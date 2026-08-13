@@ -2,6 +2,9 @@ The developer pushes code to Git, which triggers Jenkins through a webhook. Jenk
 
 <img width="1918" height="828" alt="image" src="https://github.com/user-attachments/assets/f7000a92-b1d0-424c-8ca7-82b7e07045aa" />
 
+<img width="800" height="999" alt="image" src="https://github.com/user-attachments/assets/c430a155-b4fb-4831-9042-e1722a4859db" />
+
+
 - The payload URL is the webhook endpoint exposed by the receiving application. For Jenkins, it's typically https://<jenkins-url>/github-webhook/, and for Argo CD it's https://<argocd-url>/api/webhook. The webhook secret is not provided by GitHub; we generate a secure random string ourselves, configure it in the GitHub webhook settings, and configure the same secret in Jenkins or Argo CD so incoming webhook requests can be authenticated and verified.
 
 ```
