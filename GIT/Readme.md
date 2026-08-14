@@ -1,6 +1,7 @@
 1. What is Git
 2. Contents of a Git repo
 3. How to push to a remote repo ?
+4. Branch protection rules ?
 
 - [Commands](#Commands)
 ---
@@ -47,6 +48,15 @@ git config -- global user.email "seshaec1999@gmail.com"
 git config user.name "seshadri"
 git config user.email "seshaec1999@gmail.com"
 ```
+
+---
+
+### 4. Branch protection rule ?
+
+Repository --> Settings --> Rulesets --> New ruleset --> New branch ruleset
+
+
+---
 
 ## Commands
 
