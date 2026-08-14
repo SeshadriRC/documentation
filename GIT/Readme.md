@@ -61,6 +61,9 @@ Repository --> Settings --> Rulesets --> New ruleset --> New branch ruleset
 ## Commands
 
 ```bash
+git branch <branch-name>
+git branch -m main -> renames the current Git branch to main. It is commonly used when changing the default branch name from master to main.
+
 git status
 git status -s    # -s means short format
 
