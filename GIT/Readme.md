@@ -235,6 +235,18 @@ Apply without removing from stash:
 git stash apply
 ```
 
+```bash
+in main.py , write somethings
+
+git add .
+git commit -m "aded a python file"
+
+again do some changes to the file
+
+git stash list
+git stash pop
+```
+
 Apply and remove from stash:
 
 ```bash
@@ -250,6 +262,7 @@ Delete a stash:
 ```bash
 git stash drop
 ```
+
 
 ### Interview answer
 
