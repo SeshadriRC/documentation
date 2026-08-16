@@ -2,6 +2,7 @@
 2. Contents of a Git repo
 3. How to push to a remote repo ?
 4. Branch protection rules ?
+5. Git merge, rebase and merge conflict 
 
 - [Commands](#Commands)
 ---
@@ -55,6 +56,15 @@ git config user.email "seshaec1999@gmail.com"
 
 Repository --> Settings --> Rulesets --> New ruleset --> New branch ruleset
 
+---
+
+### 5. Git merge, rebase and merge conflict
+
+**Git merge**
+
+**Git rebase**
+
+**Git merge conflict**
 
 ---
 
