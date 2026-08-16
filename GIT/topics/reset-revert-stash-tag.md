@@ -56,6 +56,36 @@ Moves `HEAD` and **discards changes** after `B`.
 
 > "`git reset` moves the branch pointer to another commit. Depending on the mode, it can keep changes staged, unstaged, or discard them."
 
+
+```
+git reset --hard HEAD~1   = this command will delete the entire commit, stage and working file 
+
+git reset --mixed HEAD~1 =  this is default [git reset HEAD~1] it will delete the commit and unstage file, working file will remains same
+
+git reset --soft HEAD~1 = this will only delete the commit, the working files and stage files does not change
+
+```
+
+### Practicals
+
+```
+git reset --hard c45ab21
+git reset HEAD~2	--> last 2 commits will be deleted
+
+
+practicals
+git commit -m "2nd commit"
+git commit -m "wrong commit"
+git commit -m "3rd  commit"
+
+we need to delete wrong commit, but its not possible . so remove last 2 commits
+git reset HEAD~2
+
+```
+
+<img width="1379" height="917" alt="image" src="https://github.com/user-attachments/assets/24b33d84-9cb8-4cdb-a16e-912e16655b49" />
+
+
 ---
 
 # 2. `git revert` ↩️
