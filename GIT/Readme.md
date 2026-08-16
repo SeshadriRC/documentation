@@ -2,7 +2,7 @@
 2. Contents of a Git repo
 3. How to push to a remote repo ?
 4. Branch protection rules ?
-5. Git merge, fast forward merge, rebase and merge conflict 
+5. Git merge, fast forward merge, rebase and merge conflict, git pull. 
 
 - [Commands](#Commands)
 ---
@@ -62,36 +62,52 @@ Repository --> Settings --> Rulesets --> New ruleset --> New branch ruleset
 
 **Git merge**
 
+ - git merge is used to integrate changes from one branch into another.
+
 **Git fast forward merge**
 
+- A fast-forward merge occurs when the target branch has no new commits since the feature branch was created.
+- `main` hasn't changed after `feature` was created.
+
 **Git rebase**
+- `git rebase` moves my branch commits on top of the latest commit of another branch. It replays those commits with new hashes and creates a linear history.
 
 **Git merge/rebase difference**
 [merge-and-rebase-difference](https://github.com/SeshadriRC/documentation/blob/main/GIT/topics/merge-rebase-difference.md)
 
+**Git pull**
+- git pull is used to get changes from a remote repository and integrate them into your current local branch.
+
 **Git merge conflict**
+[merge-and-rebase-difference](https://github.com/SeshadriRC/documentation/blob/main/GIT/topics/merge-rebase-difference.md)
 
 ---
 
 ## Commands
 
 ```bash
-git branch <branch-name>
-git branch -m main -> renames the current Git branch to main. It is commonly used when changing the default branch name from master to main.
-
-git status
-git status -s    # -s means short format
-
 git init
 git add <file-name>
 
-git reset <file-name> -> unstage a file
+git branch <branch-name>
+git branch -m main -> renames the current Git branch to main. It is commonly used when changing the default branch name from master to main.
 
 git commit -m "first commit"
 git commit -a -m "first commit"  # add and commit
 
 git log
 git log --oneline
+
+git merge feature
+
+git status
+git status -s    # -s means short format
+
+git reset <file-name> -> unstage a file
+
+git rebase main
+git rebase --continue
+git rebase --abort
 ```
 
 ---
