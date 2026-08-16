@@ -268,7 +268,9 @@ git merge feature
 git status
 git status -s    # -s means short format
 
-git reset <file-name> -> unstage a file
+git reset <file-name>   # unstage a file
+git reset --hard c45ab21
+git reset HEAD~2	   # last 2 commits will be deleted
 
 git rebase main
 git rebase --continue
