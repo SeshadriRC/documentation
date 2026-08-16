@@ -66,6 +66,9 @@ Repository --> Settings --> Rulesets --> New ruleset --> New branch ruleset
 
 **Git rebase**
 
+**Git merge/rebase difference**
+[merge-and-rebase-difference](https://github.com/SeshadriRC/documentation/blob/main/GIT/topics/merge-rebase-difference.md)
+
 **Git merge conflict**
 
 ---
