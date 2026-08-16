@@ -2,7 +2,8 @@
 2. Contents of a Git repo
 3. How to push to a remote repo ?
 4. Branch protection rules ?
-5. Git merge, fast forward merge, rebase and merge conflict, git pull. 
+5. Git merge, fast forward merge, rebase and merge conflict, git pull.
+6. Git reset, revert, reflog, tag, stash
 
 - [Commands](#Commands)
 ---
@@ -80,6 +81,93 @@ Repository --> Settings --> Rulesets --> New ruleset --> New branch ruleset
 
 **Git merge conflict**
 [merge-and-rebase-difference](https://github.com/SeshadriRC/documentation/blob/main/GIT/topics/merge-rebase-difference.md)
+
+---
+
+### 6. Git reset, revert, reflog, tag, stash
+
+- `git reset` moves the branch pointer to another commit. Depending on the mode, it can keep changes staged, unstaged, or discard them.
+- `git revert` is used to undo a commit by creating a new commit. I prefer it for shared branches because it preserves Git history.
+- `git reflog` records movements of HEAD and branch references in your local repository. git reflog helps me recover commits or previous branch states that may no longer be reachable through the normal branch history
+
+   For example, you accidentally do and think: 😨 "I lost my commits!"
+
+    `git reset --hard HEAD~3`
+
+  So check
+
+  ` git reflog`
+
+  you might see
+
+  ```
+  a1b2c3d HEAD@{0}: reset: moving to HEAD~3
+  e4f5g6h HEAD@{1}: commit: Important changes
+  ```
+
+- A Git tag is a **named reference to a specific commit**, commonly used to mark releases.
+
+Suppose:
+
+```text
+A---B---C---D
+        ↑
+       v1.0
+```
+
+Create a tag:
+
+```bash
+git tag v1.0
+```
+
+See tags:
+
+```bash
+git tag
+```
+
+Push it:
+
+```bash
+git push origin v1.0
+```
+
+Or push all tags:
+
+```bash
+git push origin --tags
+```
+
+### Why use tags?
+
+For releases:
+
+```text
+v1.0.0
+v1.1.0
+v2.0.0
+```
+
+For example:
+
+```text
+v1.5.0 → Production release
+```
+
+Your CI/CD pipeline could detect the tag and deploy that version.
+
+### Annotated tag
+
+For production releases, you may use:
+
+```bash
+git tag -a v1.0 -m "Production release v1.0"
+```
+
+### Interview answer
+
+> "A Git tag is a reference to a specific commit, commonly used to mark important points such as application releases or production versions."
 
 ---
 
