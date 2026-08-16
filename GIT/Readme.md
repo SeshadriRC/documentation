@@ -4,6 +4,7 @@
 4. Branch protection rules ?
 5. Git merge, fast forward merge, rebase and merge conflict, git pull.
 6. Git reset, revert, reflog, tag, stash
+7. Recover the deleted commit and deleted branch.
 
 - [Commands](#Commands)
 ---
@@ -118,8 +119,11 @@ A---B---C---D
 Create a tag:
 
 ```bash
+git checkout <commit-id>
 git tag v1.0
 ```
+<img width="1213" height="697" alt="image" src="https://github.com/user-attachments/assets/2fe1eaff-c1fa-4465-86cb-ca59535810a0" />
+
 
 See tags:
 
@@ -164,6 +168,8 @@ For production releases, you may use:
 ```bash
 git tag -a v1.0 -m "Production release v1.0"
 ```
+
+
 
 ### Interview answer
 
@@ -234,6 +240,10 @@ Apply and remove from stash:
 ```bash
 git stash pop
 ```
+<img width="1116" height="700" alt="image" src="https://github.com/user-attachments/assets/0411a0ce-570c-43fb-aec8-fe0e8fb8a63d" />
+
+<img width="928" height="841" alt="image" src="https://github.com/user-attachments/assets/af30f354-8a53-4de2-ad88-46487e37b223" />
+
 
 Delete a stash:
 
@@ -245,6 +255,38 @@ git stash drop
 
 > "`git stash` temporarily saves uncommitted changes so I can switch branches or perform another Git operation without committing incomplete work."
 
+
+
+---
+
+7. Recover the deleted commit and deleted branch.
+
+**Recover the deleted commit**
+
+```
+git commit -m "2nd commit"
+git branch X
+git commit -m "3rd commit"
+git commit -m "4th commit"
+git checkout X
+git commit -m "abc commit"
+git commit -m "xyz commit"
+git checkout master
+git reset HEAD~1
+git commit -m "fourth commit"
+git commit -m "fifth commit"
+git commit -m "sixth commit"
+git checkout X
+git checkout -b <new-branch-name> <deleted-commit-id> ( git checkout -b Y 12ed325 )
+```
+
+**Recover the deleted branch**
+
+```bash
+git branch -d X
+git checkout -b <deleted branch name> <recent commit-id of deleted branch>    ( git checkout -b X 9e686c1 )
+```
+<img width="1353" height="950" alt="image" src="https://github.com/user-attachments/assets/da274739-835f-4937-8938-c405fee59a01" />
 
 
 ---
