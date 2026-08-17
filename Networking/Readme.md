@@ -167,10 +167,77 @@ Q: What is the default route?
 ## Internet
 
 - Internet is a network of networks.
+- The Internet is a global network of interconnected computers and devices that communicate using the TCP/IP protocol suite. It enables services such as websites, email, file transfer, and cloud applications.
+
+How It Works
+- Your device sends a request (for example, opening Google).
+- DNS converts the domain name into an IP address.
+- Routers forward packets through different networks.
+- The destination server processes the request and sends the response back.
+
+Components of the Internet
+- IP Address → Identifies a device on the network.
+- DNS → Converts domain names to IP addresses.
+- Router → Forwards data between networks.
+- ISP (Internet Service Provider) → Provides Internet connectivity.
+- Web Server → Hosts websites and applications.
   
 <img width="1145" height="590" alt="image" src="https://github.com/user-attachments/assets/eda66d86-0fee-4d2c-bf96-0ff4dba2280f" />
 
+<img width="1170" height="663" alt="image" src="https://github.com/user-attachments/assets/910180bb-b99b-4e0f-a3fe-29715b308e50" />
+
+Q: What protocol is used on the Internet?
+
+ A: The Internet primarily uses the TCP/IP protocol suite for communication between devices.
+
 ## DNS
+
 <img width="1226" height="594" alt="image" src="https://github.com/user-attachments/assets/b04ddcee-0462-4160-beaf-3af48169fb44" />
 
+DNS translates human-readable domain names (like google.com) into IP addresses (like 142.250.x.x) so computers can locate and communicate with each other. It acts like the phonebook of the Internet.
 
+<img width="1137" height="667" alt="image" src="https://github.com/user-attachments/assets/a365ea24-95bd-450a-b865-537b37647081" />
+
+
+How DNS Works
+
+When you open www.google.com:
+
+1. Browser checks its DNS cache.
+2. If not found, it queries a DNS server.
+3. DNS server returns Google's IP address.
+4. Browser connects to that IP address.
+5. The webpage is loaded.
+
+Common DNS Record Types
+
+1. A Record → Domain name to IPv4 address
+2. AAAA Record → Domain name to IPv6 address
+3. CNAME Record → Alias to another domain
+4. MX Record → Mail server information
+5. TXT Record → Verification and security records
+
+Common DNS Port
+
+- UDP 53 → Used for most DNS queries
+- TCP 53 → Used for large responses and zone transfers
+
+**Real-Time DevOps Example**
+
+- Suppose your application is deployed in Kubernetes and accessible through: `app.company.com`
+
+- DNS resolves app.company.com to the Load Balancer's IP address, allowing users to access the application without knowing the actual IP.
+
+Interview Follow-up Question
+
+Q: What happens if DNS is down?
+
+ A: Users cannot resolve domain names to IP addresses, so websites and services become inaccessible using names, even if the servers are running.
+
+Easy Analogy
+
+- DNS = Phonebook
+- Domain Name = Person's name
+- IP Address = Phone number
+
+---
