@@ -102,13 +102,12 @@ Acknowledge – DHCP server confirms and assigns the IP address.
 
 Information Provided by DHCP
 
-IP Address (e.g., 192.168.1.10)
+- IP Address (e.g., 192.168.1.10)
+- Subnet Mask
+- Default Gateway
+- DNS Server
+- Lease Time
 
-Subnet Mask
-
-Default Gateway
-DNS Server
-Lease Time
 Real-Time Example
 
 When you connect your laptop to a Wi-Fi network, the router's DHCP service automatically assigns an IP address such as 192.168.1.100. Without DHCP, you would have to manually configure the IP settings on every device.
@@ -116,6 +115,7 @@ When you connect your laptop to a Wi-Fi network, the router's DHCP service autom
 Common Ports
 UDP 67 → DHCP Server
 UDP 68 → DHCP Client
+
 Interview Follow-up Question
 
 Q: What happens if DHCP server is unavailable?
