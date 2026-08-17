@@ -122,6 +122,11 @@ Q: What happens if DHCP server is unavailable?
 
  A: The client cannot obtain a valid IP address. In many systems, it may assign itself an APIPA address (169.254.x.x) for limited local network communication.
 
+- Below details received from the DHCP
+
+<img width="1156" height="428" alt="image" src="https://github.com/user-attachments/assets/696aae01-eafd-43d6-a64c-e5d2cdda36e2" />
+
+
 ---
 
 ## Internet
