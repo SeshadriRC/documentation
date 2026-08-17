@@ -126,6 +126,41 @@ Q: What happens if DHCP server is unavailable?
 
 <img width="1156" height="428" alt="image" src="https://github.com/user-attachments/assets/696aae01-eafd-43d6-a64c-e5d2cdda36e2" />
 
+---
+
+## Routing table
+
+<img width="1221" height="680" alt="image" src="https://github.com/user-attachments/assets/8ddf78b8-121d-4e40-8215-374ebfe54539" />
+
+A routing table is a list of network routes maintained by a router or operating system to determine where to forward network packets. It helps decide the best path to reach a destination IP address.
+
+**Routing Table Contains**
+
+Destination Network → Target network (e.g., 192.168.1.0/24)
+
+Subnet Mask/Prefix → Network size
+
+Gateway (Next Hop) → Where to send the packet next
+
+Interface → Network adapter used
+
+Metric → Cost of the route (lower is preferred)
+
+<img width="1102" height="268" alt="image" src="https://github.com/user-attachments/assets/824f6eeb-5996-42c2-9d7a-25e2e1a2651f" />
+
+Explanation
+
+Suppose your laptop wants to access 8.8.8.8:
+
+It checks the routing table.
+
+- No specific route exists for 8.8.8.8.
+- It uses the default route (0.0.0.0/0).
+- Packet is sent to gateway 192.168.1.1.
+
+Q: What is the default route?
+
+ A: The default route (0.0.0.0/0) is used when no more specific route exists in the routing table. It usually points to the network gateway/router.
 
 ---
 
