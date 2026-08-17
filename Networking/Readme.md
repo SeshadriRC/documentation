@@ -69,3 +69,68 @@ Interview one-liner:
 
 
 ---
+
+<img width="1251" height="621" alt="image" src="https://github.com/user-attachments/assets/f7cd3d56-5dcf-4cd3-803f-b440d19d5ac7" />
+
+<img width="1261" height="629" alt="image" src="https://github.com/user-attachments/assets/0fcc39aa-6d5c-4d49-a073-e361944577c0" />
+
+
+- HR department wants to connect with finance department which is in the other network.
+- If device is in the same network, then communication will happen using switch, but in this case its a different network, So computer A will send the data to router IP address.
+- So how will computer A will know the IP address of router ( default gateway ). it didn't know. so whenever new device is adding to the network, Network admin will manually configure the IP address, default gateway IP , DNS server IP to the computer.
+- So to avoid this manual configuration, we have made DHCP , so that automatically configuration will be done.
+
+## DHCP
+
+**DHCP (Dynamic Host Configuration Protocol)**
+
+**Interview Answer (2 lines):**
+
+ DHCP is a network protocol that automatically assigns IP addresses and other network settings (Subnet Mask, Gateway, DNS) to devices in a network. It eliminates the need for manual IP configuration.
+
+**How DHCP Works**
+
+When a device joins a network, DHCP follows the DORA process:
+
+Discover – Client broadcasts a request for an IP address.
+
+Offer – DHCP server offers an available IP address.
+
+Request – Client requests the offered IP address.
+
+Acknowledge – DHCP server confirms and assigns the IP address.
+
+Information Provided by DHCP
+
+IP Address (e.g., 192.168.1.10)
+
+Subnet Mask
+
+Default Gateway
+DNS Server
+Lease Time
+Real-Time Example
+
+When you connect your laptop to a Wi-Fi network, the router's DHCP service automatically assigns an IP address such as 192.168.1.100. Without DHCP, you would have to manually configure the IP settings on every device.
+
+Common Ports
+UDP 67 → DHCP Server
+UDP 68 → DHCP Client
+Interview Follow-up Question
+
+Q: What happens if DHCP server is unavailable?
+
+ A: The client cannot obtain a valid IP address. In many systems, it may assign itself an APIPA address (169.254.x.x) for limited local network communication.
+
+---
+
+## Internet
+
+- Internet is a network of networks.
+  
+<img width="1145" height="590" alt="image" src="https://github.com/user-attachments/assets/eda66d86-0fee-4d2c-bf96-0ff4dba2280f" />
+
+## DNS
+<img width="1226" height="594" alt="image" src="https://github.com/user-attachments/assets/b04ddcee-0462-4160-beaf-3af48169fb44" />
+
+
