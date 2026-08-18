@@ -49,3 +49,23 @@ injector:
 ui:
   enabled: true
 ```
+
+- storge class yaml
+
+**sc.yaml**
+
+```yaml
+apiVersion: storage.k8s.io/v1
+kind: StorageClass
+metadata:
+  name: ebs-sc
+
+provisioner: ebs.csi.aws.com
+
+parameters:
+  type: gp3
+  fsType: ext4
+
+reclaimPolicy: Retain
+volumeBindingMode: WaitForFirstConsumer
+```
