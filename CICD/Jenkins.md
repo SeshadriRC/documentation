@@ -14,6 +14,7 @@
 10. Parameterized Job
 11. Jenkins Credentials
 12. Parallel jobs
+13. [CI pipeline](https://github.com/SeshadriRC/3-Tier-DevSecOps-Mega-Project/blob/main/Day-3-CI-Pipeline.md)
 ---
 
 ### 1. Jenkins
