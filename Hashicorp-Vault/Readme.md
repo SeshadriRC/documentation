@@ -119,3 +119,8 @@ kubectl exec -n vault -it vault-0 --vault operator unseal <token>
 <img width="649" height="311" alt="image" src="https://github.com/user-attachments/assets/f8f708ba-2b1e-4a07-a1b8-4295d0fdf62e" />
 
 <img width="970" height="290" alt="image" src="https://github.com/user-attachments/assets/79a1cca5-f929-4030-9007-c8acaea95083" />
+
+- Now all pods are up and running fine.
+
+<img width="920" height="169" alt="image" src="https://github.com/user-attachments/assets/0ea251af-52d2-4993-9fc0-716ea9365c7e" />
+
