@@ -36,7 +36,7 @@ server:
   dataStorage:
     enabled: true
     size: 10Gi
-    storageClass: "gp2"   # or ebs-sc
+    storageClass: "ebs-sc"   # or ebs-sc
 
   extraEnvironmentVars:
     VAULT_LOG_LEVEL: "debug"
