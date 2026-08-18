@@ -1,5 +1,38 @@
+1. Discussed about Vault setup in a statefulset
+2. What is RAFT
+3. How kubernetes app will fetch the secret from hashicorp vault
 
+- Enable auth with kubernetes, this will tell the kubernetes that pod can fetch the secrets from vault
+- Create a service account and assign it to Pod, this SA will have token and its signed by kubernetes. so that we can know this token coming from kubernetes
+- Create a Policy in vault -> suppose assume secret stored in secrets/mysql location. we are giving read, write access to that location using policy
+- Create a role and attach the above created policy to this role. So now this role will have permission to read the secret from the vault.
+- Now we will attach a role to the service account which is in the kubernetes
+- First pod serviceaccount will send the JWT token which is signed by kubernetes to the vault. Now this token will sent to vault, now vault will check the SA token which needs to be signed by kubernetes 
+and it should have required permissions. AFter validation, vault will be sharing one token to the POD SA, so using that token secrets can be fetched from the vault
+
+- secret/data/mysql --> it will contain the secrets
+- secret/metadata/mysql --> it will contain the version information ( first you write seshadri, second time you write aditya )
+- KV2 --> used for versioning
+
+4. Provision EKS cluster , use terraform, eksctl, kubectl, helm, update kubeconfig . do all the setups by following that mega project doc
+
+```bash
+#Install HELM
+sudo apt update && sudo apt upgrade -y
+curl https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3 | bash
+```
+
+```bash
+kubectl create ns vault
+
+helm repo add hashicorp https://helm.releases.hashicorp.com
+
+helm repo update
+
+```
 - write the vault vaules, but don't apply. after applying storage class, you can install below vaules.
+
+
 
 ```bash
 helm install vault hashicorp/vault -n vault -f vault-values.yml
