@@ -1,0 +1,49 @@
+```yaml
+server:
+  ha:
+    enabled: true
+    replicas: 3
+
+    raft:
+      enabled: true
+      config: |
+        ui = true
+
+        listener "tcp" {
+          address         = "0.0.0.0:8200"
+          cluster_address = "0.0.0.0:8201"
+          tls_disable     = 1
+        }
+
+        storage "raft" {
+          path = "/vault/data"
+
+          retry_join {
+            leader_api_addr = "http://vault-0.vault-internal:8200"
+          }
+
+          retry_join {
+            leader_api_addr = "http://vault-1.vault-internal:8200"
+          }
+
+          retry_join {
+            leader_api_addr = "http://vault-2.vault-internal:8200"
+          }
+        }
+
+        service_registration "kubernetes" {}
+
+  dataStorage:
+    enabled: true
+    size: 10Gi
+    storageClass: "gp2"   # or ebs-sc
+
+  extraEnvironmentVars:
+    VAULT_LOG_LEVEL: "debug"
+
+injector:
+  enabled: true
+
+ui:
+  enabled: true
+```
