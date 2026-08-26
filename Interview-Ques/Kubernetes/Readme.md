@@ -2,3 +2,4 @@
 2. [IRSA](https://github.com/SeshadriRC/documentation/blob/main/Interview-Ques/Kubernetes/Topics/IRSA.md)
 3. [You have a Java application running on OpenShift with 6 replicas.The application is intermittently failing. Some requests work, but some return 500.](https://github.com/SeshadriRC/documentation/blob/main/Interview-Ques/Kubernetes/Topics/500-error-openshift.md#day-45--kubernetesopenshift--database-scenario-)
 4. [Difference between 503 and 504 error](https://github.com/SeshadriRC/documentation/blob/main/Interview-Ques/Kubernetes/Topics/503-and-504-difference.md#503-vs-504--openshifthaproxy-examples)
+5. You have an OpenShift application with 5 replicas.Everything was working normally. Suddenly users report, The application is very slow, and sometimes requests fail with 504 Gateway Timeout.[Link](https://github.com/SeshadriRC/documentation/blob/main/Interview-Ques/Kubernetes/Topics/504-gateway-timeout.md)
