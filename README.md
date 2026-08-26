@@ -5,6 +5,7 @@ https://github.com/SeshadriRC/Python-app-private-repo -> i created this for norm
 ## Jenkins
 
 https://github.com/SeshadriRC/Jenkins-Basics-To-Production - pending practicals ( maven, sonarqube, full project , shared libraries )
+
 https://github.com/SeshadriRC/YouTube-Standalone-Lectures/tree/main - pending practicals ( network policy )
 
 ## Kubernetes
