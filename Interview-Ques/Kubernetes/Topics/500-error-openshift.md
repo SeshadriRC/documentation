@@ -568,4 +568,160 @@ That distinction is exactly why we compare a **bad Pod against a healthy Pod** r
 
 ---
 
-# 
+# How that pod will fetch different image digest, all should have same rit
+
+Yes — **you're right**. Under normal Kubernetes/OpenShift deployment, all Pods created by the **same ReplicaSet/Deployment revision should use the same image reference**, and typically the same image digest.
+
+My previous example needs an important clarification.
+
+### Normal case
+
+Suppose your Deployment has:
+
+```yaml
+containers:
+- name: employee
+  image: myrepo/employee:v10
+```
+
+The Deployment creates a ReplicaSet, and that ReplicaSet creates the Pods:
+
+```text
+Deployment
+    ↓
+ReplicaSet
+    ↓
+Pod 1 → employee:v10
+Pod 2 → employee:v10
+Pod 3 → employee:v10
+```
+
+They should resolve to the **same image digest**.
+
+You can verify:
+
+```bash
+oc get pods -o wide
+```
+
+and:
+
+```bash
+oc get pod <pod-name> \
+  -o jsonpath='{.status.containerStatuses[0].imageID}'
+```
+
+---
+
+## Then how could different image digests happen?
+
+There are some **specific scenarios**, not the normal case.
+
+### Scenario 1 — `:latest` or a mutable tag
+
+Suppose you use:
+
+```yaml
+image: myrepo/employee:latest
+```
+
+You push a new image to the same tag:
+
+```text
+latest
+ ↓
+Digest A
+```
+
+Later:
+
+```text
+latest
+ ↓
+Digest B
+```
+
+If different Pods are created/recreated at different times and the platform pulls the mutable tag again, you can potentially end up with different image content.
+
+That's why production deployments should preferably use **immutable tags/digests**, for example:
+
+```yaml
+image: myrepo/employee:2026.08.26
+```
+
+or:
+
+```yaml
+image: myrepo/employee@sha256:abc123...
+```
+
+---
+
+### Scenario 2 — Different ReplicaSets
+
+This is much more common during a rollout.
+
+For example:
+
+```text
+Deployment
+   |
+   +── ReplicaSet-old
+   |      ├── Pod 1 → SHA-A
+   |      └── Pod 2 → SHA-A
+   |
+   +── ReplicaSet-new
+          ├── Pod 3 → SHA-B
+          └── Pod 4 → SHA-B
+```
+
+During a rolling deployment, **old and new ReplicaSets can temporarily coexist**.
+
+So you'd see different image digests, but not because Pods from the same ReplicaSet randomly chose different images.
+
+---
+
+### Scenario 3 — Someone manually changed a Pod
+
+If someone manually modifies/deletes/recreates workloads outside the normal Deployment process, you need to investigate the resulting state. But a Pod's container image isn't normally something you'd change independently and expect the Deployment to preserve.
+
+---
+
+## For your original troubleshooting question
+
+If you have:
+
+```text
+Pod 1 → SHA-A
+Pod 2 → SHA-A
+Pod 3 → SHA-A
+Pod 4 → SHA-A
+Pod 5 → SHA-A
+Pod 6 → SHA-A
+```
+
+and **Pod 4 alone is having database connection issues**, then **image difference is NOT a reasonable first suspect**.
+
+I'd investigate:
+
+```text
+Pod 4
+ ├── Application logs
+ ├── Hikari connection pool
+ ├── Threads
+ ├── Network connectivity
+ ├── DB connections
+ ├── Node
+ └── Runtime state
+```
+
+And compare Pod 4 against a healthy Pod.
+
+### 🎯 Interview-quality answer
+
+> **"If all Pods belong to the same ReplicaSet, I would expect them to use the same image and digest. Different digests would usually indicate different rollout revisions, a mutable image tag, or an unusual deployment issue. I wouldn't assume a single Pod has a different image. If all six Pods have the same digest but one is failing, I'd investigate runtime state, application behavior, node-level issues, or dependency connectivity."**
+
+Good catch — **your understanding is correct.**
+
+
+---
