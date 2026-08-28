@@ -3,7 +3,7 @@
 1. What is service mesh
 2. Why Servicemesh
     - difference between mtls and tls
-3. 
+3. How istio works.
 
 
 ---
@@ -40,3 +40,13 @@
 
  ## How Traditional TLS works
  - Usually here client will display their certificate to the server and if server acknowledges then a trust is established and communication established.
+
+---
+
+# 3. How Istio works
+
+- what istio does is , in all pods of the kubernetes cluster. ofcourse the namespaces which istio access to .
+- within each and every pod it will add a new container, which will sit next to the actual pod and this new container is called as sidecar container.
+- what is inside side care container --> It has Envoy proxy application, which will handle traffic management of the kubernetes pod.
+
+---
