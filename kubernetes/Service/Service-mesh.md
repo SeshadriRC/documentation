@@ -6,6 +6,9 @@
     - difference between mtls and tls
 3. How istio works.
 4. ISTIO Setup
+5. mTLS practicals
+6. Canary practicals
+7. How istio implements admission controller
 
 ---
 
@@ -113,6 +116,14 @@
 
 - Do the istio setup using https://github.com/SeshadriRC/istio-guide/tree/main/install-and-setup
 - Also read the architecture of application [architecture](https://istio.io/latest/docs/setup/getting-started/#bookinfo)
+
+<img width="1283" height="247" alt="image" src="https://github.com/user-attachments/assets/e22016f7-a4a6-4914-8670-d8763ff09f0d" />
+
+- Also we can see initcontainers
+
+<img width="1917" height="486" alt="image" src="https://github.com/user-attachments/assets/01d310c7-bb76-4915-955f-dd307f8e4098" />
+
+
 - Review 1 not having star, Review 2 having black start and Review 3 is coloured. only reveiw 2 and 3 only connected to rating service
 
 <img width="1167" height="610" alt="image" src="https://github.com/user-attachments/assets/4e1058fa-3c20-4b2a-9a5f-47b01c299ab3" />
@@ -124,5 +135,71 @@
 
 <img width="1917" height="961" alt="image" src="https://github.com/user-attachments/assets/77bc606e-7261-4e58-a7ab-27959cb5b30c" />
 
+---
+# mTLS practicals
+- see normally what istio should do, it should allow only service to service communication, someone should have certificate to talk with pod. But however you can see, it allows curl. So by default istio will run the mTLS in permissive mode
+
+<img width="1297" height="382" alt="image" src="https://github.com/user-attachments/assets/f2da96ba-12db-4454-b4e7-665429323eb0" />
+
+- Permissive mode says, you can access the cluster using mTLS or without mTLS
+- Now we will enable mTLS in strict mode, follow the github ( https://github.com/SeshadriRC/istio-guide/tree/main/mTLS ) and apply this yaml
+
+<img width="1011" height="142" alt="image" src="https://github.com/user-attachments/assets/e0aea397-96aa-4d29-81cf-4ba845f48994" />
+
+- Now run the curl again, we can see it rejected the connection. However you can able to see in browser still,internal communication is working fine. only manual way it wont work
+
+<img width="860" height="108" alt="image" src="https://github.com/user-attachments/assets/12c4b526-a4ab-4b11-b43d-dd9aa222f338" />
 
 ---
+# Canary practicals
+
+- Virtual service and Destination rules will help us implementing Canary model of deployment.
+
+## Intially make this talk to v1 ( reviews-v1 )
+
+- use this [link](https://github.com/SeshadriRC/istio-guide/blob/main/traffic-management/traffic-shifting/01-old-version.yaml) to create virtual service.
+
+<img width="981" height="215" alt="image" src="https://github.com/user-attachments/assets/b092b13a-9d08-488f-a533-1ee47febe3af" />
+
+- use this yaml inside node to create destination rules. In website also you can find, abhishek didn't mention in github
+
+<img width="723" height="190" alt="image" src="https://github.com/user-attachments/assets/cb6e2c69-5be5-4716-88f2-1815143954ab" />
+
+- Now we can see, you can refresh it multiple times, but it will route only to **reviews-v1**
+
+<img width="1917" height="960" alt="image" src="https://github.com/user-attachments/assets/38fe4655-02bf-484f-9434-975ef2bcb8c2" />
+
+- How its routing to only v1 --> by using the subset v1 which is mentioned in the virtualservice yaml. And in destination route yaml, we will be mentioning subset for all versions.
+
+## Send 50% of traffic to v1 and another 50% to v3
+
+- We need to edit the virtual service and this will inform to sidecar containers regarding the traffic rules.
+- use the yaml in github (https://github.com/SeshadriRC/istio-guide/blob/main/traffic-management/traffic-shifting/02-traffic-shifting.yaml)
+
+<img width="1286" height="465" alt="image" src="https://github.com/user-attachments/assets/2bf52cb1-0126-467c-8971-0bdc932b8bd8" />
+
+- I tested in browser, its working fine.
+
+## Send 100% of traffic to v3, as its working fine
+
+- Assume new version worked fine, so route 100% of traffic to it. use this yaml (https://github.com/SeshadriRC/istio-guide/blob/main/traffic-management/traffic-shifting/03-v3-new.yaml)
+- I tested multiple times, its going to v3
+
+<img width="1917" height="855" alt="image" src="https://github.com/user-attachments/assets/c4d965df-9c06-4c11-8172-fd024dae1b89" />
+
+---
+
+# 7. How istio implements admission controller
+
+- Whatever admission controller we have seen before ( quota, storageclass ) which is pre compiled on the api-server. so api-server automatically knows how to invoke these admission controllers.
+- But when you come to istio, whenever pod creation request come to api-server, it needs to inform istio regarding that. so that istio will proceed with the sidecar injection, so that is called as Dynamic Admission controller
+
+<img width="1176" height="747" alt="image" src="https://github.com/user-attachments/assets/908c2789-11b0-4f85-93f9-9c4cedac6598" />
+
+- So here Mutating Admission webhook controller will take place, however it will not do any mutation and validation. It will call the istiod admission webhook and this istiod will inject the sidecar container (i.e., its performing mutation) and it returns the object back to api-server, then object goes to ETCD.
+
+<img width="862" height="221" alt="image" src="https://github.com/user-attachments/assets/e4ec3b6f-0e44-4a4d-92f4-04e5433e6162" />
+
+- Below are Kubernetes Mutating Admission Webhooks created/used by Istio. They are a key part of how Istio automatically injects the istio-proxy sidecar into your pods. [Read more]()
+
+<img width="900" height="235" alt="image" src="https://github.com/user-attachments/assets/b2b29486-50c2-416f-8874-119a6231fd55" />
