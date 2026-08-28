@@ -1,10 +1,27 @@
 [Repo](https://github.com/SeshadriRC/istio-guide)
 
+
 1. What is service mesh
 2. Why Servicemesh
     - difference between mtls and tls
 3. How istio works.
+4. ISTIO Setup
 
+---
+
+# Difference between service mesh and Istio
+
+- Service mesh = concept/category
+
+- Istio = one specific service mesh implementation
+
+  Service Mesh
+     |
+     +-- Istio
+     +-- Linkerd
+     +-- Consul
+     +-- Kuma
+     +-- etc.
 
 ---
 
@@ -51,5 +68,61 @@
 - what istio does is , in all pods of the kubernetes cluster. ofcourse the namespaces which istio access to .
 - within each and every pod it will add a new container, which will sit next to the actual pod and this new container is called as sidecar container.
 - what is inside side care container --> It has Envoy proxy application, which will handle traffic management of the kubernetes pod.
+- Any request coming to our app pod, it will go to the side car container. Any request going out of app pod, which will go through the sidecar proxy pod.
+
+## Normal communication without Istio
+
+- Assume catalogue m.service needs to communicate with payment m.service.
+- First catalog m.svc will find the service url of payment m.service. using that it will initiate an API call. catalog m.svc can get the service URL from the configmap or from command argument. Then communication will get established.
+
+<img width="447" height="170" alt="image" src="https://github.com/user-attachments/assets/aeed03d2-1fd2-4215-8d09-4493692a96b2" />
+
+## Communication with Istio
+
+- Both the inward traffic and outward traffic will be intercepted by the sidecar container
+
+    catalogue m.svc --> catalg sidecar container --> payment sidecar --> payment m.svc 
+  
+<img width="565" height="167" alt="image" src="https://github.com/user-attachments/assets/27408527-86f2-4baa-a002-eae678076c9d" />
+
+
+- catalogue m.svc --> catalg sidecar container will add the TLS certificate --> payment sidecar will veryify the TLS certificate of catalog and it will display its TLS certificate, bcz its a mTLS
+
+<img width="531" height="207" alt="image" src="https://github.com/user-attachments/assets/a34bc191-3bb9-4de3-9e73-f14bcb26e84c" />
+
+- So this sidecar container will be used for mTLS, Canary, Circuit breaking, Observability.
+- These sidecar containers will be sending the collected data to the **ISTIOD** --> It is a primary component of Istio. And data stored in the ISTIOD will be useful for observability.
+
+## How ISTIO will know if new pod is created
+
+- Below is the basic user communication whenever user triggered `kubectl apply -f` below will happen.
+
+<img width="813" height="462" alt="image" src="https://github.com/user-attachments/assets/b585f567-8b25-460a-b86c-4a094edf8d34" />
+
+## Admission controller 
+- User is sending a pod creation request will go to api server --> then components in the API server will check Authentication and Authorization --> Before storing the objects in ETCD --> Admission controller will do mutation/validation
+- Mutation --> nothing but a update, if in case in PVC we didn't mention storage class, then automatically admission controller will add that. Location of admission plugins is `/etc/kubernetes/manifests/kube-apiserver.yaml`. Mutation example is there in istio github repo
+- Validation --> It will validate whether given yaml is valid or not, take a look on example in github for validation. Resource quota of namespace is 1g, but you created a pod yaml of 2g. so it won't allow
+
+<img width="1158" height="370" alt="image" src="https://github.com/user-attachments/assets/8fd837f2-d23c-4b56-9683-3d1551595149" />
+
+<img width="1917" height="371" alt="image" src="https://github.com/user-attachments/assets/9ec73183-5807-4e6b-9a63-297ba22f49cd" />
+
+---
+# 4. ISTIO Setup
+
+- Do the istio setup using https://github.com/SeshadriRC/istio-guide/tree/main/install-and-setup
+- Also read the architecture of application [architecture](https://istio.io/latest/docs/setup/getting-started/#bookinfo)
+- Review 1 not having star, Review 2 having black start and Review 3 is coloured. only reveiw 2 and 3 only connected to rating service
+
+<img width="1167" height="610" alt="image" src="https://github.com/user-attachments/assets/4e1058fa-3c20-4b2a-9a5f-47b01c299ab3" />
+
+- Once you refresh it will change
+
+<img width="1201" height="247" alt="image" src="https://github.com/user-attachments/assets/d2445624-9770-4bfb-987c-a1c80f7d9a47" />
+
+
+<img width="1917" height="961" alt="image" src="https://github.com/user-attachments/assets/77bc606e-7261-4e58-a7ab-27959cb5b30c" />
+
 
 ---
