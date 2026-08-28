@@ -200,6 +200,6 @@
 
 <img width="862" height="221" alt="image" src="https://github.com/user-attachments/assets/e4ec3b6f-0e44-4a4d-92f4-04e5433e6162" />
 
-- Below are Kubernetes Mutating Admission Webhooks created/used by Istio. They are a key part of how Istio automatically injects the istio-proxy sidecar into your pods. [Read more]()
+- Below are Kubernetes Mutating Admission Webhooks created/used by Istio. They are a key part of how Istio automatically injects the istio-proxy sidecar into your pods. [Read more](https://github.com/SeshadriRC/istio-guide/blob/main/my-learnings/Kubernetes%20Mutating%20Admission%20Webhooks.md)
 
 <img width="900" height="235" alt="image" src="https://github.com/user-attachments/assets/b2b29486-50c2-416f-8874-119a6231fd55" />
