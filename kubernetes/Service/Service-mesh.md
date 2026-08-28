@@ -10,6 +10,7 @@
 6. Canary practicals
 7. How istio implements admission controller
 8. How to know which namespace is configured for istio
+9. Access the UI for kiali
 
 ---
 
@@ -231,5 +232,19 @@ spec:
 - Its working fine.
 
 <img width="1917" height="575" alt="image" src="https://github.com/user-attachments/assets/76ccd596-7e2d-44d1-8803-e1c011387896" />
+
+---
+
+# 9. Access the UI for kiali
+
+https://istio.io/latest/docs/ops/integrations/kiali/#installation
+https://istio.io/latest/docs/tasks/observability/kiali/
+
+```bash
+kubectl port-forward svc/kiali 9677:20001 -n istio-system
+```
+
+<img width="1917" height="892" alt="image" src="https://github.com/user-attachments/assets/caf2b87a-5690-4bbc-ad08-7a4167f08099" />
+
 
 ---
