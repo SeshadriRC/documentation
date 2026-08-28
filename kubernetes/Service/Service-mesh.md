@@ -9,6 +9,7 @@
 5. mTLS practicals
 6. Canary practicals
 7. How istio implements admission controller
+8. How to know which namespace is configured for istio
 
 ---
 
@@ -203,3 +204,32 @@
 - Below are Kubernetes Mutating Admission Webhooks created/used by Istio. They are a key part of how Istio automatically injects the istio-proxy sidecar into your pods. [Read more](https://github.com/SeshadriRC/istio-guide/blob/main/my-learnings/Kubernetes%20Mutating%20Admission%20Webhooks.md)
 
 <img width="900" height="235" alt="image" src="https://github.com/user-attachments/assets/b2b29486-50c2-416f-8874-119a6231fd55" />
+
+---
+# 8. How to know which namespace is configured for istio
+
+<img width="1315" height="160" alt="image" src="https://github.com/user-attachments/assets/7cf37aeb-8899-4ce8-b805-3e3fb7ac7e27" />
+
+- apply the sample yaml and test it
+
+```yaml
+apiVersion: v1
+kind: Pod
+metadata:
+  name: istio-test
+  namespace: default
+  labels:
+    app: istio-test
+spec:
+  containers:
+    - name: nginx
+      image: nginx:alpine
+      ports:
+        - containerPort: 80
+```
+
+- Its working fine.
+
+<img width="1917" height="575" alt="image" src="https://github.com/user-attachments/assets/76ccd596-7e2d-44d1-8803-e1c011387896" />
+
+---
