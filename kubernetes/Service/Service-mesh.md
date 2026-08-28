@@ -26,6 +26,9 @@
 # 2. Why service mesh
 
 
+<img width="440" height="370" alt="image" src="https://github.com/user-attachments/assets/71ea0279-b41e-4602-becc-34af26cb8a66" />
+
+
 - As said above it is used to secure service to service communication and also it has some add on capabilities on this. for Eg: **Mutual TLS(mtls)**
 - **Advanced deplyment capabilities** , we can implement deployment strategies like Canary, A-B, Blue green deployment in very Easy way, which means little less difficulties
 - Also it has good observability, we need to install a tool called kiali. and we can use this to see how our service to service communication is behaving.
