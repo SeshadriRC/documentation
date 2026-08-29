@@ -79,3 +79,9 @@
 - Consider user is accessing from US-east region, then DNS will route the traffic to ingress which is present in the us-east and this ingress will route the traffic to the kubernetes cluste which is present in the east.
 
 ---
+
+## Note: 
+
+- There are more levels , it won't end up in 5. we also can setup helm chart, service mesh, gitOps etc.,
+
+---
