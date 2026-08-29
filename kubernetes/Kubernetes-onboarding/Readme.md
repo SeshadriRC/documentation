@@ -49,3 +49,33 @@
 
 
 ---
+
+## Level 3: Onboarding Staging environment
+
+- Replicate the Dev environment and create the Stage cluster.
+- Dev cluster is not similar to prod cluster thats the reason we are creating stage cluster. Stage cluster is used to test out the production related scenarios.
+- So create the stage cluster with increased size of resources, which should be similar to prod.
+
+---
+
+## Level 4: Onboarding Prod
+
+- Main difference here is we need to setup prod cluster with **Multi AZ and Multi Region** feature.
+- AZ --> Its a datacenter ( us-east-1a, us-east-1b, us-east-1c ). so one zone goes down, another will be available. So multi AZ is 100% required. one node in us-east-1 and other in us-east-1b ... etc.,
+- Here we can use autoscaling like cluster autoscaler/karpenter to scale up the nodes
+- Nodes we placed in AZ, but pod also should be in multiple AZs. For example if there is a 3 replica, each replica should be in each AZ. This is achieved by **Pod topology spread contraint**.
+- we need to setup good observability stack such as prometheus, grafana, datadog etc.,
+---
+
+## Level 5: Scaling Production
+
+`End goal: HA, Multi zone, Multi Region`
+
+<img width="1247" height="593" alt="image" src="https://github.com/user-attachments/assets/c6a5b71c-9737-4ffc-b8e9-1ea88b4b08af" />
+
+- Deploy kubernetes in every region ( ap-south, us-east, us-west )
+- Deploy the pod in all 3 kubernetes cluster, for each of the services we will create a ingress and front face the ingress with ALB
+- Also you can use DNS based (route 53) load balancing. using this we can see from where the request is originated.
+- Consider user is accessing from US-east region, then DNS will route the traffic to ingress which is present in the us-east and this ingress will route the traffic to the kubernetes cluste which is present in the east.
+
+---
