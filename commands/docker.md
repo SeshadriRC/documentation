@@ -1,4 +1,4 @@
-```
+```bash
 # Stop current containers
 docker compose down
 
