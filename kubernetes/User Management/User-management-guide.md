@@ -1,6 +1,11 @@
+## Topics
 
+1. Kubernetes user mangement
+2. Authentication and Authorization
+3. Border-0 VPN
+4. [Install Border-0]()
 
-## Kubernetes User Management — Complete Summary
+---
 
 ### 1. What is Kubernetes User Management?
 
@@ -311,4 +316,11 @@ A better way to understand it is:
 
 The two can work together.
 
+---
 
+## Install Border-0
+
+1. Signup with github
+2. Follow the steps given in URL and install border-0 using helm
+
+---
