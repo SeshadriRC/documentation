@@ -1,5 +1,5 @@
 ```
-# 1. Stop current containers
+# Stop current containers
 docker compose down
 
 # 2. Start up with the existing volume attached
