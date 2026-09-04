@@ -1,1 +1,1 @@
-[Sonarqube](https://github.com/SeshadriRC/SonarQube-For-DevOps)
+[Sonarqube-Repo](https://github.com/SeshadriRC/SonarQube-For-DevOps)
