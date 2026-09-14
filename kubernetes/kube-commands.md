@@ -41,6 +41,11 @@ kubectl get namespaces --show-labels
   -p '{"spec":{"type":"NodePort"}}'
 ```
 
+## Port-forward
+
+```bash
+kubectl port-forward pod/mlflow-community-6d575f4f6b-28cxb 7006:5000 --address 0.0.0.0
+```
 ## Service
 
 ```bash
