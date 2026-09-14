@@ -44,7 +44,7 @@ kubectl get namespaces --show-labels
 ## Port-forward
 
 ```bash
-kubectl port-forward pod/mlflow-community-6d575f4f6b-28cxb 7006:5000 --address 0.0.0.0
+kubectl port-forward -n <namespace-name> pod/mlflow-community-6d575f4f6b-28cxb 7006:5000 --address 0.0.0.0
 ```
 ## Service
 
