@@ -15,6 +15,8 @@ curl 190.xx.xx.xx:9099
 ## Cluster
 
 ```bash
+kind create cluster --name=basic-mlflow-cluster
+
 kubectl cluster-info --context kind-demo-cluster
 kubectl cluster-info
 ```
