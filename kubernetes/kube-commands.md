@@ -27,6 +27,14 @@ kubectl cluster-info
 kubectl delete -f path/file.yml
 ```
 
+## Logs
+
+```bash
+# To check specific container logs
+kubectl logs -n <namespace> <pod-name> --container <container-name>
+kubectl logs -n mlflow mlflow-545ff865df-4j4h9 --container mlflow-db-migration
+```
+
 ## Namespace
 
 ```bash
