@@ -1,0 +1,1 @@
+- Download the postgresql from official website, while downloading it will ask whether to install only client , App etc.,
