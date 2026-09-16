@@ -22,6 +22,7 @@ curl -v telnet://database-1.c5k88omakd8d.ap-south-1.rds.amazonaws.com:5432
 
 ```bash
 kind create cluster --name=basic-mlflow-cluster
+kind get clusters
 
 kubectl cluster-info --context kind-demo-cluster
 kubectl cluster-info
