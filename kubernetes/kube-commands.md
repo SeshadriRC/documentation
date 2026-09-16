@@ -27,6 +27,13 @@ kubectl cluster-info --context kind-demo-cluster
 kubectl cluster-info
 ```
 
+## Context
+
+```bash
+kubectl config set-context --current --namespace=employee-app
+kubectl config view --minify --output 'jsonpath={..namespace}'
+```
+
 ## Delete
 
 ```bash
