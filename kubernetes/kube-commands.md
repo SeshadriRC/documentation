@@ -10,6 +10,12 @@ kubectl apply -f path/file.yml
 curl <service-clusterip>:port
 curl 190.xx.xx.xx:9099
 
+# find the public IP address of the machine from which the request is made.
+curl https://checkip.amazonaws.com
+
+# check whether your machine can establish a TCP connection to an RDS PostgreSQL database on port 5432
+curl -v telnet://database-1.c5k88omakd8d.ap-south-1.rds.amazonaws.com:5432
+
 ```
 
 ## Cluster
