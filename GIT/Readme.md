@@ -6,6 +6,7 @@
 6. Git reset, revert, reflog, tag, stash
 7. Recover the deleted commit and deleted branch.
 8. Git fetch and Git clone.
+9. After fork only main branch is visible. follow this steps
 
 - [Commands](#Commands)
 ---
