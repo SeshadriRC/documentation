@@ -54,6 +54,14 @@ kubectl get namespaces --show-labels
 ```bash
 kubectl port-forward -n <namespace-name> pod/mlflow-community-6d575f4f6b-28cxb 7006:5000 --address 0.0.0.0
 ```
+
+## Pods
+
+```bash
+# To check all container status
+kubectl get pod <pod-name> -n <namespace> -o jsonpath='{.status.containerStatuses[*].state}'
+kubectl get pod mlflow-545ff865df-vccp6 -n mlflow -o jsonpath='{.status.containerStatuses[*].state}'
+```
 ## Service
 
 ```bash
