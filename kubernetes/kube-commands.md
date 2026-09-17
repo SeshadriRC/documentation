@@ -32,6 +32,8 @@ kubectl cluster-info
 ## Context
 
 ```bash
+kubectl config use-context kind-basic-mlflow-cluster
+
 kubectl config set-context --current --namespace=employee-app
 kubectl config view --minify --output 'jsonpath={..namespace}'
 ```
