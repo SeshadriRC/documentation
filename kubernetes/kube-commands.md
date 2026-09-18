@@ -21,12 +21,18 @@ curl -v telnet://database-1.c5k88omakd8d.ap-south-1.rds.amazonaws.com:5432
 ## Cluster
 
 ```bash
-kubectl config current-context
 kind create cluster --name=basic-mlflow-cluster
 kind get clusters
 
 kubectl cluster-info --context kind-demo-cluster
 kubectl cluster-info
+
+kubectl config use-context kind-<cluster-name>
+kubectl config view
+kubectl config current-context
+kubectl config get-contexts
+
+ls ~/.kube/config
 ```
 
 ## Context
