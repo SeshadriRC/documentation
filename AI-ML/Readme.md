@@ -1,1 +1,2 @@
 - [Claude-Code](https://github.com/SeshadriRC/claude-code-crash-course)
+   - [Claude-setup-using-openrouter](https://gist.github.com/SeshadriRC/ac762bbda26bc31138e04db1229936e2)
