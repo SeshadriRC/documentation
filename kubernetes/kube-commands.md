@@ -56,6 +56,9 @@ kubectl delete -f path/file.yml
 # To check specific container logs
 kubectl logs -n <namespace> <pod-name> --container <container-name>
 kubectl logs -n mlflow mlflow-545ff865df-4j4h9 --container mlflow-db-migration
+
+kubectl logs <pod-name> -c <container-name>
+kubectl logs -f <pod-name>
 ```
 
 ## Namespace
