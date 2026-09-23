@@ -21,7 +21,10 @@ curl -v telnet://database-1.c5k88omakd8d.ap-south-1.rds.amazonaws.com:5432
 ## Cluster
 
 ```bash
+# refer day 8 in cka for kind commands
 kind create cluster --name=basic-mlflow-cluster
+kind delete cluster --name my-first-cluster
+kind create cluster --name my-second-cluster --config kind-cluster.yaml
 kind get clusters
 
 kubectl cluster-info --context kind-demo-cluster
