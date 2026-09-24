@@ -34,6 +34,7 @@ kubectl config use-context kind-<cluster-name>
 kubectl config view
 kubectl config current-context
 kubectl config get-contexts
+kubectl config set-context --current --namespace=app1-ns
 
 ls ~/.kube/config
 ```
@@ -91,6 +92,13 @@ kubectl port-forward -n <namespace-name> pod/mlflow-community-6d575f4f6b-28cxb 7
 kubectl get pod <pod-name> -n <namespace> -o jsonpath='{.status.containerStatuses[*].state}'
 kubectl get pod mlflow-545ff865df-vccp6 -n mlflow -o jsonpath='{.status.containerStatuses[*].state}'
 ```
+
+## Run
+
+```bash
+kubectl run test-pod --image=busybox -it --rm --restart=Never -- /bin/sh
+```
+
 ## Service
 
 ```bash
