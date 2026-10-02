@@ -4,3 +4,5 @@
 2. [Mlops](https://github.com/SeshadriRC/mlops-zero-to-hero/tree/main)
 3. [Google-AI-Agent-Abhishek](https://github.com/SeshadriRC/awesome-enterprise-agent-guide)
 4. [RAG](https://github.com/SeshadriRC/RAG)
+
+   - [youtube](https://www.youtube.com/watch?v=4Qp5D5hcE4A&list=PLhhO7g8ucBH7MzCKGDp8fLOuFgdpW4l5Z&index=2)
