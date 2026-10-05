@@ -1,3 +1,11 @@
+
+1. Tokenizer and Tokens
+2. Context window
+
+---
+
+# 1. Tokenizer and Tokens
+
 <img width="1917" height="880" alt="image" src="https://github.com/user-attachments/assets/5d83ff52-a5ae-4142-8903-2792b288243c" />
 
 <img width="1097" height="981" alt="image" src="https://github.com/user-attachments/assets/c6580b9c-e0aa-4daa-a1f0-c9aa72eb72fb" />
@@ -11,3 +19,15 @@
 <img width="1811" height="842" alt="image" src="https://github.com/user-attachments/assets/a2c4f106-abfa-4b4a-b606-abaa6046194f" />
 
 <img width="1900" height="717" alt="image" src="https://github.com/user-attachments/assets/925709f3-1d27-4ec8-9530-ebbe394f6714" />
+
+---
+
+# 2. Context window
+
+<img width="1892" height="601" alt="image" src="https://github.com/user-attachments/assets/824b60b4-7841-439a-a273-7af55d182983" />
+
+<img width="1906" height="960" alt="image" src="https://github.com/user-attachments/assets/721394b9-7aff-4984-b611-02e740af48db" />
+
+<img width="1852" height="957" alt="image" src="https://github.com/user-attachments/assets/87da2b19-0c90-444c-97cc-632c43fb8e2c" />
+
+---
