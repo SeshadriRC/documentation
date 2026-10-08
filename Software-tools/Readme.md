@@ -22,6 +22,19 @@ winget install Helm.Helm
 ## Kind
 
 - [kind-installation](https://kind.sigs.k8s.io/docs/user/quick-start/#installation)
+
+```bash
+1. Follow the powershell method in the above given link, then run below command
+
+powershell
+& "C:\myfolder\myprojects\kind\kind.exe" version
+
+[Environment]::SetEnvironmentVariable(
+    "Path",
+    [Environment]::GetEnvironmentVariable("Path", "User") + ";C:\myfolder\myprojects\kind",
+    "User"
+)
+```
   
 ##  WSL
 
