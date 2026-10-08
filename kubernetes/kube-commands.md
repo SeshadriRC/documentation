@@ -86,6 +86,12 @@ kubectl logs <pod-name> -c <container-name>
 kubectl logs -f <pod-name>
 ```
 
+## Minikube
+
+```bash
+minikube start --vm-driver docker --cpus=4 --memory=8192
+```
+
 ## Namespace
 
 ```bash
