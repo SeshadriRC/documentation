@@ -2,10 +2,12 @@
 
 Kibana
 -------
-Observability --> Alerts --> Manage rules --> create rule --> metric threshold 
+Stack management --> Rules and connectors --> Create rule --> Rule type Elasticsearch query
 
-name: slack alert
-select conditions
+<img width="1917" height="852" alt="image" src="https://github.com/user-attachments/assets/d7e39db3-8379-43a6-a571-643346aaafc1" />
+
+
+
 
 ```
 IF
@@ -292,3 +294,25 @@ resources:
     cpu: "500m"
     memory: "500Mi"
 ```
+
+<img width="1917" height="470" alt="image" src="https://github.com/user-attachments/assets/c3842022-2128-4e3b-8ed0-458c99ef12ab" />
+
+<img width="1537" height="455" alt="image" src="https://github.com/user-attachments/assets/b1c8095c-07e6-48e3-a8f4-0c74aeb4781d" />
+
+<img width="1897" height="832" alt="image" src="https://github.com/user-attachments/assets/11528a5d-f860-4962-9178-415eb9e42694" />
+
+<img width="967" height="606" alt="image" src="https://github.com/user-attachments/assets/0be92584-9e56-4ca5-b518-9ca536b706ac" />
+
+<img width="1885" height="828" alt="image" src="https://github.com/user-attachments/assets/b8ff9412-6633-480c-928a-f5ca36386ad3" />
+
+<img width="958" height="505" alt="image" src="https://github.com/user-attachments/assets/9b393ae7-4248-4062-9c8d-3bef25de2074" />
+
+<img width="1897" height="702" alt="image" src="https://github.com/user-attachments/assets/02086616-cd08-4048-a4f0-83ff85292fde" />
+
+Stack management --> Rules and connectors --> Create rule --> Rule type Elasticsearch query
+
+<img width="1917" height="852" alt="image" src="https://github.com/user-attachments/assets/d7e39db3-8379-43a6-a571-643346aaafc1" />
+
+<img width="1900" height="597" alt="image" src="https://github.com/user-attachments/assets/e9d1937d-343a-4e4c-bbc4-833da740cb8b" />
+
+<img width="1912" height="425" alt="image" src="https://github.com/user-attachments/assets/396a06d6-4a43-4778-a469-34493ab45c79" />
