@@ -1,6 +1,6 @@
 ## 1. Using kubernetes minikube.
 
-[Sending slack alerts](https://github.com/SeshadriRC/documentation/blob/main/Observability/ELK/Practicals/minikube-steps.md)
+[Sending slack alerts](https://github.com/SeshadriRC/documentation/blob/main/Observability/ELK/Practicals/minikube-slack-ELK-steps.md)
 
 ```
 https://www.youtube.com/watch?v=vOvbEmKAPHA&list=PLACmqyggUd8M&index=1&t=584s
