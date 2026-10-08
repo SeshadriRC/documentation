@@ -295,6 +295,25 @@ resources:
     memory: "500Mi"
 ```
 
+```bash
+helm search repo elastic/metricbeat --versions | head
+
+
+kubectl label serviceaccount metricbeat \
+  app.kubernetes.io/managed-by=Helm \
+  -n default
+  
+kubectl annotate serviceaccount metricbeat \
+  meta.helm.sh/release-name=metricbeat \
+  meta.helm.sh/release-namespace=default \
+  -n default
+  
+helm install metricbeat elastic/metricbeat \
+  --version 8.5.1 \
+  -n default \
+  -f metricbeat-values.yml
+```
+
 <img width="1917" height="470" alt="image" src="https://github.com/user-attachments/assets/c3842022-2128-4e3b-8ed0-458c99ef12ab" />
 
 <img width="1537" height="455" alt="image" src="https://github.com/user-attachments/assets/b1c8095c-07e6-48e3-a8f4-0c74aeb4781d" />
