@@ -21,8 +21,9 @@ https://www.youtube.com/watch?v=25LjNCzjVzk&list=PLACmqyggUd8M&index=7
 https://www.fosstechnix.com/send-alerts-to-slack-using-elastic-stack/
 ```
 
-## 3. Opentelemetry Repo
+## 3. Opentelemetry Docs and Repo
 
 ```
+https://opentelemetry.io/docs/demo/kubernetes-deployment/
 https://github.com/open-telemetry/opentelemetry-demo
 ```
