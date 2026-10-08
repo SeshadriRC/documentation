@@ -19,7 +19,10 @@ winget install Helm.Helm
 
 - [follow the steps](https://kubernetes.io/docs/tasks/tools/install-kubectl-windows/#install-kubectl-binary-on-windows-via-direct-download-or-curl)
 
+## Kind
 
+- [kind-installation](https://kind.sigs.k8s.io/docs/user/quick-start/#installation)
+  
 ##  WSL
 
 - [follow the steps](https://github.com/SeshadriRC/documentation/tree/main/WSL)
