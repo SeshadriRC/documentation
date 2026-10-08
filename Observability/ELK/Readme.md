@@ -20,3 +20,9 @@ t3.xtralarge - 30GB disk size
 https://www.youtube.com/watch?v=25LjNCzjVzk&list=PLACmqyggUd8M&index=7
 https://www.fosstechnix.com/send-alerts-to-slack-using-elastic-stack/
 ```
+
+## 3. Opentelemetry Repo
+
+```
+https://github.com/open-telemetry/opentelemetry-demo
+```
