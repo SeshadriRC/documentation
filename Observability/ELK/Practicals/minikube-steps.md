@@ -169,3 +169,126 @@ resources:
     cpu: "1000m"
     memory: "2Gi"
 ```
+
+**metricbeat-rbac.yml**
+
+```yaml
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: metricbeat
+  namespace: default
+
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: metricbeat
+rules:
+  - apiGroups: [""]
+    resources:
+      - nodes
+      - nodes/stats
+      - pods
+      - namespaces
+      - events
+      - services
+      - endpoints
+      - persistentvolumes
+      - persistentvolumeclaims
+      - resourcequotas
+    verbs: ["get", "list", "watch"]
+
+  - apiGroups: ["apps"]
+    resources:
+      - deployments
+      - replicasets
+      - statefulsets
+      - daemonsets
+    verbs: ["get", "list", "watch"]
+
+  - apiGroups: ["batch"]
+    resources:
+      - jobs
+      - cronjobs
+    verbs: ["get", "list", "watch"]
+
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  name: metricbeat
+subjects:
+  - kind: ServiceAccount
+    name: metricbeat
+    namespace: default
+roleRef:
+  kind: ClusterRole
+  name: metricbeat
+  apiGroup: rbac.authorization.k8s.io
+```
+
+**metricbeat-values.yml**
+
+```yaml
+daemonset:
+  enabled: true
+
+deployment:
+  enabled: false
+
+serviceAccount: metricbeat
+
+extraEnvs:
+  - name: ELASTICSEARCH_USERNAME
+    valueFrom:
+      secretKeyRef:
+        name: elasticsearch-master-credentials
+        key: username
+
+  - name: ELASTICSEARCH_PASSWORD
+    valueFrom:
+      secretKeyRef:
+        name: elasticsearch-master-credentials
+        key: password
+
+secretMounts:
+  - name: elasticsearch-master-certs
+    secretName: elasticsearch-master-certs
+    path: /usr/share/metricbeat/certs
+
+metricbeatConfig:
+  metricbeat.yml: |
+    metricbeat.modules:
+      - module: kubernetes
+        metricsets:
+          - node
+          - pod
+          - container
+          - system
+        period: 10s
+        host: ${NODE_NAME}
+        hosts:
+          - https://${NODE_NAME}:10250
+        bearer_token_file: /var/run/secrets/kubernetes.io/serviceaccount/token
+        ssl.verification_mode: none
+
+    processors:
+      - add_kubernetes_metadata:
+          host: ${NODE_NAME}
+
+    output.elasticsearch:
+      hosts: ["https://elasticsearch-master:9200"]
+      username: "${ELASTICSEARCH_USERNAME}"
+      password: "${ELASTICSEARCH_PASSWORD}"
+      ssl.certificate_authorities:
+        - /usr/share/metricbeat/certs/ca.crt
+
+resources:
+  requests:
+    cpu: "100m"
+    memory: "100Mi"
+  limits:
+    cpu: "500m"
+    memory: "500Mi"
+```
