@@ -54,6 +54,19 @@ kubectl config view --minify --output 'jsonpath={..namespace}'
 kubectl delete -f path/file.yml
 ```
 
+## Kind
+
+```bash
+kind: Cluster
+apiVersion: kind.x-k8s.io/v1alpha4
+
+# Specify the Kubernetes version by using a specific node image
+# Visit https://hub.docker.com/r/kindest/node/tags and https://github.com/kubernetes-sigs/kind/releases for available images
+nodes:
+  - role: control-plane
+  - role: worker
+```
+
 ## Logs
 
 ```bash
