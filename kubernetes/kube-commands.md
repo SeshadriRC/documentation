@@ -56,6 +56,8 @@ kubectl delete -f path/file.yml
 
 ## Kind
 
+`kind-config.yaml`
+
 ```bash
 kind: Cluster
 apiVersion: kind.x-k8s.io/v1alpha4
