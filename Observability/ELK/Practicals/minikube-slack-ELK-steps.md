@@ -1,5 +1,7 @@
 ## High level steps
 
+
+
 Kibana
 -------
 Stack management --> Rules and connectors --> Create rule --> Rule type Elasticsearch query
@@ -49,6 +51,71 @@ Alerts --> manage rules --> click slack alert --> Actions --> edit rule --> conn
 ---
 
 ## Full practicals
+
+```bash
+Update the Package List.
+sudo apt update
+
+Installs essential tools like curl, wget and apt-transport-https.
+sudo apt install curl wget apt-transport-https -y
+
+Installs Docker, a container runtime that will be used as the VM driver for Minikube.
+sudo apt install docker.io -y
+
+sudo usermod -aG docker $USER
+sudo chmod 666 /var/run/docker.sock
+
+egrep -q 'vmx|svm' /proc/cpuinfo && echo yes || echo no
+sudo apt install qemu-kvm libvirt-clients libvirt-daemon-system bridge-utils virtinst libvirt-daemon
+
+sudo adduser $USER libvirt
+sudo adduser $USER libvirt-qemu
+
+newgrp libvirt
+newgrp libvirt-qemu
+
+# Install Minikube and kubectl
+curl -LO https://storage.googleapis.com/minikube/releases/latest/minikube-linux-amd64
+sudo install minikube-linux-amd64 /usr/local/bin/minikube
+
+minikube version
+
+curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl"
+chmod +x ./kubectl
+sudo mv kubectl /usr/local/bin/
+
+# Start the Minikube
+minikube start --vm-driver docker --cpus=4 --memory=8192
+minikube status
+
+# Install the Helm
+curl -fsSL -o get_helm.sh https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3
+chmod 700 get_helm.sh
+./get_helm.sh
+helm version
+helm repo add elastic https://helm.elastic.co
+helm repo update
+
+# Deploy the ELK Stack and Filebeat
+elasticsearch-values.yaml
+helm install elasticsearch elastic/elasticsearch -f elasticsearch-values.yaml
+
+nano filebeat-values.yaml
+helm install filebeat elastic/filebeat -f filebeat-values.yaml
+
+nano logstash-values.yaml
+helm install logstash elastic/logstash -f logstash-values.yaml
+
+nano kibana-values.yaml
+helm install kibana elastic/kibana -f kibana-values.yaml
+
+# Access the ELK Stack
+kubectl get services
+kubectl port-forward --address 0.0.0.0 svc/kibana-kibana 5601:5601
+kubectl get secret elasticsearch-master-credentials -o jsonpath="{.data.username}" | base64 --decode ; echo
+kubectl get secret elasticsearch-master-credentials -o jsonpath="{.data.password}" | base64 --decode ; echo
+```
+
 
 **elasticsearch-values**
 
