@@ -1,0 +1,15 @@
+## 1. Using kubernetes minikube.
+
+```
+https://www.youtube.com/watch?v=vOvbEmKAPHA&list=PLACmqyggUd8M&index=1&t=584s
+https://www.fosstechnix.com/kubernetes-logging-using-elk-stack-and-filebeat/
+
+t3.xtralarge - 30GB disk size
+```
+
+## 2. Using docker compose
+
+```
+https://www.youtube.com/watch?v=25LjNCzjVzk&list=PLACmqyggUd8M&index=7
+https://www.fosstechnix.com/send-alerts-to-slack-using-elastic-stack/
+```
