@@ -1,10 +1,14 @@
-- Create a channel in slack.
-- Create incoming webhook, select the channel which you created and Copy the webhook url
+- Make sure to install the slack plugin
+
 
 <img width="1917" height="847" alt="image" src="https://github.com/user-attachments/assets/9454ada8-821d-453d-95fb-a3cbf5f27edc" />
 
-<img width="1917" height="832" alt="image" src="https://github.com/user-attachments/assets/3f01fd45-5b7a-4e56-9b3d-0cd06ffadac0" />
 
-<img width="1917" height="818" alt="image" src="https://github.com/user-attachments/assets/9e774470-cef3-45b4-ba7b-fbf1a9da6ade" />
+<img width="1917" height="593" alt="image" src="https://github.com/user-attachments/assets/7330ba25-ca7f-475c-af70-92f0c8fbb75c" />
 
-<img width="1546" height="491" alt="image" src="https://github.com/user-attachments/assets/f855c083-53df-4497-91e9-9f8b56106f48" />
+<img width="1000" height="597" alt="image" src="https://github.com/user-attachments/assets/9269b8c7-0a51-424a-b5a5-86cdc37bb4f0" />
+
+<img width="1917" height="840" alt="image" src="https://github.com/user-attachments/assets/10606561-e22e-4e34-b101-ffbbe97d1cd2" />
+
+<img width="1917" height="731" alt="image" src="https://github.com/user-attachments/assets/7dc258b3-1944-4031-86bd-2c301354c444" />
+
