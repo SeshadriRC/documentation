@@ -1,8 +1,16 @@
+- This method will work only with public channel 
 - Make sure to install the slack plugin
 - Manage Jenkins --> System --> Slack --> Enter the workspace
 - Then in the same page --> Add creds --> Secret text
 - Then select the channel name, then check mark the custom slack bot user and save it. Below is the creds of custom slack bot
+
 <img width="1247" height="151" alt="image" src="https://github.com/user-attachments/assets/cd951b64-92b7-437f-9cb9-98124bd5f259" />
+
+- Manage jenkins --> Creds --> Add creds --> Secret text
+
+<img width="1917" height="777" alt="image" src="https://github.com/user-attachments/assets/1fefaa3a-7107-4847-bcb3-44432ef6ad2d" />
+
+---
 
 <img width="1917" height="847" alt="image" src="https://github.com/user-attachments/assets/9454ada8-821d-453d-95fb-a3cbf5f27edc" />
 
@@ -18,3 +26,6 @@
 <img width="905" height="732" alt="image" src="https://github.com/user-attachments/assets/a4ac6b44-450a-45e2-8204-bbaaefa02892" />
 
 <img width="1917" height="633" alt="image" src="https://github.com/user-attachments/assets/fbf3694b-20e1-400d-aa03-a612eabc534c" />
+
+- After testing it will show like this
+<img width="1712" height="306" alt="image" src="https://github.com/user-attachments/assets/0a59d34d-6df5-48b0-910a-059075679f71" />
