@@ -124,6 +124,11 @@ kubectl get pod mlflow-545ff865df-vccp6 -n mlflow -o jsonpath='{.status.containe
 
 ```bash
 kubectl run test-pod --image=busybox -it --rm --restart=Never -- /bin/sh
+
+kubectl run alert-test \
+  --image=busybox \
+  --restart=Always \
+  -- sh -c "echo 'Alert test crashing now'; sleep 5; exit 1"
 ```
 
 ## Service
