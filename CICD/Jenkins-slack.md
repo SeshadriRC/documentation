@@ -1,5 +1,7 @@
 - Make sure to install the slack plugin
-
+- Manage Jenkins --> System --> Slack --> Enter the workspace
+- Then in the same page --> Add creds --> Secret text
+- Then select the channel name
 
 <img width="1917" height="847" alt="image" src="https://github.com/user-attachments/assets/9454ada8-821d-453d-95fb-a3cbf5f27edc" />
 
@@ -12,3 +14,4 @@
 
 <img width="1917" height="731" alt="image" src="https://github.com/user-attachments/assets/7dc258b3-1944-4031-86bd-2c301354c444" />
 
+<img width="905" height="732" alt="image" src="https://github.com/user-attachments/assets/a4ac6b44-450a-45e2-8204-bbaaefa02892" />
