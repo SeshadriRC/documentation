@@ -4,6 +4,8 @@ helm repo add elastic https://helm.elastic.co
 
 helm repo update
 
+helm repo remove elastic
+
 helm search repo elastic/metricbeat --versions | head
 
 helm install metricbeat elastic/metricbeat \
