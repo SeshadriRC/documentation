@@ -38,7 +38,13 @@ powershell
     "User"
 )
 ```
-  
+
+---
+
+## Minikube Installation
+
+- [Minikube-installation](https://github.com/SeshadriRC/documentation/blob/main/Observability/ELK/Practicals/minikube-slack-ELK-steps.md#full-practicals)
+
 ##  WSL
 
 - [follow the steps](https://github.com/SeshadriRC/documentation/tree/main/WSL)
