@@ -3,6 +3,8 @@ minikube start --vm-driver docker --cpus=4 --memory=8192
 kubectl get secret elasticsearch-master-credentials -o jsonpath="{.data.password}" | base64 --decode ; echo
 ```
 
+[Observability-Repo](https://github.com/SeshadriRC/observability-zero-to-hero/tree/main)
+
 ## 1. Using kubernetes minikube.
 
 - [Sending slack alerts](https://github.com/SeshadriRC/documentation/blob/main/Observability/ELK/Practicals/minikube-slack-ELK-steps.md)
