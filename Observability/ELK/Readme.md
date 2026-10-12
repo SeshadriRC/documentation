@@ -5,6 +5,9 @@ kubectl get secret elasticsearch-master-credentials -o jsonpath="{.data.password
 
 [Observability-Repo](https://github.com/SeshadriRC/observability-zero-to-hero/tree/main)
 
+  - About prometheus/grafana stack installation - Day 2
+  - About prometheus/grafana explanation - Day 3
+
 ## 1. Using kubernetes minikube.
 
 - [Sending slack alerts](https://github.com/SeshadriRC/documentation/blob/main/Observability/ELK/Practicals/minikube-slack-ELK-steps.md)
