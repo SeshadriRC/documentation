@@ -48,3 +48,7 @@ powershell
 ##  WSL
 
 - [follow the steps](https://github.com/SeshadriRC/documentation/tree/main/WSL)
+
+## WSL - Ubuntu
+
+- [follow the steps](https://github.com/SeshadriRC/Devops-Learnings/blob/main/Infrastructure/WSL.md)
