@@ -5,9 +5,10 @@ kubectl get secret elasticsearch-master-credentials -o jsonpath="{.data.password
 
 ## Practicals
 
-1. [Grafana-Slack-Integration](https://github.com/SeshadriRC/documentation/blob/main/Observability/ELK/Practicals/grafana-slack-alert.md)
-2. [ELK-setup-and-Sending slack alerts](https://github.com/SeshadriRC/documentation/blob/main/Observability/ELK/Practicals/minikube-slack-ELK-steps.md)
-3. [Sending ELK - email alerts](https://github.com/SeshadriRC/documentation/blob/main/Observability/ELK/Practicals/Email-alert.md)
+1. [Grafana-Slack-Integration](https://github.com/SeshadriRC/documentation/blob/main/Observability/ELK/Practicals/grafana-slack-integration.md)
+2. [Grafana-Slack-Alert](https://github.com/SeshadriRC/documentation/blob/main/Observability/ELK/Practicals/grafana-slack-alert.md)
+3. [ELK-setup-and-Sending slack alerts](https://github.com/SeshadriRC/documentation/blob/main/Observability/ELK/Practicals/minikube-slack-ELK-steps.md)
+4. [Sending ELK - email alerts](https://github.com/SeshadriRC/documentation/blob/main/Observability/ELK/Practicals/Email-alert.md)
 
 ---
 
