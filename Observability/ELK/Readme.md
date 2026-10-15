@@ -3,6 +3,14 @@ minikube start --vm-driver docker --cpus=4 --memory=8192
 kubectl get secret elasticsearch-master-credentials -o jsonpath="{.data.password}" | base64 --decode ; echo
 ```
 
+## Practicals
+
+1. [Grafana-Slack-Integration](https://github.com/SeshadriRC/documentation/blob/main/Observability/ELK/Practicals/grafana-slack-alert.md)
+2. [ELK-setup-and-Sending slack alerts](https://github.com/SeshadriRC/documentation/blob/main/Observability/ELK/Practicals/minikube-slack-ELK-steps.md)
+3. [Sending ELK - email alerts](https://github.com/SeshadriRC/documentation/blob/main/Observability/ELK/Practicals/Email-alert.md)
+
+---
+
 ## 1. [Observability-Repo](https://github.com/SeshadriRC/observability-zero-to-hero/tree/main)
 
   - About prometheus/grafana stack installation - Day 2
@@ -11,8 +19,6 @@ kubectl get secret elasticsearch-master-credentials -o jsonpath="{.data.password
 
 ## 2. Using kubernetes minikube.
 
-- [ELK-setup-and-Sending slack alerts](https://github.com/SeshadriRC/documentation/blob/main/Observability/ELK/Practicals/minikube-slack-ELK-steps.md)
-- [Sending email alerts](https://github.com/SeshadriRC/documentation/blob/main/Observability/ELK/Practicals/Email-alert.md)
 
 ```
 https://www.youtube.com/watch?v=vOvbEmKAPHA&list=PLACmqyggUd8M&index=1&t=584s
