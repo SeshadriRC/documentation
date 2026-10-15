@@ -17,6 +17,7 @@ kubectl get secret elasticsearch-master-credentials -o jsonpath="{.data.password
   - About prometheus/grafana stack installation - Day 2
   - About prometheus/grafana explanation - Day 3
   - Instrumentation - Day 4
+  - EFK Setup - Day 5 ( EC2 kind cluster )
 
 ## 2. Using kubernetes minikube.
 
