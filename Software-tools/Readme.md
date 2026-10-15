@@ -13,6 +13,8 @@
 winget install Helm.Helm
 ```
 
+- install in [ubuntu](https://helm.sh/docs/intro/install/#from-script)
+
 ## VSCode
 
 - Download for windows in [website](https://code.visualstudio.com/download?_exp_download=fb315fc982)
