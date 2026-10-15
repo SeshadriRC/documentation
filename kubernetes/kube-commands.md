@@ -72,7 +72,10 @@ kind create cluster --name=basic-mlflow-cluster --config=kind-config.yaml
 kind create cluster --name=basic-mlflow-cluster
 kind delete cluster --name my-first-cluster
 kind create cluster --name my-second-cluster --config kind-cluster.yaml
+
 kind get clusters
+kind export kubeconfig --name observability-cluster
+kubectl config use-context kind-observability-cluster
 ```
 
 ## Logs
