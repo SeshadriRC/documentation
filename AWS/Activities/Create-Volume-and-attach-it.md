@@ -2,7 +2,7 @@
 
 These notes cover how to identify an additional EBS volume, create an ext4 filesystem, mount it to a directory, troubleshoot a busy mount point, and configure automatic mounting after reboot.
 
-**Note**: Make sure to create the volume in AWS , which should be in the same `AZ` as `EC2`.
+**Note**: Make sure to create the volume in AWS , which should be in the same `AZ` as `EC2`. follow this [doc](https://github.com/SeshadriRC/ultimate-linux-guide/blob/main/My-Activities/Disk-management.md#volume-create)
 
 ## 1. Identify the attached disk
 
