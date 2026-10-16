@@ -7,6 +7,15 @@
 
 - Download for windows in [website](https://docs.docker.com/desktop/setup/install/windows-install/)
 
+## Docker CLI
+
+- Install CLI on linux, follow [this](https://docs.docker.com/engine/install/ubuntu/#install-using-the-repository)
+
+```bash
+sudo usermod -aG docker $USER
+newgrp docker
+```
+
 ## Helm
 
 ```bash
