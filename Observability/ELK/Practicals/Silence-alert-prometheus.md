@@ -41,3 +41,9 @@ This can appear before the silence's start time. Make sure the Start is now or i
 Once all fields are filled, click Create.
 
 Important: This suppresses notifications routed through Alertmanager. Prometheus continues evaluating rules, and notifications from separate Grafana alerting configurations may still be sent.
+
+---
+
+<img width="1917" height="960" alt="image" src="https://github.com/user-attachments/assets/b9767b8b-7db6-4062-b305-a3086d7bc321" />
+
+<img width="1917" height="860" alt="image" src="https://github.com/user-attachments/assets/3949f491-827b-4f99-92d9-fe5dc1a5b46e" />
