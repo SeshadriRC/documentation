@@ -14,7 +14,7 @@ kubectl get secret elasticsearch-master-credentials -o jsonpath="{.data.password
 
 ## 1. [Observability-Repo](https://github.com/SeshadriRC/observability-zero-to-hero/tree/main)
 
-  - About prometheus/grafana stack installation - Day 2
+  - About prometheus/grafana stack installation,  Also EKS cluster provisioning - Day 2
   - About prometheus/grafana explanation - Day 3
   - Instrumentation - Day 4
   - EFK Setup - Day 5 ( EC2 kind cluster )
