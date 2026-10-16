@@ -102,6 +102,13 @@ minikube start --vm-driver docker --cpus=4 --memory=8192
 kubectl get namespaces --show-labels
 ```
 
+## Nodes
+
+```bash
+# Check the taints
+kubectl get nodes -o custom-columns=NAME:.metadata.name,TAINTS:.spec.taints
+```
+
 ## Patch
 
 ```bash
@@ -122,6 +129,10 @@ kubectl port-forward -n <namespace-name> pod/mlflow-community-6d575f4f6b-28cxb 7
 # To check all container status
 kubectl get pod <pod-name> -n <namespace> -o jsonpath='{.status.containerStatuses[*].state}'
 kubectl get pod mlflow-545ff865df-vccp6 -n mlflow -o jsonpath='{.status.containerStatuses[*].state}'
+
+# Check the tolerations
+kubectl get pod monitoring-prometheus-node-exporter-c79mr -n monitoring -o yaml | grep -A10 tolerations
+
 ```
 
 ## Run
