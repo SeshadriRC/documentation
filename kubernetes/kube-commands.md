@@ -42,6 +42,13 @@ kubectl config set-context --current --namespace=employee-app
 kubectl config view --minify --output 'jsonpath={..namespace}'
 ```
 
+## Deployment
+
+```bash
+kubectl set env deployment/service-b-deployment -n dev OTEL_EXPORTER_JAEGER_ENDPOINT=http://jaeger.tracing:14268/api/traces
+kubectl rollout restart deployment/service-b-deployment -n dev
+```
+
 ## Delete
 
 ```bash
