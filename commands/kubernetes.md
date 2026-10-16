@@ -1,0 +1,160 @@
+## Apply
+
+```bash
+kubectl apply -f path/file.yml
+```
+
+## Curl
+
+```bash
+curl <service-clusterip>:port
+curl 190.xx.xx.xx:9099
+
+# find the public IP address of the machine from which the request is made.
+curl https://checkip.amazonaws.com
+
+# check whether your machine can establish a TCP connection to an RDS PostgreSQL database on port 5432
+curl -v telnet://database-1.c5k88omakd8d.ap-south-1.rds.amazonaws.com:5432
+
+```
+
+## Cluster
+
+```bash
+kubectl cluster-info --context kind-demo-cluster
+kubectl cluster-info
+
+kubectl config use-context kind-<cluster-name>
+kubectl config view
+kubectl config current-context
+kubectl config get-contexts
+kubectl config set-context --current --namespace=app1-ns
+
+ls ~/.kube/config
+```
+
+## Context
+
+```bash
+kubectl config use-context kind-basic-mlflow-cluster
+
+kubectl config set-context --current --namespace=employee-app
+kubectl config view --minify --output 'jsonpath={..namespace}'
+```
+
+## Deployment
+
+```bash
+kubectl set env deployment/service-b-deployment -n dev OTEL_EXPORTER_JAEGER_ENDPOINT=http://jaeger.tracing:14268/api/traces
+kubectl rollout restart deployment/service-b-deployment -n dev
+```
+
+## Delete
+
+```bash
+kubectl delete -f path/file.yml
+```
+
+## Kind
+
+`kind-config.yaml`
+
+```bash
+kind: Cluster
+apiVersion: kind.x-k8s.io/v1alpha4
+
+# Specify the Kubernetes version by using a specific node image
+# Visit https://hub.docker.com/r/kindest/node/tags and https://github.com/kubernetes-sigs/kind/releases for available images
+nodes:
+  - role: control-plane
+  - role: worker
+  - role: worker
+```
+
+`commands`
+
+```bash
+kind create cluster --name=basic-mlflow-cluster --config=kind-config.yaml
+
+# refer day 8 in cka for kind commands
+kind create cluster --name=basic-mlflow-cluster
+kind delete cluster --name my-first-cluster
+kind create cluster --name my-second-cluster --config kind-cluster.yaml
+
+kind get clusters
+kind export kubeconfig --name observability-cluster
+kubectl config use-context kind-observability-cluster
+```
+
+## Logs
+
+```bash
+# To check specific container logs
+kubectl logs -n <namespace> <pod-name> --container <container-name>
+kubectl logs -n mlflow mlflow-545ff865df-4j4h9 --container mlflow-db-migration
+
+kubectl logs <pod-name> -c <container-name>
+kubectl logs -f <pod-name>
+```
+
+## Minikube
+
+```bash
+minikube start --vm-driver docker --cpus=4 --memory=8192
+```
+
+## Namespace
+
+```bash
+kubectl get namespaces --show-labels
+```
+
+## Nodes
+
+```bash
+# Check the taints
+kubectl get nodes -o custom-columns=NAME:.metadata.name,TAINTS:.spec.taints
+```
+
+## Patch
+
+```bash
+ kubectl patch svc bookinfo-gateway-istio \
+  -n default \
+  -p '{"spec":{"type":"NodePort"}}'
+```
+
+## Port-forward
+
+```bash
+kubectl port-forward -n <namespace-name> pod/mlflow-community-6d575f4f6b-28cxb 7006:5000 --address 0.0.0.0
+```
+
+## Pods
+
+```bash
+# To check all container status
+kubectl get pod <pod-name> -n <namespace> -o jsonpath='{.status.containerStatuses[*].state}'
+kubectl get pod mlflow-545ff865df-vccp6 -n mlflow -o jsonpath='{.status.containerStatuses[*].state}'
+
+# Check the tolerations
+kubectl get pod monitoring-prometheus-node-exporter-c79mr -n monitoring -o yaml | grep -A10 tolerations
+
+```
+
+## Run
+
+```bash
+kubectl run test-pod --image=busybox -it --rm --restart=Never -- /bin/sh
+
+kubectl run alert-test \
+  --image=busybox \
+  --restart=Always \
+  -- sh -c "echo 'Alert test crashing now'; sleep 5; exit 1"
+```
+
+## Service
+
+```bash
+kubectl get svc
+```
