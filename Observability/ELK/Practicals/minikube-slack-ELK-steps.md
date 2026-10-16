@@ -1,5 +1,6 @@
 ## High level steps
 
+[Link](https://www.fosstechnix.com/kubernetes-logging-using-elk-stack-and-filebeat/)
 
 
 Kibana
