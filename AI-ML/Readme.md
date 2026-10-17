@@ -6,3 +6,5 @@
 4. [RAG](https://github.com/SeshadriRC/RAG)
 
    - [youtube](https://www.youtube.com/watch?v=4Qp5D5hcE4A&list=PLhhO7g8ucBH7MzCKGDp8fLOuFgdpW4l5Z&index=2)
+
+5. [AgentOps](https://github.com/SeshadriRC/documentation/blob/main/AI-ML/Topics/Explanations/AgentOps.md)
