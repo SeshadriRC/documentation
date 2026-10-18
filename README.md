@@ -15,3 +15,22 @@ https://github.com/SeshadriRC/YouTube-Standalone-Lectures/tree/main - pending pr
     - [youtube video](https://www.youtube.com/watch?v=tKKl3PHNAyY)
 
 ---
+
+## DevOps Commands Reference
+
+Check the [commands/](file:///home/ubuntu/documentation/commands/README.md) directory for comprehensive command cheat sheets:
+- [Linux Commands](file:///home/ubuntu/documentation/commands/Linux.md)
+- [Kubernetes Commands](file:///home/ubuntu/documentation/commands/kubernetes.md)
+- [Docker Commands](file:///home/ubuntu/documentation/commands/docker.md)
+- [Helm Commands](file:///home/ubuntu/documentation/commands/Helm.md)
+- [Terraform Commands](file:///home/ubuntu/documentation/commands/Terraform.md)
+- [AWS CLI Commands](file:///home/ubuntu/documentation/commands/AWS-CLI.md)
+- [Git Commands](file:///home/ubuntu/documentation/commands/Git.md)
+- [Ansible Commands](file:///home/ubuntu/documentation/commands/Ansible.md)
+- [HashiCorp Vault Commands](file:///home/ubuntu/documentation/commands/Vault.md)
+- [Argo CD GitOps Commands](file:///home/ubuntu/documentation/commands/ArgoCD.md)
+- [CI/CD Commands (GitHub Actions, Jenkins, GitLab)](file:///home/ubuntu/documentation/commands/CI-CD.md)
+- [Observability Commands (Prometheus, Grafana, Loki, OpenTelemetry, Elastic)](file:///home/ubuntu/documentation/commands/Observability.md)
+- [Networking & SSL/TLS Commands (OpenSSL, Certbot, Nginx, tcpdump)](file:///home/ubuntu/documentation/commands/Networking-and-SSL.md)
+- [Database CLI Commands (PostgreSQL, MySQL, Redis, MongoDB)](file:///home/ubuntu/documentation/commands/Database-CLI.md)
+- [Antigravity CLI Commands](file:///home/ubuntu/documentation/commands/Antigravity-cli.md)
