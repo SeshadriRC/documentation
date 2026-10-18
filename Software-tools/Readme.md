@@ -59,6 +59,20 @@ powershell
 
 - [Minikube-installation](https://github.com/SeshadriRC/documentation/blob/main/Observability/ELK/Practicals/minikube-slack-ELK-steps.md#full-practicals)
 
+## npm / npx
+
+```bash
+sudo apt install npm
+```
+
+## uvx
+
+```bash
+curl -LsSf https://astral.sh/uv/install.sh | sh
+uvx google-agents-cli setup
+```
+
+
 ##  WSL
 
 - [follow the steps](https://github.com/SeshadriRC/documentation/tree/main/WSL)
@@ -67,9 +81,4 @@ powershell
 
 - [follow the steps](https://github.com/SeshadriRC/Devops-Learnings/blob/main/Infrastructure/WSL.md)
 
-## uvx
 
-```bash
-curl -LsSf https://astral.sh/uv/install.sh | sh
-uvx google-agents-cli setup
-```
