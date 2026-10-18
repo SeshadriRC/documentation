@@ -66,3 +66,10 @@ powershell
 ## WSL - Ubuntu
 
 - [follow the steps](https://github.com/SeshadriRC/Devops-Learnings/blob/main/Infrastructure/WSL.md)
+
+## uvx
+
+```bash
+curl -LsSf https://astral.sh/uv/install.sh | sh
+uvx google-agents-cli setup
+```
