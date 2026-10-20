@@ -4,6 +4,26 @@ A comprehensive reference for production database operations, backup/restore pip
 
 ---
 
+## Table of Contents
+
+- [1. PostgreSQL (`psql`, `pg_dump`, `pg_restore`)](#1-postgresql-psql-pg_dump-pg_restore)
+  - [Connection & Health Checks](#connection--health-checks)
+  - [Backup & Restore](#backup--restore)
+  - [DevOps Troubleshooting & Performance Queries](#devops-troubleshooting--performance-queries)
+- [2. MySQL & MariaDB (`mysql`, `mysqldump`)](#2-mysql--mariadb-mysql-mysqldump)
+  - [Connection & Health Checks](#connection--health-checks-1)
+  - [Backup & Restore](#backup--restore-1)
+  - [DevOps Troubleshooting & Queries](#devops-troubleshooting--queries)
+- [3. Redis (`redis-cli`)](#3-redis-redis-cli)
+  - [Connection & Diagnostics](#connection--diagnostics)
+  - [Troubleshooting & DevOps Operations](#troubleshooting--devops-operations)
+- [4. MongoDB (`mongosh`, `mongodump`, `mongorestore`)](#4-mongodb-mongosh-mongodump-mongorestore)
+  - [Connection & Administration](#connection--administration)
+  - [Backup & Restore](#backup--restore-2)
+  - [Performance & Query Killing](#performance--query-killing)
+
+---
+
 ## 1. PostgreSQL (`psql`, `pg_dump`, `pg_restore`)
 
 ### Connection & Health Checks
@@ -69,6 +89,8 @@ ORDER BY pg_total_relation_size(relid) DESC
 LIMIT 10;
 ```
 
+[Back to Top ↑](#table-of-contents)
+
 ---
 
 ## 2. MySQL & MariaDB (`mysql`, `mysqldump`)
@@ -124,6 +146,8 @@ GROUP BY table_schema;
 SHOW REPLICA STATUS\G
 ```
 
+[Back to Top ↑](#table-of-contents)
+
 ---
 
 ## 3. Redis (`redis-cli`)
@@ -170,6 +194,8 @@ redis-cli -h localhost flushdb async
 redis-cli -h localhost flushall async
 ```
 
+[Back to Top ↑](#table-of-contents)
+
 ---
 
 ## 4. MongoDB (`mongosh`, `mongodump`, `mongorestore`)
@@ -207,3 +233,5 @@ db.currentOp({ "active": true, "secs_running": { "$gt": 5 } });
 // Kill operation by OpID
 db.killOp(12345);
 ```
+
+[Back to Top ↑](#table-of-contents)

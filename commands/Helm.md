@@ -4,6 +4,23 @@ A comprehensive reference for Kubernetes package management using Helm 3.
 
 ---
 
+## Table of Contents
+
+- [1. Repository Management](#1-repository-management)
+- [2. Searching & Discovering Charts](#2-searching--discovering-charts)
+- [3. Installing Charts](#3-installing-charts)
+- [4. Upgrading Releases (Idempotent Deployments)](#4-upgrading-releases-idempotent-deployments)
+- [5. Rollback & Release History](#5-rollback--release-history)
+- [6. Inspecting Releases & Values](#6-inspecting-releases--values)
+- [7. Chart Development, Linting & Dry-Runs](#7-chart-development-linting--dry-runs)
+- [8. Managing Chart Dependencies](#8-managing-chart-dependencies)
+- [9. Inspecting Upstream Charts (Without Installing)](#9-inspecting-upstream-charts-without-installing)
+- [10. Uninstalling Releases](#10-uninstalling-releases)
+- [11. Helm Diff & Useful Plugins](#11-helm-diff--useful-plugins)
+- [12. OCI Registry Support (Helm 3.8+)](#12-oci-registry-support-helm-38)
+
+---
+
 ## 1. Repository Management
 
 ```bash
@@ -26,6 +43,8 @@ helm repo list
 helm repo remove elastic
 ```
 
+[Back to Top ↑](#table-of-contents)
+
 ---
 
 ## 2. Searching & Discovering Charts
@@ -41,6 +60,8 @@ helm search repo elastic/metricbeat --versions | head
 helm search hub cert-manager
 helm search hub prometheus
 ```
+
+[Back to Top ↑](#table-of-contents)
 
 ---
 
@@ -79,6 +100,8 @@ helm install redis bitnami/redis \
 helm install my-app ./chart --atomic --timeout 5m
 ```
 
+[Back to Top ↑](#table-of-contents)
+
 ---
 
 ## 4. Upgrading Releases (Idempotent Deployments)
@@ -103,6 +126,8 @@ helm upgrade my-app ./chart --reuse-values --set replicaCount=5
 helm upgrade my-app ./chart --reset-values -f new-values.yaml
 ```
 
+[Back to Top ↑](#table-of-contents)
+
 ---
 
 ## 5. Rollback & Release History
@@ -120,6 +145,8 @@ helm rollback my-app 2 -n production
 # Roll back with atomic validation and timeout
 helm rollback my-app 2 -n production --atomic --timeout 5m
 ```
+
+[Back to Top ↑](#table-of-contents)
 
 ---
 
@@ -148,6 +175,8 @@ helm get manifest my-app -n production
 helm get notes my-app -n production
 ```
 
+[Back to Top ↑](#table-of-contents)
+
 ---
 
 ## 7. Chart Development, Linting & Dry-Runs
@@ -172,6 +201,8 @@ helm install my-app ./my-microservice --dry-run --debug -n default
 helm package ./my-microservice -d ./charts-repo
 ```
 
+[Back to Top ↑](#table-of-contents)
+
 ---
 
 ## 8. Managing Chart Dependencies
@@ -186,6 +217,8 @@ helm dependency update ./my-chart
 # Build dependencies locally into the charts/ directory
 helm dependency build ./my-chart
 ```
+
+[Back to Top ↑](#table-of-contents)
 
 ---
 
@@ -205,6 +238,8 @@ helm show readme bitnami/nginx
 helm show all elastic/metricbeat
 ```
 
+[Back to Top ↑](#table-of-contents)
+
 ---
 
 ## 10. Uninstalling Releases
@@ -219,6 +254,8 @@ helm uninstall my-app -n production --keep-history
 # Uninstall with a grace period / timeout
 helm uninstall my-app -n production --timeout 3m
 ```
+
+[Back to Top ↑](#table-of-contents)
 
 ---
 
@@ -241,6 +278,8 @@ helm plugin update diff
 helm plugin uninstall diff
 ```
 
+[Back to Top ↑](#table-of-contents)
+
 ---
 
 ## 12. OCI Registry Support (Helm 3.8+)
@@ -259,3 +298,5 @@ helm pull oci://ghcr.io/my-org/charts/my-chart --version 0.1.0 --untar
 # Install chart directly from OCI registry
 helm install my-app oci://ghcr.io/my-org/charts/my-chart --version 0.1.0 -n production
 ```
+
+[Back to Top ↑](#table-of-contents)

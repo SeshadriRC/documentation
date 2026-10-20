@@ -4,6 +4,27 @@ A comprehensive reference for cluster operations, application deployment, debugg
 
 ---
 
+## Table of Contents
+
+- [1. Cluster & Kubeconfig Management](#1-cluster--kubeconfig-management)
+- [2. Local Cluster Provisioning (Kind & Minikube)](#2-local-cluster-provisioning-kind--minikube)
+  - [Kind (Kubernetes in Docker)](#kind-kubernetes-in-docker)
+  - [Minikube](#minikube)
+- [3. Namespaces](#3-namespaces)
+- [4. Pod Operations & Troubleshooting](#4-pod-operations--troubleshooting)
+- [5. Pod Logs](#5-pod-logs)
+- [6. Interactive Exec & Debugging](#6-interactive-exec--debugging)
+- [7. Deployments, Rollouts & Scaling](#7-deployments-rollouts--scaling)
+- [8. Services, Networking & Ingress](#8-services-networking--ingress)
+- [9. Nodes & Cluster Administration](#9-nodes--cluster-administration)
+- [10. Resource Metrics & Cluster Health](#10-resource-metrics--cluster-health)
+- [11. ConfigMaps & Secrets](#11-configmaps--secrets)
+- [12. Storage: PV, PVC & StorageClass](#12-storage-pv-pvc--storageclass)
+- [13. Apply, Delete & Dry-Run Manifest Generation](#13-apply-delete--dry-run-manifest-generation)
+- [14. RBAC, Service Accounts & Security](#14-rbac-service-accounts--security)
+
+---
+
 ## 1. Cluster & Kubeconfig Management
 
 ```bash
@@ -36,6 +57,8 @@ kubectl config view --minify --output 'jsonpath={..namespace}'
 # Merge multiple kubeconfig files into one
 KUBECONFIG=~/.kube/config:~/.kube/eks-config kubectl config view --flatten > ~/.kube/config-merged
 ```
+
+[Back to Top ↑](#table-of-contents)
 
 ---
 
@@ -91,6 +114,8 @@ minikube stop
 minikube delete
 ```
 
+[Back to Top ↑](#table-of-contents)
+
 ---
 
 ## 3. Namespaces
@@ -110,6 +135,8 @@ kubectl get namespace <terminating-namespace> -o json \
   | tr -d "\n" | sed "s/\"finalizers\": \[[^]]\+\]/\"finalizers\": []/" \
   | kubectl replace --raw /api/v1/namespaces/<terminating-namespace>/finalize -f -
 ```
+
+[Back to Top ↑](#table-of-contents)
 
 ---
 
@@ -148,6 +175,8 @@ kubectl run alert-test \
 kubectl delete pod <pod-name> -n <namespace> --grace-period=0 --force
 ```
 
+[Back to Top ↑](#table-of-contents)
+
 ---
 
 ## 5. Pod Logs
@@ -170,6 +199,8 @@ kubectl logs -f -l app=my-app -n production --max-log-requests=10
 kubectl logs --timestamps <pod-name> -n <namespace>
 ```
 
+[Back to Top ↑](#table-of-contents)
+
 ---
 
 ## 6. Interactive Exec & Debugging
@@ -188,6 +219,8 @@ kubectl exec <pod-name> -n <namespace> -- netstat -tulpn
 # Attach an ephemeral debug container to a running pod (Kubernetes 1.23+)
 kubectl debug -it <pod-name> -n <namespace> --image=nicolaka/netshoot --target=<container-name>
 ```
+
+[Back to Top ↑](#table-of-contents)
 
 ---
 
@@ -225,6 +258,8 @@ kubectl rollout resume deployment/my-deployment -n production
 # Scale deployment replicas
 kubectl scale deployment/my-deployment --replicas=5 -n production
 ```
+
+[Back to Top ↑](#table-of-contents)
 
 ---
 
@@ -267,6 +302,8 @@ curl https://checkip.amazonaws.com
 curl -v telnet://database-1.c5k88omakd8d.ap-south-1.rds.amazonaws.com:5432
 ```
 
+[Back to Top ↑](#table-of-contents)
+
 ---
 
 ## 9. Nodes & Cluster Administration
@@ -301,6 +338,8 @@ kubectl label nodes <node-name> disktype=ssd
 kubectl label nodes <node-name> disktype-
 ```
 
+[Back to Top ↑](#table-of-contents)
+
 ---
 
 ## 10. Resource Metrics & Cluster Health
@@ -319,6 +358,8 @@ kubectl get events -A --sort-by=.metadata.creationTimestamp
 # Filter warning events only
 kubectl get events -A --field-selector type=Warning --sort-by=.metadata.creationTimestamp
 ```
+
+[Back to Top ↑](#table-of-contents)
 
 ---
 
@@ -351,6 +392,8 @@ echo ""
 kubectl get secret db-credentials -n production -o json | jq '.data | map_values(@base64d)'
 ```
 
+[Back to Top ↑](#table-of-contents)
+
 ---
 
 ## 12. Storage: PV, PVC & StorageClass
@@ -371,6 +414,8 @@ kubectl describe pvc <pvc-name> -n <namespace>
 # Clear finalizers on a PVC stuck in Terminating status
 kubectl patch pvc <pvc-name> -n <namespace> -p '{"metadata":{"finalizers":null}}'
 ```
+
+[Back to Top ↑](#table-of-contents)
 
 ---
 
@@ -393,6 +438,8 @@ kubectl create service clusterip my-app --tcp=80:80 --dry-run=client -o yaml > s
 kubectl create configmap app-cfg --from-file=app.properties --dry-run=client -o yaml > configmap.yaml
 ```
 
+[Back to Top ↑](#table-of-contents)
+
 ---
 
 ## 14. RBAC, Service Accounts & Security
@@ -410,3 +457,5 @@ kubectl get serviceaccounts -n <namespace>
 kubectl get roles,rolebindings -n <namespace>
 kubectl get clusterroles,clusterrolebindings
 ```
+
+[Back to Top ↑](#table-of-contents)

@@ -4,6 +4,16 @@ A comprehensive reference for automating, inspecting, and triggering continuous 
 
 ---
 
+## Table of Contents
+
+- [1. GitHub CLI (`gh`) for GitHub Actions](#1-github-cli-gh-for-github-actions)
+- [2. Jenkins CLI & REST API Automation](#2-jenkins-cli--rest-api-automation)
+  - [Jenkins CLI (`jenkins-cli.jar`)](#jenkins-cli-jenkins-clijar)
+  - [Jenkins REST API via cURL](#jenkins-rest-api-via-curl)
+- [3. GitLab CLI (`glab`) for GitLab CI/CD](#3-gitlab-cli-glab-for-gitlab-cicd)
+
+---
+
 ## 1. GitHub CLI (`gh`) for GitHub Actions
 
 ```bash
@@ -51,6 +61,8 @@ gh pr create --title "feat: upgrade helm chart" --body "Automated update" --base
 gh pr checkout 42
 gh pr merge 42 --squash --auto --delete-branch
 ```
+
+[Back to Top ↑](#table-of-contents)
 
 ---
 
@@ -107,6 +119,8 @@ curl -X POST -u "<username>:<api-token>" -H "$CRUMB" \
   http://<jenkins-host>:8080/reload
 ```
 
+[Back to Top ↑](#table-of-contents)
+
 ---
 
 ## 3. GitLab CLI (`glab`) for GitLab CI/CD
@@ -133,3 +147,5 @@ glab ci retry <job-id>
 # Cancel a running pipeline
 glab ci cancel
 ```
+
+[Back to Top ↑](#table-of-contents)

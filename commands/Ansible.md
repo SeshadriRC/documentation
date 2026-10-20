@@ -4,6 +4,16 @@ A comprehensive reference for configuration management, ad-hoc server orchestrat
 
 ---
 
+## Table of Contents
+
+- [1. Ad-Hoc Commands & Remote Execution](#1-ad-hoc-commands--remote-execution)
+- [2. Playbook Execution & Validation](#2-playbook-execution--validation)
+- [3. Ansible Vault (Secret Encryption & Decryption)](#3-ansible-vault-secret-encryption--decryption)
+- [4. Inventory Inspection & Validation](#4-inventory-inspection--validation)
+- [5. Ansible Galaxy (Roles & Collections)](#5-ansible-galaxy-roles--collections)
+
+---
+
 ## 1. Ad-Hoc Commands & Remote Execution
 
 ```bash
@@ -35,6 +45,8 @@ ansible webservers -m copy -a "src=./nginx.conf dest=/etc/nginx/nginx.conf mode=
 # Manage systemd services (start, restart, enable)
 ansible webservers -m systemd -a "name=nginx state=restarted enabled=yes" --become -i inventory.ini
 ```
+
+[Back to Top ↑](#table-of-contents)
 
 ---
 
@@ -83,6 +95,8 @@ ansible-playbook -i inventory.ini deploy.yml --start-at-task="Reload Nginx Servi
 ansible-playbook -i inventory.ini deploy.yml --step
 ```
 
+[Back to Top ↑](#table-of-contents)
+
 ---
 
 ## 3. Ansible Vault (Secret Encryption & Decryption)
@@ -113,6 +127,8 @@ ansible-playbook -i inventory.ini deploy.yml --ask-vault-pass
 ansible-playbook -i inventory.ini deploy.yml --vault-password-file ~/.vault_pass.txt
 ```
 
+[Back to Top ↑](#table-of-contents)
+
 ---
 
 ## 4. Inventory Inspection & Validation
@@ -127,6 +143,8 @@ ansible-inventory -i inventory.ini --graph
 # View variables assigned to a specific host
 ansible-inventory -i inventory.ini --host web-01.prod
 ```
+
+[Back to Top ↑](#table-of-contents)
 
 ---
 
@@ -144,3 +162,5 @@ ansible-galaxy collection install amazon.aws
 ansible-galaxy collection install community.docker
 ansible-galaxy collection install kubernetes.core
 ```
+
+[Back to Top ↑](#table-of-contents)

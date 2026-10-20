@@ -4,6 +4,25 @@ A comprehensive, production-tested Linux administration and troubleshooting refe
 
 ---
 
+## Table of Contents
+
+- [1. System Information & Hardware Inspection](#1-system-information--hardware-inspection)
+- [2. Resource Monitoring & Performance Triage (CPU & RAM)](#2-resource-monitoring--performance-triage-cpu--ram)
+- [3. Disk, Filesystem & Volume Management (LVM & Storage)](#3-disk-filesystem--volume-management-lvm--storage)
+- [4. Process Inspection & Management](#4-process-inspection--management)
+- [5. Networking & Troubleshooting](#5-networking--troubleshooting)
+- [6. Systemd & Service Management](#6-systemd--service-management)
+- [7. Log Analysis & Diagnostics](#7-log-analysis--diagnostics)
+- [8. Text Processing, Search & Pipelines](#8-text-processing-search--pipelines)
+- [9. User, Group & Permission Security](#9-user-group--permission-security)
+- [10. SSH, File Transfers & Remote Operations](#10-ssh-file-transfers--remote-operations)
+- [11. Compression, Archives & Backups](#11-compression-archives--backups)
+- [12. Cron, Automation & Terminal Multiplexing](#12-cron-automation--terminal-multiplexing)
+- [13. Shell Configuration & Aliases (WSL / Ubuntu Navigation)](#13-shell-configuration--aliases-wsl--ubuntu-navigation)
+  - [Option 1: Create an alias (recommended)](#option-1-create-an-alias-recommended)
+
+---
+
 ## 1. System Information & Hardware Inspection
 
 ```bash
@@ -30,6 +49,8 @@ sudo dmidecode -t memory
 # Check system time, time zone, and NTP synchronization
 timedatectl
 ```
+
+[Back to Top ↑](#table-of-contents)
 
 ---
 
@@ -63,6 +84,8 @@ sar -r 2 5
 dmesg -T | grep -i -E "oom|killed process"
 sudo journalctl -k --grep="oom"
 ```
+
+[Back to Top ↑](#table-of-contents)
 
 ---
 
@@ -109,6 +132,8 @@ sudo lvs         # Logical volumes
 sudo lvextend -r -L +20G /dev/vg_name/lv_name   # Extend LV and resize underlying filesystem in one shot
 ```
 
+[Back to Top ↑](#table-of-contents)
+
 ---
 
 ## 4. Process Inspection & Management
@@ -146,6 +171,8 @@ lsof -p <PID>
 # View process hierarchy tree
 pstree -p
 ```
+
+[Back to Top ↑](#table-of-contents)
 
 ---
 
@@ -209,6 +236,8 @@ sudo iptables -L -n -v
 sudo iptables -t nat -L -n -v
 ```
 
+[Back to Top ↑](#table-of-contents)
+
 ---
 
 ## 6. Systemd & Service Management
@@ -238,6 +267,8 @@ systemd-analyze
 systemd-analyze blame
 ```
 
+[Back to Top ↑](#table-of-contents)
+
 ---
 
 ## 7. Log Analysis & Diagnostics
@@ -260,6 +291,8 @@ dmesg -T | tail -n 50
 # View priority errors, alerts, and emergencies only
 sudo journalctl -p err..emerg -xb
 ```
+
+[Back to Top ↑](#table-of-contents)
 
 ---
 
@@ -294,6 +327,8 @@ find /tmp/cache -type f -name "*.tmp" -print0 | xargs -0 rm -f
 ./deploy.sh 2>&1 | tee deployment.log
 ```
 
+[Back to Top ↑](#table-of-contents)
+
 ---
 
 ## 9. User, Group & Permission Security
@@ -322,6 +357,8 @@ sudo visudo
 # deployer ALL=(ALL) NOPASSWD: /usr/bin/systemctl restart nginx
 ```
 
+[Back to Top ↑](#table-of-contents)
+
 ---
 
 ## 10. SSH, File Transfers & Remote Operations
@@ -347,6 +384,8 @@ rsync -avzP --delete /local/build/ user@remote:/var/www/html/
 scp -P 2222 app.jar user@remote:/opt/app/
 ```
 
+[Back to Top ↑](#table-of-contents)
+
 ---
 
 ## 11. Compression, Archives & Backups
@@ -364,6 +403,8 @@ tar -xzvf app-backup.tar.gz -C /opt/destination/
 # List contents of a tar archive without extracting
 tar -tzvf app-backup.tar.gz
 ```
+
+[Back to Top ↑](#table-of-contents)
 
 ---
 
@@ -387,6 +428,8 @@ tmux new -s devops-session       # Start new session
 tmux attach -t devops-session    # Reattach to session
 # Detach shortcut inside tmux: Ctrl+B then D
 ```
+
+[Back to Top ↑](#table-of-contents)
 
 ---
 
@@ -423,3 +466,4 @@ That's it! Your terminal will navigate directly to:
 /mnt/c/Myfolder/MyProjects/
 ```
 
+[Back to Top ↑](#table-of-contents)

@@ -4,6 +4,18 @@ A comprehensive reference for secrets management, KV-v2 engine operations, Raft 
 
 ---
 
+## Table of Contents
+
+- [1. Environment Setup & Cluster Status](#1-environment-setup--cluster-status)
+- [2. Operator Initialization & Unsealing](#2-operator-initialization--unsealing)
+- [3. Authentication & Token Management](#3-authentication--token-management)
+- [4. Key-Value v2 Secrets Management (KV2 Engine)](#4-key-value-v2-secrets-management-kv2-engine)
+- [5. Policies & Access Control (RBAC)](#5-policies--access-control-rbac)
+- [6. Kubernetes Authentication Integration](#6-kubernetes-authentication-integration)
+- [7. Audit Logging](#7-audit-logging)
+
+---
+
 ## 1. Environment Setup & Cluster Status
 
 ```bash
@@ -21,6 +33,8 @@ vault status
 # View Vault CLI and server version
 vault version
 ```
+
+[Back to Top ↑](#table-of-contents)
 
 ---
 
@@ -47,6 +61,8 @@ vault operator raft snapshot save /backups/vault-raft-$(date +%F).snap
 # Restore Vault from a Raft snapshot
 vault operator raft snapshot restore -force /backups/vault-raft-backup.snap
 ```
+
+[Back to Top ↑](#table-of-contents)
 
 ---
 
@@ -77,6 +93,8 @@ vault token revoke <token-string>
 # Revoke all tokens issued under an accessor
 vault token revoke -accessor <accessor-id>
 ```
+
+[Back to Top ↑](#table-of-contents)
 
 ---
 
@@ -123,6 +141,8 @@ vault kv undelete -versions=2 secret/database
 vault kv destroy -versions=1,2 secret/database
 ```
 
+[Back to Top ↑](#table-of-contents)
+
 ---
 
 ## 5. Policies & Access Control (RBAC)
@@ -151,6 +171,8 @@ EOF
 vault policy delete web-app-policy
 ```
 
+[Back to Top ↑](#table-of-contents)
+
 ---
 
 ## 6. Kubernetes Authentication Integration
@@ -175,6 +197,8 @@ SA_TOKEN=$(cat /var/run/secrets/kubernetes.io/serviceaccount/token)
 vault write auth/kubernetes/login role=my-app-role jwt="$SA_TOKEN"
 ```
 
+[Back to Top ↑](#table-of-contents)
+
 ---
 
 ## 7. Audit Logging
@@ -189,3 +213,5 @@ vault audit list
 # Disable audit logging
 vault audit disable file
 ```
+
+[Back to Top ↑](#table-of-contents)

@@ -4,6 +4,22 @@ A comprehensive reference for Docker container operations, image lifecycle manag
 
 ---
 
+## Table of Contents
+
+- [1. Container Lifecycle & Execution](#1-container-lifecycle--execution)
+- [2. Container Inspection, Troubleshooting & Logs](#2-container-inspection-troubleshooting--logs)
+- [3. Executing Commands Inside Containers](#3-executing-commands-inside-containers)
+- [4. File Copy & Artifact Transfer](#4-file-copy--artifact-transfer)
+- [5. Image Management & Building](#5-image-management--building)
+- [6. Multi-Architecture Builds (Docker Buildx)](#6-multi-architecture-builds-docker-buildx)
+- [7. Volume & Persistent Storage Management](#7-volume--persistent-storage-management)
+- [8. Network Management](#8-network-management)
+- [9. Docker Compose (v2) Workflows](#9-docker-compose-v2-workflows)
+- [10. System Maintenance & Cleanup](#10-system-maintenance--cleanup)
+- [11. Security & Vulnerability Scanning](#11-security--vulnerability-scanning)
+
+---
+
 ## 1. Container Lifecycle & Execution
 
 ```bash
@@ -53,6 +69,8 @@ docker rm web-app
 docker rm -f web-app
 ```
 
+[Back to Top ↑](#table-of-contents)
+
 ---
 
 ## 2. Container Inspection, Troubleshooting & Logs
@@ -95,6 +113,8 @@ docker diff web-app
 docker port web-app
 ```
 
+[Back to Top ↑](#table-of-contents)
+
 ---
 
 ## 3. Executing Commands Inside Containers
@@ -114,6 +134,8 @@ docker exec web-app env
 docker exec web-app nginx -t
 ```
 
+[Back to Top ↑](#table-of-contents)
+
 ---
 
 ## 4. File Copy & Artifact Transfer
@@ -126,6 +148,8 @@ docker cp ./config.json web-app:/etc/app/config.json
 docker cp web-app:/var/log/nginx/error.log ./error.log
 docker cp sonarqube:/opt/sonarqube/logs/ ./sonar-logs/
 ```
+
+[Back to Top ↑](#table-of-contents)
 
 ---
 
@@ -175,6 +199,8 @@ docker save -o app-v1.0.0.tar my-org/app:v1.0.0
 docker load -i app-v1.0.0.tar
 ```
 
+[Back to Top ↑](#table-of-contents)
+
 ---
 
 ## 6. Multi-Architecture Builds (Docker Buildx)
@@ -190,6 +216,8 @@ docker buildx build \
   -t my-org/app:v1.0.0 \
   --push .
 ```
+
+[Back to Top ↑](#table-of-contents)
 
 ---
 
@@ -227,6 +255,8 @@ docker volume rm app-data
 docker volume prune -f
 ```
 
+[Back to Top ↑](#table-of-contents)
+
 ---
 
 ## 8. Network Management
@@ -253,6 +283,8 @@ docker network disconnect app-network web-app
 # Remove a network
 docker network rm app-network
 ```
+
+[Back to Top ↑](#table-of-contents)
 
 ---
 
@@ -308,6 +340,8 @@ docker compose down -v
 docker compose down -v --rmi all
 ```
 
+[Back to Top ↑](#table-of-contents)
+
 ---
 
 ## 10. System Maintenance & Cleanup
@@ -336,6 +370,8 @@ docker system prune -f
 docker system prune -a --volumes -f
 ```
 
+[Back to Top ↑](#table-of-contents)
+
 ---
 
 ## 11. Security & Vulnerability Scanning
@@ -350,3 +386,5 @@ trivy image --severity HIGH,CRITICAL --exit-code 1 my-org/app:v1.0.0
 # Check container image configuration for security best practices (e.g. running as non-root)
 docker inspect --format='{{.Config.User}}' my-org/app:v1.0.0
 ```
+
+[Back to Top ↑](#table-of-contents)

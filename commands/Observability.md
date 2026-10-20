@@ -4,6 +4,18 @@ A comprehensive reference for Prometheus, Grafana, OpenTelemetry, Loki, and Elas
 
 ---
 
+## Table of Contents
+
+- [1. Prometheus API & PromQL Queries](#1-prometheus-api--promql-queries)
+  - [API Management](#api-management)
+  - [Essential PromQL Formulas for Production Monitoring](#essential-promql-formulas-for-production-monitoring)
+- [2. Grafana API & Dashboards](#2-grafana-api--dashboards)
+- [3. Grafana Loki & LogCLI](#3-grafana-loki--logcli)
+- [4. OpenTelemetry Collector (`otelcol`)](#4-opentelemetry-collector-otelcol)
+- [5. Elasticsearch & Kibana Operations](#5-elasticsearch--kibana-operations)
+
+---
+
 ## 1. Prometheus API & PromQL Queries
 
 ### API Management
@@ -50,6 +62,8 @@ sum(container_memory_working_set_bytes{container!="",container!="POD"}) by (pod,
 histogram_quantile(0.99, sum(rate(http_request_duration_seconds_bucket[5m])) by (le))
 ```
 
+[Back to Top ↑](#table-of-contents)
+
 ---
 
 ## 2. Grafana API & Dashboards
@@ -74,6 +88,8 @@ curl -X POST -u admin:admin \
   http://localhost:3000/api/dashboards/db
 ```
 
+[Back to Top ↑](#table-of-contents)
+
 ---
 
 ## 3. Grafana Loki & LogCLI
@@ -94,6 +110,8 @@ logcli query '{app="nginx"} |= "500" != "healthcheck"' --limit=50
 # Calculate log volume rate over time
 logcli query --stats 'rate({app="payment-service"}[5m])'
 ```
+
+[Back to Top ↑](#table-of-contents)
 
 ---
 
@@ -116,6 +134,8 @@ curl -i -X POST http://localhost:4318/v1/metrics \
   -H "Content-Type: application/json" \
   -d '{"resourceMetrics": []}'
 ```
+
+[Back to Top ↑](#table-of-contents)
 
 ---
 
@@ -145,3 +165,5 @@ curl -s -u elastic:password -X GET "http://localhost:9200/app-logs-*/_search?pre
 # Check Kibana server status
 curl -s http://localhost:5601/api/status | jq '{name: .name, version: .version.number, overall_status: .status.overall.state}'
 ```
+
+[Back to Top ↑](#table-of-contents)

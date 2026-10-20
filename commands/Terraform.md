@@ -4,6 +4,22 @@ A comprehensive reference for Infrastructure as Code (IaC) lifecycle management,
 
 ---
 
+## Table of Contents
+
+- [1. Initialization & Provider Management](#1-initialization--provider-management)
+- [2. Formatting & Validation](#2-formatting--validation)
+- [3. Planning & Speculative Execution](#3-planning--speculative-execution)
+- [4. Applying Changes](#4-applying-changes)
+- [5. Destroying Infrastructure](#5-destroying-infrastructure)
+- [6. State Management & Inspection (DevOps Critical)](#6-state-management--inspection-devops-critical)
+- [7. Workspaces (Multi-Environment Isolation)](#7-workspaces-multi-environment-isolation)
+- [8. Importing Existing Infrastructure](#8-importing-existing-infrastructure)
+- [9. Forcing Resource Recreation (Replace / Taint)](#9-forcing-resource-recreation-replace--taint)
+- [10. Outputs & Interactive Console](#10-outputs--interactive-console)
+- [11. Debugging & Graphing](#11-debugging--graphing)
+
+---
+
 ## 1. Initialization & Provider Management
 
 ```bash
@@ -23,6 +39,8 @@ terraform init -migrate-state
 terraform init -backend=false
 ```
 
+[Back to Top ↑](#table-of-contents)
+
 ---
 
 ## 2. Formatting & Validation
@@ -40,6 +58,8 @@ terraform validate
 # Validate configuration and output machine-readable JSON (ideal for CI/CD gates)
 terraform validate -json
 ```
+
+[Back to Top ↑](#table-of-contents)
 
 ---
 
@@ -66,6 +86,8 @@ terraform show tfplan.binary
 terraform show -json tfplan.binary | jq .
 ```
 
+[Back to Top ↑](#table-of-contents)
+
 ---
 
 ## 4. Applying Changes
@@ -88,6 +110,8 @@ terraform apply -target=module.vpc.aws_route_table.public
 terraform apply -target=aws_security_group.allow_tls
 ```
 
+[Back to Top ↑](#table-of-contents)
+
 ---
 
 ## 5. Destroying Infrastructure
@@ -102,6 +126,8 @@ terraform destroy -var-file="environments/staging.tfvars" -auto-approve
 # Destroy only a targeted resource
 terraform destroy -target=aws_instance.bastion -auto-approve
 ```
+
+[Back to Top ↑](#table-of-contents)
 
 ---
 
@@ -136,6 +162,8 @@ terraform state push terraform.tfstate.backup
 terraform refresh
 ```
 
+[Back to Top ↑](#table-of-contents)
+
 ---
 
 ## 7. Workspaces (Multi-Environment Isolation)
@@ -159,6 +187,8 @@ terraform workspace select default
 terraform workspace delete staging
 ```
 
+[Back to Top ↑](#table-of-contents)
+
 ---
 
 ## 8. Importing Existing Infrastructure
@@ -178,6 +208,8 @@ terraform import module.vpc.aws_vpc.main vpc-0a1b2c3d4e5f
 terraform plan -generate-config-out=generated_resources.tf
 ```
 
+[Back to Top ↑](#table-of-contents)
+
 ---
 
 ## 9. Forcing Resource Recreation (Replace / Taint)
@@ -193,6 +225,8 @@ terraform apply -replace="module.database.aws_db_instance.primary"
 terraform taint aws_instance.web
 terraform untaint aws_instance.web
 ```
+
+[Back to Top ↑](#table-of-contents)
 
 ---
 
@@ -218,6 +252,8 @@ terraform console
 # > exit
 ```
 
+[Back to Top ↑](#table-of-contents)
+
 ---
 
 ## 11. Debugging & Graphing
@@ -235,3 +271,5 @@ unset TF_LOG_PATH
 # Generate visual dependency graph in DOT format
 terraform graph | dot -Tsvg > terraform-dependency-graph.svg
 ```
+
+[Back to Top ↑](#table-of-contents)

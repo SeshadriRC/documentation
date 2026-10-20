@@ -4,6 +4,33 @@ A comprehensive reference for version control, branch management, history manipu
 
 ---
 
+## Table of Contents
+
+- [1. Setup & Configuration](#1-setup--configuration)
+- [2. SSH Authentication & GitHub Setup Walkthrough](#2-ssh-authentication--github-setup-walkthrough)
+  - [Step 1: Check for Existing SSH Keys](#step-1-check-for-existing-ssh-keys)
+  - [Step 2: Generate a New SSH Key Pair](#step-2-generate-a-new-ssh-key-pair)
+  - [Step 3: View and Copy Public SSH Key](#step-3-view-and-copy-public-ssh-key)
+  - [Step 4: Add Public Key to GitHub Web UI](#step-4-add-public-key-to-github-web-ui)
+  - [Step 5: Switch Existing Repository Remote from HTTPS to SSH](#step-5-switch-existing-repository-remote-from-https-to-ssh)
+  - [Step 6: Test SSH Connection & Accept Host Fingerprint](#step-6-test-ssh-connection--accept-host-fingerprint)
+  - [Step 7: Configure Git User Identity (Fix "Author identity unknown")](#step-7-configure-git-user-identity-fix-author-identity-unknown)
+  - [Step 8: Stage, Commit, and Push over SSH](#step-8-stage-commit-and-push-over-ssh)
+  - [Step 9: (Optional) Start SSH Agent & Add Private Key](#step-9-optional-start-ssh-agent--add-private-key)
+  - [Step 10: (Optional) Configure `~/.ssh/config` for Multiple Accounts (Work vs Personal)](#step-10-optional-configure-sshconfig-for-multiple-accounts-work-vs-personal)
+- [3. Basic Staging, Committing & Status](#3-basic-staging-committing--status)
+- [4. Branching & Switching](#4-branching--switching)
+- [5. Stashing Uncommitted Work](#5-stashing-uncommitted-work)
+- [6. History, Inspection & Diffs](#6-history-inspection--diffs)
+- [7. Undoing Changes & History Rewriting](#7-undoing-changes--history-rewriting)
+- [8. Reflog & Disaster Recovery](#8-reflog--disaster-recovery)
+- [9. Rebasing, Merging & Cherry-Picking](#9-rebasing-merging--cherry-picking)
+- [10. Remotes & Synchronization](#10-remotes--synchronization)
+- [11. Tags & Releases](#11-tags--releases)
+- [12. Maintenance, Cleanups & Submodules](#12-maintenance-cleanups--submodules)
+
+---
+
 ## 1. Setup & Configuration
 
 ```bash
@@ -20,6 +47,8 @@ git config --global pull.rebase true
 # List all global and local configurations
 git config --list --show-origin
 ```
+
+[Back to Top ↑](#table-of-contents)
 
 ---
 
@@ -213,6 +242,8 @@ Host github-work
 git clone git@github-work:my-company/infra-repo.git
 ```
 
+[Back to Top ↑](#table-of-contents)
+
 ---
 
 ## 3. Basic Staging, Committing & Status
@@ -243,6 +274,8 @@ git commit -a -m "fix: update helm chart replica count"
 git commit --amend --no-edit
 git commit --amend -m "feat: updated commit message"
 ```
+
+[Back to Top ↑](#table-of-contents)
 
 ---
 
@@ -276,6 +309,8 @@ git branch -d feature/old-feature
 git branch -D feature/abandoned-work
 ```
 
+[Back to Top ↑](#table-of-contents)
+
 ---
 
 ## 5. Stashing Uncommitted Work
@@ -303,6 +338,8 @@ git stash show -p stash@{0}
 git stash drop stash@{0}
 git stash clear
 ```
+
+[Back to Top ↑](#table-of-contents)
 
 ---
 
@@ -337,6 +374,8 @@ git diff --staged
 git diff main..feature/api-gateway
 ```
 
+[Back to Top ↑](#table-of-contents)
+
 ---
 
 ## 7. Undoing Changes & History Rewriting
@@ -364,6 +403,8 @@ git revert <commit-sha>
 git revert -m 1 <merge-commit-sha>    # Revert a merge commit specifying parent 1
 ```
 
+[Back to Top ↑](#table-of-contents)
+
 ---
 
 ## 8. Reflog & Disaster Recovery
@@ -380,6 +421,8 @@ git reset --hard HEAD@{2}
 # or:
 git branch recovery-branch HEAD@{2}
 ```
+
+[Back to Top ↑](#table-of-contents)
 
 ---
 
@@ -407,6 +450,8 @@ git cherry-pick <commit-sha>
 git cherry-pick --continue
 git cherry-pick --abort
 ```
+
+[Back to Top ↑](#table-of-contents)
 
 ---
 
@@ -439,6 +484,8 @@ git push --force-with-lease origin feature/new-pipeline
 git push origin --delete feature/old-branch
 ```
 
+[Back to Top ↑](#table-of-contents)
+
 ---
 
 ## 11. Tags & Releases
@@ -462,6 +509,8 @@ git tag -d v1.2.0
 git push origin --delete v1.2.0
 ```
 
+[Back to Top ↑](#table-of-contents)
+
 ---
 
 ## 12. Maintenance, Cleanups & Submodules
@@ -482,3 +531,5 @@ git submodule update --init --recursive
 # Run a command across all submodules
 git submodule foreach git pull origin main
 ```
+
+[Back to Top ↑](#table-of-contents)

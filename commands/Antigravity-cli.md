@@ -4,6 +4,19 @@ A comprehensive reference for DevOps engineers and automation workflows using th
 
 ---
 
+## Table of Contents
+
+- [1. Quick Start & Execution Modes](#1-quick-start--execution-modes)
+- [2. Non-Interactive / Scripting / CI-CD Automation](#2-non-interactive--scripting--ci-cd-automation)
+- [3. Session & Conversation Resumption](#3-session--conversation-resumption)
+- [4. Models & Agents Inspection](#4-models--agents-inspection)
+- [5. Model Context Protocol (MCP) Management](#5-model-context-protocol-mcp-management)
+- [6. Plugins & Extensions](#6-plugins--extensions)
+- [7. Remote Control & Daemon](#7-remote-control--daemon)
+- [8. Essential Interactive TUI Slash Commands](#8-essential-interactive-tui-slash-commands)
+
+---
+
 ## 1. Quick Start & Execution Modes
 
 ```bash
@@ -27,6 +40,8 @@ agy --effort high
 # Specify model for the current CLI session
 agy --model gemini-3.8-flash
 ```
+
+[Back to Top ↑](#table-of-contents)
 
 ---
 
@@ -57,6 +72,8 @@ echo '{"prompt": "Check cluster health"}' | agy --input-format stream-json --out
 agy -p "Evaluate regex pattern" --disable-slash-commands
 ```
 
+[Back to Top ↑](#table-of-contents)
+
 ---
 
 ## 3. Session & Conversation Resumption
@@ -78,6 +95,8 @@ agy --add-dir /home/ubuntu/project-backend --add-dir /home/ubuntu/project-fronte
 agy --new-project --project "infra-migration"
 ```
 
+[Back to Top ↑](#table-of-contents)
+
 ---
 
 ## 4. Models & Agents Inspection
@@ -93,6 +112,8 @@ agy agent
 # Specify a specialized agent type
 agy --agent research
 ```
+
+[Back to Top ↑](#table-of-contents)
 
 ---
 
@@ -113,6 +134,8 @@ agy mcp disable postgresql
 agy mcp remove postgresql
 ```
 
+[Back to Top ↑](#table-of-contents)
+
 ---
 
 ## 6. Plugins & Extensions
@@ -132,6 +155,8 @@ agy plugin disable <plugin-name>
 agy plugin uninstall <plugin-name>
 ```
 
+[Back to Top ↑](#table-of-contents)
+
 ---
 
 ## 7. Remote Control & Daemon
@@ -149,6 +174,8 @@ agy remote-control stop
 # Launch CLI session with a remote connection attached
 agy --remote-control
 ```
+
+[Back to Top ↑](#table-of-contents)
 
 ---
 
@@ -168,3 +195,5 @@ Inside an interactive `agy` session, use slash commands for workflow automation:
 | `/boost` | Deep reasoning, strategic architectural planning, and rigorous verification |
 | `/learn` | Persist custom instructions, fixes, or configurations for future sessions |
 | `/exit` or `/quit` | Exit the CLI session (`Ctrl+D Ctrl+D`) |
+
+[Back to Top ↑](#table-of-contents)

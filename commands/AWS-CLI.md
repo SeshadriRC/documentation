@@ -4,6 +4,20 @@ A comprehensive reference for AWS cloud infrastructure operations, EKS cluster a
 
 ---
 
+## Table of Contents
+
+- [1. Authentication, Identity & Configuration](#1-authentication-identity--configuration)
+- [2. Amazon EKS (Elastic Kubernetes Service)](#2-amazon-eks-elastic-kubernetes-service)
+- [3. Amazon EC2 & Networking](#3-amazon-ec2--networking)
+- [4. Amazon EBS Volumes & Disk Management](#4-amazon-ebs-volumes--disk-management)
+- [5. Amazon S3 (Simple Storage Service)](#5-amazon-s3-simple-storage-service)
+- [6. Amazon ECR (Elastic Container Registry)](#6-amazon-ecr-elastic-container-registry)
+- [7. AWS SSM (Systems Manager) & Secrets Manager](#7-aws-ssm-systems-manager--secrets-manager)
+- [8. Amazon RDS (Relational Database Service)](#8-amazon-rds-relational-database-service)
+- [9. Amazon CloudWatch Logs & Metrics](#9-amazon-cloudwatch-logs--metrics)
+
+---
+
 ## 1. Authentication, Identity & Configuration
 
 ```bash
@@ -32,6 +46,8 @@ export AWS_SECRET_ACCESS_KEY="..."
 export AWS_SESSION_TOKEN="..."
 ```
 
+[Back to Top ↑](#table-of-contents)
+
 ---
 
 ## 2. Amazon EKS (Elastic Kubernetes Service)
@@ -55,6 +71,8 @@ aws eks list-nodegroups --cluster-name my-eks-cluster
 # Describe a specific nodegroup (scaling config, instance types, status)
 aws eks describe-nodegroup --cluster-name my-eks-cluster --nodegroup-name primary-workers
 ```
+
+[Back to Top ↑](#table-of-contents)
 
 ---
 
@@ -94,6 +112,8 @@ aws ec2 revoke-security-group-ingress \
   --cidr 0.0.0.0/0
 ```
 
+[Back to Top ↑](#table-of-contents)
+
 ---
 
 ## 4. Amazon EBS Volumes & Disk Management
@@ -115,6 +135,8 @@ aws ec2 create-snapshot \
   --volume-id vol-0123456789abcdef0 \
   --description "Backup before application upgrade $(date +%F)"
 ```
+
+[Back to Top ↑](#table-of-contents)
 
 ---
 
@@ -142,6 +164,8 @@ aws s3 rb s3://my-old-bucket --force    # Recursively deletes objects then delet
 aws s3 presign s3://my-app-artifacts/logs.zip --expires-in 3600
 ```
 
+[Back to Top ↑](#table-of-contents)
+
 ---
 
 ## 6. Amazon ECR (Elastic Container Registry)
@@ -162,6 +186,8 @@ aws ecr describe-repositories --output table
 # List latest 10 image tags in a repository
 aws ecr list-images --repository-name my-service --query "imageIds[*].imageTag" --output text
 ```
+
+[Back to Top ↑](#table-of-contents)
 
 ---
 
@@ -188,6 +214,8 @@ aws secretsmanager get-secret-value \
   --output text | jq .
 ```
 
+[Back to Top ↑](#table-of-contents)
+
 ---
 
 ## 8. Amazon RDS (Relational Database Service)
@@ -207,6 +235,8 @@ aws rds create-db-snapshot \
 aws rds reboot-db-instance --db-instance-identifier database-1 --force-failover
 ```
 
+[Back to Top ↑](#table-of-contents)
+
 ---
 
 ## 9. Amazon CloudWatch Logs & Metrics
@@ -221,3 +251,5 @@ aws logs tail /aws/containerinsights/my-eks-cluster/application --since 15m --fi
 # List CloudWatch log groups matching prefix
 aws logs describe-log-groups --log-group-name-prefix "/aws/lambda" --output table
 ```
+
+[Back to Top ↑](#table-of-contents)

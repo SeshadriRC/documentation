@@ -4,6 +4,18 @@ A comprehensive reference for GitOps continuous delivery, application synchroniz
 
 ---
 
+## Table of Contents
+
+- [1. Authentication & Connection](#1-authentication--connection)
+- [2. Application Inspection & Health](#2-application-inspection--health)
+- [3. Drift Detection & Synchronization (Syncing)](#3-drift-detection--synchronization-syncing)
+- [4. Application Creation & Configuration](#4-application-creation--configuration)
+- [5. History & Rollbacks](#5-history--rollbacks)
+- [6. Repository & Multi-Cluster Management](#6-repository--multi-cluster-management)
+- [7. Deletion & Stuck Resource Troubleshooting](#7-deletion--stuck-resource-troubleshooting)
+
+---
+
 ## 1. Authentication & Connection
 
 ```bash
@@ -25,6 +37,8 @@ argocd account update-password
 argocd version
 ```
 
+[Back to Top ↑](#table-of-contents)
+
 ---
 
 ## 2. Application Inspection & Health
@@ -45,6 +59,8 @@ argocd app manifests my-app
 # View logs of an application's pods directly through Argo CD CLI
 argocd app logs my-app --tail 100 -f
 ```
+
+[Back to Top ↑](#table-of-contents)
 
 ---
 
@@ -69,6 +85,8 @@ argocd app sync my-app --prune
 # Wait for application to reach Synced and Healthy state (great for CI/CD pipeline steps)
 argocd app wait my-app --sync --health --timeout 300
 ```
+
+[Back to Top ↑](#table-of-contents)
 
 ---
 
@@ -98,6 +116,8 @@ argocd app set my-microservice --values-literal-file ./custom-values.yaml
 argocd app set my-microservice --helm-set image.tag="v2.1.0"
 ```
 
+[Back to Top ↑](#table-of-contents)
+
 ---
 
 ## 5. History & Rollbacks
@@ -112,6 +132,8 @@ argocd app rollback my-app 3
 # Re-enable automated sync after rollback verification
 argocd app set my-app --sync-policy automated --auto-prune --self-heal
 ```
+
+[Back to Top ↑](#table-of-contents)
 
 ---
 
@@ -134,6 +156,8 @@ argocd cluster add <kube-context-name> --name staging-cluster
 argocd cluster list
 ```
 
+[Back to Top ↑](#table-of-contents)
+
 ---
 
 ## 7. Deletion & Stuck Resource Troubleshooting
@@ -152,3 +176,5 @@ kubectl describe applications.argoproj.io my-app -n argocd
 # Force remove an Argo CD application stuck in "Terminating" state
 kubectl patch application my-app -n argocd --type merge -p '{"metadata":{"finalizers":null}}'
 ```
+
+[Back to Top ↑](#table-of-contents)

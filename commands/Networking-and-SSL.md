@@ -4,6 +4,16 @@ A comprehensive reference for network diagnostics, SSL/TLS certificate managemen
 
 ---
 
+## Table of Contents
+
+- [1. OpenSSL Certificate Inspection & Validation](#1-openssl-certificate-inspection--validation)
+- [2. Certificate Generation & Key Creation](#2-certificate-generation--key-creation)
+- [3. Let's Encrypt & Certbot](#3-lets-encrypt--certbot)
+- [4. Nginx Reverse Proxy Administration](#4-nginx-reverse-proxy-administration)
+- [5. Network Diagnostics & Packet Sniffing](#5-network-diagnostics--packet-sniffing)
+
+---
+
 ## 1. OpenSSL Certificate Inspection & Validation
 
 ```bash
@@ -27,6 +37,8 @@ openssl verify -CAfile ca-bundle.crt tls.crt
 openssl s_client -connect example.com:443 -tls1_2
 openssl s_client -connect example.com:443 -tls1_3
 ```
+
+[Back to Top ↑](#table-of-contents)
 
 ---
 
@@ -55,6 +67,8 @@ openssl rsa -in encrypted.key -out decrypted.key
 openssl pkcs12 -export -out bundle.pfx -inkey tls.key -in tls.crt -certfile ca.crt
 ```
 
+[Back to Top ↑](#table-of-contents)
+
 ---
 
 ## 3. Let's Encrypt & Certbot
@@ -79,6 +93,8 @@ sudo certbot certificates
 sudo certbot revoke --cert-path /etc/letsencrypt/live/mydomain.com/cert.pem
 ```
 
+[Back to Top ↑](#table-of-contents)
+
 ---
 
 ## 4. Nginx Reverse Proxy Administration
@@ -100,6 +116,8 @@ nginx -V
 # Tail access logs filtering only HTTP 4xx and 5xx errors
 tail -f /var/log/nginx/access.log | grep -E " (4[0-9]{2}|5[0-9]{2}) "
 ```
+
+[Back to Top ↑](#table-of-contents)
 
 ---
 
@@ -134,3 +152,5 @@ dig @8.8.8.8 company.com +trace
 dig company.com ANY
 dig company.com TXT
 ```
+
+[Back to Top ↑](#table-of-contents)
