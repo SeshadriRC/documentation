@@ -2,6 +2,7 @@
 - Terraform
 - Kubernetes
 - Docker
+- Jenkins
 - AWS
 - ArgoCD
 - ELK
