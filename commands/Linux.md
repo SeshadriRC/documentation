@@ -387,3 +387,39 @@ tmux new -s devops-session       # Start new session
 tmux attach -t devops-session    # Reattach to session
 # Detach shortcut inside tmux: Ctrl+B then D
 ```
+
+---
+
+## 13. Shell Configuration & Aliases (WSL / Ubuntu Navigation)
+
+### Option 1: Create an alias (recommended)
+
+**Step 1:** Open your Ubuntu terminal and run:
+```bash
+nano ~/.bashrc
+```
+
+**Step 2:** Go to the bottom and add:
+```bash
+alias projects='cd /mnt/c/Myfolder/MyProjects/'
+```
+
+**Step 3:** Save and exit:
+- `Ctrl + O` → `Enter` (save)
+- `Ctrl + X` (exit)
+
+**Step 4:** Apply the change:
+```bash
+source ~/.bashrc
+```
+
+**Step 5:** Test it:
+```bash
+projects
+```
+
+That's it! Your terminal will navigate directly to:
+```
+/mnt/c/Myfolder/MyProjects/
+```
+
