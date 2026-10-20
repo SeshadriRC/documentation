@@ -1,0 +1,12 @@
+- Ansible
+- Terraform
+- Kubernetes
+- Docker
+- AWS
+- ArgoCD
+- ELK
+- Prometheus
+- Grafana
+- Git
+- Python
+- Shell scripting
