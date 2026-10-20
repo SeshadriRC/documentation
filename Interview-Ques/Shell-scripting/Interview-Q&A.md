@@ -1,304 +1,474 @@
-1. Your script receives a filename that may include spaces and wildcard characters. Which approach is best ?
+# Shell Scripting & Linux DevOps Interview Questions and Answers
 
-- Always quote variables when handling filenames.
+A structured and comprehensive guide covering fundamental to advanced Linux shell scripting concepts, practical commands, safety practices, and real-world DevOps automation scenarios.
+
+---
+
+## Table of Contents
+
+- [1. Handling Filenames with Spaces and Wildcard Characters (Variable Quoting)](#1-handling-filenames-with-spaces-and-wildcard-characters-variable-quoting)
+- [2. Counting Matching Lines Safely Without Printing (`grep -c`)](#2-counting-matching-lines-safely-without-printing-grep--c)
+- [3. Creating Unique Temporary Files Securely (`mktemp`)](#3-creating-unique-temporary-files-securely-mktemp)
+- [4. Filtering Specific Error Patterns from Log Files (e.g., Oracle `ORA-` Errors)](#4-filtering-specific-error-patterns-from-log-files-eg-oracle-ora--errors)
+- [5. Script to Print Date and Name Every 5 Seconds Using an Environment Variable](#5-script-to-print-date-and-name-every-5-seconds-using-an-environment-variable)
+- [6. Script to Delete All Docker Images Scheduled via Crontab (e.g., Wednesdays)](#6-script-to-delete-all-docker-images-scheduled-via-crontab-eg-wednesdays)
+- [7. Commonly Used Linux Shell Commands](#7-commonly-used-linux-shell-commands)
+- [8. What is `awk` and How is it Used?](#8-what-is-awk-and-how-is-it-used)
+- [9. Script to Print Only Errors from a Remote Log File](#9-script-to-print-only-errors-from-a-remote-log-file)
+- [10. Understanding the Linux Pipe (`|`) Operator](#10-understanding-the-linux-pipe--operator)
+- [11. Difference Between `curl` and `wget`](#11-difference-between-curl-and-wget)
+- [12. Shell Script to Print Numbers Divisible by 3 and 5 but Not 15 (1..100)](#12-shell-script-to-print-numbers-divisible-by-3-and-5-but-not-15-1100)
+- [13. Script to Check Each File in Directory for Content (Empty vs Not Empty)](#13-script-to-check-each-file-in-directory-for-content-empty-vs-not-empty)
+- [14. Script to Check Whether the Current Directory is Empty](#14-script-to-check-whether-the-current-directory-is-empty)
+- [15. Shell Test Operators: `-z`, `-s`, and `-f`](#15-shell-test-operators--z--s-and--f)
+- [16. Understanding `set -euo pipefail` (Bash Strict Mode)](#16-understanding-set--euo-pipefail-bash-strict-mode)
+- [17. Understanding the `trap` Command and Signal Handling](#17-understanding-the-trap-command-and-signal-handling)
+- [18. Understanding `IFS` (Internal Field Separator)](#18-understanding-ifs-internal-field-separator)
+- [19. Difference Between `IFS` and `awk`](#19-difference-between-ifs-and-awk)
+
+---
+
+## 1. Handling Filenames with Spaces and Wildcard Characters (Variable Quoting)
+
+**Question:** Your script receives a filename that may include spaces and wildcard characters (such as `*`, `?`, or `[]`). Which approach is best?
+
+**Answer:**  
+Always enclose variable references in **double quotes** (`"$file"`).
 
 ```bash
 file="my data*.txt"
 
+# Safe: double quotes prevent word-splitting and unexpected globbing expansion
 cat "$file"
 ```
 
+### Why Quoting Matters:
+- Without quotes (`cat $file`), the shell performs **word splitting** (splitting on spaces) and **pathname expansion / globbing** (expanding `*` to match files in the directory).
+- If `$file` is `"my data*.txt"`, unquoted `cat $file` executes `cat my data1.txt data2.txt`, causing missing file errors or reading unintended files.
+- Double quotes ensure the variable value is passed to the command as a single literal argument.
+
+> **Interview One-Liner:**  
+> "Always quote variables (`\"$var\"`) to prevent unwanted word splitting on whitespace and unintentional glob expansion on wildcard characters."
+
+[⬆ Back to Top](#table-of-contents)
+
 ---
 
-2. Which command safely counts the number of matching lines without printing them?
+## 2. Counting Matching Lines Safely Without Printing (`grep -c`)
+
+**Question:** Which command safely counts the number of matching lines in a file without printing the matching lines themselves?
+
+**Answer:**  
+Use `grep -c`.
 
 ```bash
-Ans:
 grep -c "ERROR" app.log
+```
 
-sesha@LAPTOP-QMBUJPPJ:~$ grep "ERROR" error.log
+### Example:
+```bash
+$ cat error.log
 ERROR Connection failed
+INFO Service started
 ERROR Timeout
-sesha@LAPTOP-QMBUJPPJ:~$ grep -c "ERROR" error.log
+
+$ grep -c "ERROR" error.log
 2
 ```
+
+### Why not `grep "ERROR" app.log | wc -l`?
+- `grep -c` executes in a **single process** without the overhead of creating a subshell, pipeline, and spawning `wc`.
+- It directly returns the count and sets the exit status appropriately (0 if count > 0, 1 if count == 0).
+
+[⬆ Back to Top](#table-of-contents)
+
 ---
 
-3. Which command creates a uniquely named temporary file safely in Bash scripts?
+## 3. Creating Unique Temporary Files Securely (`mktemp`)
 
-- mktemp creates a unique temporary file (or directory) securely and avoids naming conflicts.
+**Question:** Which command creates a uniquely named temporary file safely in Bash scripts to avoid naming collisions and symlink vulnerabilities?
+
+**Answer:**  
+Use `mktemp`.
 
 ```bash
+# Creates a unique temporary file in /tmp (e.g., /tmp/tmp.T7RjgLaxtN)
 temp_file=$(mktemp)
 
-echo "hello" > "$temp_file"
+echo "temporary payload" > "$temp_file"
+
+# Always ensure cleanup on script exit
+trap 'rm -f "$temp_file"' EXIT
 ```
 
-or
-
+### Advanced Usage:
 ```bash
-sesha@LAPTOP-QMBUJPPJ:/tmp$ echo "hello temp" > /tmp/tmp.T7RjgLaxtN
+# Create a unique temporary directory
+temp_dir=$(mktemp -d)
 
-sesha@LAPTOP-QMBUJPPJ:/tmp$ cat /tmp/tmp.T7RjgLaxtN
-hello temp
+# Create a temporary file with a custom prefix/template
+temp_file=$(mktemp /tmp/myapp_backup.XXXXXX)
 ```
+
+> **Interview One-Liner:**  
+> "`mktemp` creates unique, unpredictable temporary files or directories with restrictive permissions (0600), preventing race conditions and naming collisions."
+
+[⬆ Back to Top](#table-of-contents)
 
 ---
 
-4. Assume there is a log file(ora.logs), which has ORA errors. i need to print only the ORA errors
+## 4. Filtering Specific Error Patterns from Log Files (e.g., Oracle `ORA-` Errors)
 
+**Question:** Assume there is a log file (`ora.logs`) containing Oracle database errors. How do you print only the ORA error codes or matching lines?
+
+### Approach 1: Print Only the Exact Matching Error Code (`-o`)
 ```bash
+# -o prints only the matched part of the line
 grep -o "ORA-00019" ora.logs
 ```
 
+### Approach 2: Extract Any ORA Error Code Using Extended Regular Expressions (`-oE`)
+```bash
+# Matches 'ORA-' followed by one or more digits
+grep -oE "ORA-[0-9]+" ora.logs
+```
+
+### Approach 3: Print the Entire Line Containing Any ORA Error
+```bash
+grep -E "ORA-[0-9]+" ora.logs
+```
+
+[⬆ Back to Top](#table-of-contents)
+
 ---
 
-5. Write a shell scripting where you need to print Today's date with your name , it should run interval of 5 seconds, name need to pass as an env variable.
+## 5. Script to Print Date and Name Every 5 Seconds Using an Environment Variable
 
-export name="Welcome"
+**Question:** Write a shell script that prints today's date along with a name at an interval of 5 seconds, where the name is passed as an environment variable.
 
 ```bash
 #!/bin/bash
 
-while true
-do
-    echo "$(date) - $name"
+# Validate that the environment variable is set
+if [[ -z "${NAME:-}" ]]; then
+    echo "ERROR: Environment variable 'NAME' is not set."
+    echo "Usage: export NAME='DevOps Engineer' && ./script.sh"
+    exit 1
+fi
+
+echo "Starting monitoring loop for: $NAME (Press Ctrl+C to stop)"
+
+while true; do
+    echo "$(date '+%Y-%m-%d %H:%M:%S') - $NAME"
     sleep 5
 done
 ```
 
+### Running the Script:
+```bash
+export NAME="Seshadri"
+./script.sh
+```
+
+### Output:
+```text
+2026-10-20 19:30:00 - Seshadri
+2026-10-20 19:30:05 - Seshadri
+2026-10-20 19:30:10 - Seshadri
+```
+
+[⬆ Back to Top](#table-of-contents)
+
 ---
 
-6. write a shell script where it should delete all docker images and shedule it in a cronjob , assume its running on wednesday.
+## 6. Script to Delete All Docker Images Scheduled via Crontab (e.g., Wednesdays)
 
+**Question:** Write a shell script to remove all Docker images, log the output, and schedule it via crontab to run every Wednesday at 2:00 AM.
+
+### 1. Cleanup Script (`/home/ec2-user/cleanup_docker_images.sh`)
 ```bash
 #!/bin/bash
+set -euo pipefail
 
-# Log file
 LOGFILE="/var/log/docker_image_cleanup.log"
 
-echo "==========================================" >> $LOGFILE
-echo "Docker Image Cleanup Started: $(date)" >> $LOGFILE
+echo "==========================================" >> "$LOGFILE"
+echo "Docker Image Cleanup Started: $(date)"     >> "$LOGFILE"
 
-# Remove all Docker images
-docker rmi -f $(docker images -q) >> $LOGFILE 2>&1
+# Collect image IDs
+IMAGES=$(docker images -q)
 
-echo "Docker Image Cleanup Completed: $(date)" >> $LOGFILE
-echo "==========================================" >> $LOGFILE
+if [[ -n "$IMAGES" ]]; then
+    # Force remove all Docker images and redirect both stdout and stderr to the log
+    docker rmi -f $IMAGES >> "$LOGFILE" 2>&1
+    echo "Docker images removed successfully." >> "$LOGFILE"
+else
+    echo "No Docker images found to remove." >> "$LOGFILE"
+fi
+
+echo "Docker Image Cleanup Completed: $(date)"   >> "$LOGFILE"
+echo "==========================================" >> "$LOGFILE"
 ```
 
-**crontab**
+### 2. Crontab Schedule
+Edit crontab with `crontab -e`:
 
-```bash
-0 2 * * 3 /home/ec2-user/cleanup_docker_images.sh
+```cron
+0 2 * * 3 /bin/bash /home/ec2-user/cleanup_docker_images.sh
 ```
 
-| Field        | Value | Meaning      |
-| ------------ | ----- | ------------ |
-| Minute       | 0     | At 0 minutes |
-| Hour         | 2     | 2 AM         |
-| Day of Month | *     | Every day    |
-| Month        | *     | Every month  |
-| Day of Week  | 3     | Wednesday    |
+### Crontab Syntax Breakdown:
 
+| Field | Value | Meaning |
+| :--- | :--- | :--- |
+| **Minute** | `0` | At minute 0 |
+| **Hour** | `2` | At 02:00 AM (24-hour format) |
+| **Day of Month** | `*` | Every day of the month |
+| **Month** | `*` | Every month |
+| **Day of Week** | `3` | Wednesday (0 = Sun, 1 = Mon, 2 = Tue, 3 = Wed, ...) |
+
+[⬆ Back to Top](#table-of-contents)
 
 ---
 
+## 7. Commonly Used Linux Shell Commands
 
-1. List some of the commonly used shell commands
-
+A quick reference of essential commands for day-to-day DevOps operations, troubleshooting, and administration:
 
 ```bash
-ls
-cat
-df -h
-mkdir
-vi
-grep
-cp
-mv
-chmod
-chown
-top
-zip
-unzip
-netstat -tulnp | grep 9000    # used to display listening ports
-ss -tulnp | grep 9000         # modern usage of netstat
-nc -zv 10.1.1.20 9000  # connectivity test
-ps -ef    # to list all the processes
+# File and Directory Navigation
+ls -la                              # List all files including hidden with permissions and details
+mkdir -p /path/to/dir               # Create directory with parent directories
+cat file.txt                        # View entire file contents
+cp -r source/ destination/          # Copy files or directories recursively
+mv old_name new_name                # Move or rename files/directories
+vi filename                         # Standard text editor
 
+# Permissions & Ownership
+chmod 755 script.sh                 # Change file permissions (rwxr-xr-x)
+chown user:group filename           # Change file owner and group
+
+# Disk & System Monitoring
+df -h                               # Check disk space usage in human-readable format
+top                                 # Monitor real-time system resource usage (CPU/RAM)
+ps -ef                              # List all running processes with full details
+
+# Search & Text Processing
+grep -i "error" app.log             # Case-insensitive pattern search
+awk '{print $1}' data.txt           # Column-based text extraction
+
+# Compression & Archives
+zip -r archive.zip folder/          # Create zip archive
+unzip archive.zip                   # Extract zip archive
+
+# Networking & Connectivity
+netstat -tulnp | grep 9000          # Display listening ports (legacy)
+ss -tulnp | grep 9000               # Modern socket statistics replacement for netstat
+nc -zv 10.1.1.20 9000               # Test TCP connectivity to IP and port
 ```
+
+[⬆ Back to Top](#table-of-contents)
 
 ---
 
-2. what is awk ?
+## 8. What is `awk` and How is it Used?
 
-- `awk` is a text-processing command in Linux used to search, filter, extract, and manipulate columns/fields from structured text.
+`awk` is a complete pattern-scanning and text-processing language in Linux used to search, filter, extract, and manipulate columns/fields from structured text data (such as logs, CSVs, and command outputs).
 
-```bash
-echo "John 25" | awk '{print $1}'
+By default, `awk` divides each input line into fields separated by whitespace (spaces or tabs), accessible via `$1`, `$2`, ..., `$NF` (last field), and `$0` (the entire line).
 
+### Common Examples
 
-ps -ef|awk '{print $1}'
-```
+1. **Extract specific columns:**
+   ```bash
+   echo "John 25 Engineer" | awk '{print $1, $3}'
+   # Output: John Engineer
+   ```
 
----
+2. **Extract process owner from `ps -ef`:**
+   ```bash
+   ps -ef | awk '{print $1}'
+   ```
 
-3. Write a script to print only errors from a remote log
+3. **Custom Delimiter (e.g., CSV or Colon-separated):**
+   ```bash
+   # Extract username and shell from /etc/passwd using ':' delimiter
+   awk -F: '{print $1, $7}' /etc/passwd
+   ```
 
-```bash
-curl https://raw.githubusercontent.com/SeshadriRC/sandbox/refs/heads/main/log/dummylog01122022.log | grep -i error
-```
+4. **Filtering with conditions:**
+   ```bash
+   # Print lines where the 3rd field is greater than 100
+   awk '$3 > 100 {print $1, $3}' data.txt
+   ```
 
----
+> **Interview One-Liner:**  
+> "`awk` is a complete text-processing tool ideal for parsing structured tabular data, extracting columns, applying conditional filters, and generating formatted reports."
 
-4. what is pipe command in linux
-
-```bash
-`|` (pipe) in Linux is used to **take the output of one command and pass it as input to another command.**
-
-Syntax:
-
-```bash id="2yshzd"
-command1 | command2
-```
-
-Example:
-
-```bash id="mv7h3q"
-ps -ef | grep java
-```
-
-Meaning:
-
-* `ps -ef` → lists processes
-* `|` → sends output
-* `grep java` → filters only Java processes
-
-Output:
-
-```text id="g2wlnc"
-root  1234 ... java
-```
-
-Another example:
-
-```bash id="0f8ybh"
-ls | wc -l
-```
-
-Meaning:
-
-* `ls` → list files
-* `wc -l` → count lines (number of files)
-
-So `|` = **output of left command → input to right command**.
+[⬆ Back to Top](#table-of-contents)
 
 ---
 
-5. Difference between curl and wget
+## 9. Script to Print Only Errors from a Remote Log File
 
+When troubleshooting distributed applications, you often need to fetch logs from a remote endpoint or artifact repository and filter for critical events without downloading the entire file to disk first.
 
-`curl` and `wget` are both used to **transfer data from URLs**, but they are optimized for different use cases.
+```bash
+curl -s https://raw.githubusercontent.com/SeshadriRC/sandbox/refs/heads/main/log/dummylog01122022.log | grep -i error
+```
 
-| Feature                    | `curl`                               | `wget`                |
-| -------------------------- | ------------------------------------ | --------------------- |
-| Main purpose               | Send/receive data from APIs and URLs | Download files        |
-| HTTP methods               | GET, POST, PUT, DELETE, etc.         | Mostly GET            |
-| API testing                | Excellent                            | Limited               |
-| Download resume            | Supported                            | Supported             |
-| Recursive website download | No                                   | Yes                   |
-| Upload files               | Yes                                  | Limited               |
-| Output                     | Prints to terminal by default        | Saves file by default |
+### Explanation:
+- `curl -s`: Runs in silent mode (hides progress meters and error messages).
+- `|` (Pipe): Streams the HTTP response body directly into `grep` without writing a temporary file to disk.
+- `grep -i error`: Case-insensitive search matching `ERROR`, `error`, `Error`, etc.
 
-### `curl` → API / connectivity testing
+[⬆ Back to Top](#table-of-contents)
 
-Example:
+---
 
-```bash id="k0y4vl"
+## 10. Understanding the Linux Pipe (`|`) Operator
+
+The pipe operator (`|`) in Linux is used to **take the standard output (stdout) of one command and pass it as standard input (stdin) to another command**. It enables command chaining and building powerful modular pipelines.
+
+### Syntax
+```bash
+command1 | command2 | command3
+```
+
+### Practical Examples
+
+1. **Filter running processes:**
+   ```bash
+   ps -ef | grep java
+   ```
+   - `ps -ef`: Lists all active processes.
+   - `|`: Passes the process list to `grep`.
+   - `grep java`: Filters and displays only lines matching "java".
+
+2. **Count number of files in a directory:**
+   ```bash
+   ls -1 | wc -l
+   ```
+   - `ls -1`: Lists one file per line.
+   - `wc -l`: Counts total lines, giving the exact file count.
+
+3. **Find the top 5 memory-consuming processes:**
+   ```bash
+   ps -eo pid,ppid,cmd,%mem --sort=-%mem | head -n 6
+   ```
+
+> **Interview One-Liner:**  
+> "A pipe (`|`) connects the `stdout` of the command on its left directly to the `stdin` of the command on its right, allowing commands to work together without intermediate temporary files."
+
+[⬆ Back to Top](#table-of-contents)
+
+---
+
+## 11. Difference Between `curl` and `wget`
+
+Both `curl` and `wget` are command-line utilities used for transferring data via network protocols (HTTP, HTTPS, FTP), but they have different strengths and primary purposes:
+
+| Feature | `curl` | `wget` |
+| :--- | :--- | :--- |
+| **Primary Purpose** | Transferring data to/from APIs and URLs | Downloading files and mirroring sites |
+| **HTTP Methods** | GET, POST, PUT, DELETE, PATCH, HEAD, etc. | Primarily GET and POST |
+| **API Testing & Custom Headers** | Excellent (supports payload, custom headers, auth) | Limited |
+| **Default Output** | Prints directly to `stdout` (terminal) | Saves directly to a file on disk |
+| **Recursive Download** | No | Yes (`wget -r` can mirror entire websites) |
+| **Resume Downloads** | Supported via `-C -` | Supported via `-c` |
+| **Underlying Engine** | Powered by `libcurl` (usable as a C library) | Standalone command-line tool |
+
+### Quick Examples
+
+#### `curl` Examples (API Interaction & Connectivity)
+```bash
+# Basic GET request (prints output to terminal)
 curl http://server:8080
+
+# Send POST request with JSON payload
+curl -X POST http://api.example.com/users \
+     -H "Content-Type: application/json" \
+     -d '{"name": "Alice"}'
+
+# Fetch only HTTP response headers (check status code)
+curl -I https://google.com
 ```
 
-POST request:
+#### `wget` Examples (File Downloading)
+```bash
+# Download a file directly to the current directory
+wget https://example.com/package.zip
 
-```bash id="3sm4rz"
-curl -X POST http://api.com
+# Resume an interrupted download
+wget -c https://example.com/largefile.tar.gz
+
+# Recursively download/mirror a directory
+wget -r -np -nH https://example.com/docs/
 ```
 
-Check connectivity:
+> **Interview One-Liner:**  
+> "`curl` is best for communicating with APIs, testing HTTP methods, and streaming responses, whereas `wget` is optimized for downloading files, resuming broken transfers, and recursive website mirroring."
 
-```bash id="d75nqa"
-curl -I http://google.com
-```
+[⬆ Back to Top](#table-of-contents)
 
 ---
 
-### `wget` → Download files
+## 12. Shell Script to Print Numbers Divisible by 3 and 5 but Not 15 (1..100)
 
-Download:
-
-```bash id="7bb72d"
-wget https://example.com/file.zip
-```
-
-Resume:
-
-```bash id="z1v6r8"
-wget -c file_url
-```
-
-Recursive download:
-
-```bash id="6dzl5q"
-wget -r https://example.com
-```
-
-Interview one-liner:
-
-* **`curl` → interact with APIs / send requests**
-* **`wget` → download files from internet**
-
----
-
-6. Write a shell script to print numbers divided by 3 & 5 and not 15. Range is 1...100
-
-<img width="626" height="277" alt="image" src="https://github.com/user-attachments/assets/b5daef71-d797-44b1-b9e0-6d23de20bd19" />
+**Problem:** Loop through numbers from 1 to 100. Print numbers that are divisible by 3 OR 5, but NOT divisible by 15.
 
 ```bash
 #!/bin/bash
 
-for i in {1..100}
-do
-    if (( (i % 3 == 0 || i % 5 == 0) && i % 15 != 0 ))
-    then
-        echo $i
+for i in {1..100}; do
+    if (( (i % 3 == 0 || i % 5 == 0) && i % 15 != 0 )); then
+        echo "$i"
     fi
 done
 ```
 
+### Explanation:
+- `{1..100}`: Bash brace expansion generating numbers 1 to 100.
+- `(( ... ))`: Arithmetic evaluation syntax in Bash.
+- `i % 3 == 0 || i % 5 == 0`: True if divisible by 3 OR divisible by 5.
+- `i % 15 != 0`: Excludes numbers that are common multiples of both (i.e., 15, 30, 45, 60, 75, 90).
+
+[⬆ Back to Top](#table-of-contents)
+
 ---
 
-7. If you want to check each file in the current directory and identify whether the file has content or is empty, use:
+## 13. Script to Check Each File in Directory for Content (Empty vs Not Empty)
 
+**Problem:** Inspect every item in the current directory, verify that it is a regular file, and determine whether it contains content or is empty.
 
 ```bash
 #!/bin/bash
+
 for file in *; do
     if [ -f "$file" ]; then
         if [ -s "$file" ]; then
-            echo "$file → Not Empty"
+            echo "$file → Not Empty (Size > 0)"
         else
-            echo "$file → Empty"
+            echo "$file → Empty (Size == 0)"
         fi
     fi
 done
 ```
 
+### Explanation:
+- `for file in *`: Iterates over all visible entries in the current directory.
+- `[ -f "$file" ]`: Ensures we only evaluate regular files (skipping subdirectories, sockets, and symlinks).
+- `[ -s "$file" ]`: Returns true if the file exists and has a size greater than zero.
+
+[⬆ Back to Top](#table-of-contents)
+
 ---
 
-8. check whether the current directory contains files or not
+## 14. Script to Check Whether the Current Directory is Empty
 
 ```bash
+#!/bin/bash
+
 if [ -z "$(ls -A)" ]; then
     echo "Directory is empty"
 else
@@ -306,172 +476,31 @@ else
 fi
 ```
 
-This is a **shell script conditional statement** that checks whether the **current directory is empty or not**.
+### Step-by-Step Breakdown:
 
-Let's break it line by line:
+1. **`ls -A`**:
+   - Lists all entries in the directory, including hidden files (like `.env`, `.git`).
+   - Ignores `.` (current directory) and `..` (parent directory).
+   - If the directory has no files, `ls -A` outputs nothing (`""`).
 
+2. **`$(ls -A)` (Command Substitution)**:
+   - Executes `ls -A` and replaces itself with the command's stdout.
+
+3. **`[ -z "..." ]`**:
+   - The `-z` operator tests whether a string has a length of zero.
+   - If `$(ls -A)` produced nothing, `[ -z "" ]` evaluates to **true** $\rightarrow$ "Directory is empty".
+   - If files exist, `$(ls -A)` produces text, `[ -z "text" ]` evaluates to **false** $\rightarrow$ "Directory is not empty".
+
+[⬆ Back to Top](#table-of-contents)
+
+---
+
+## 15. Shell Test Operators: `-z`, `-s`, and `-f`
+
+These are conditional file and string test operators used inside `[ ]` (test) or `[[ ]]` (extended test) in Bash.
+
+### 1. `-z string` $\rightarrow$ Checks if string is EMPTY (length == 0)
 ```bash
-if [ -z "$(ls -A)" ]; then
-```
-
-### 1. `ls -A`
-
-Lists files in the current directory.
-
-Example:
-
-```bash
-$ ls -A
-file1.txt
-file2.txt
-```
-
-If directory is empty:
-
-```bash
-$ ls -A
-(no output)
-```
-
-`-A` means:
-
-* show hidden files too (`.env`, `.gitignore`)
-* but ignore `.` and `..`
-
-
-### 2. `$(ls -A)`
-
-This is **command substitution**.
-
-It runs:
-
-```bash
-ls -A
-```
-
-and replaces it with the output.
-
-Example:
-
-```bash
-$(ls -A)
-```
-
-becomes:
-
-```bash
-"file1.txt file2.txt"
-```
-
-If empty:
-
-```bash
-""
-```
-
-### 3. `[ -z "..." ]`
-
-`-z` means:
-
-> Check whether string length is zero.
-
-Examples:
-
-```bash
-[ -z "" ]
-```
-
-→ TRUE
-
-```bash
-[ -z "abc" ]
-```
-
-→ FALSE
-
-
-So:
-
-```bash
-if [ -z "$(ls -A)" ];
-```
-
-means:
-
-> "Run `ls -A`, and if output length is zero → directory is empty"
-
-
-Then:
-
-```bash
-then
-    echo "Directory is empty"
-```
-
-Prints:
-
-```text
-Directory is empty
-```
-
-Otherwise:
-
-```bash
-else
-    echo "Directory is not empty"
-```
-
-Prints:
-
-```text
-Directory is not empty
-```
-
-Finally:
-
-```bash
-fi
-```
-
-`fi` = closes the `if` block (`if` spelled backward).
-
-
-Flow:
-
-```text
-ls -A
-   ↓
-Any files?
-   ↓
-No → -z TRUE → Directory is empty
-Yes → else → Directory is not empty
-```
-
-
-9. what is -z , -s, -f
-
-
- These are **test operators** used inside `[ ]` in shell scripting.
-
-Example:
-
-```bash id="ayt2dg"
-if [ condition ]; then
-   commands
-fi
-```
-
-### 1. `-z` → Check whether a string is empty
-
-Syntax:
-
-```bash id="o5p6nq"
-[ -z "string" ]
-```
-
-Example:
-
-```bash id="y62vzx"
 name=""
 
 if [ -z "$name" ]; then
@@ -479,794 +508,230 @@ if [ -z "$name" ]; then
 fi
 ```
 
-Output:
+### 2. `-s file` $\rightarrow$ Checks if file has CONTENT (size > 0)
+```bash
+touch app.log
+[ -s app.log ]        # Returns FALSE (0 bytes)
 
-```text id="3tcc8e"
-String is empty
+echo "hello" > app.log
+[ -s app.log ]        # Returns TRUE (> 0 bytes)
 ```
 
-Another example:
-
-```bash id="dftv4f"
-name="hello"
-
-[ -z "$name" ]
-```
-
-→ FALSE (because string has value)
-
-
-### 2. `-s` → Check whether a file has content (size > 0)
-
-Syntax:
-
-```bash id="lcnldc"
-[ -s filename ]
-```
-
-Example:
-
-```bash id="6k0on4"
-touch a.txt
-
-[ -s a.txt ]
-```
-
-→ FALSE (empty file)
-
-Now:
-
-```bash id="6j4uwu"
-echo hello > a.txt
-
-[ -s a.txt ]
-```
-
-→ TRUE
-
-Example:
-
-```bash id="s7vq1x"
-if [ -s a.txt ]; then
-   echo "File has content"
-fi
-```
-
-### 3. `-f` → Check whether it is a regular file
-
-Syntax:
-
-```bash id="0f80lu"
-[ -f filename ]
-```
-
-Example:
-
-```bash id="iw7z2d"
+### 3. `-f file` $\rightarrow$ Checks if path exists and is a REGULAR FILE
+```bash
 touch app.log
 mkdir logs
 
-[ -f app.log ]
+[ -f app.log ]        # Returns TRUE (regular file)
+[ -f logs ]           # Returns FALSE (it is a directory, not a regular file)
 ```
 
-→ TRUE
+### Quick Operator Reference Table
 
-```bash id="3l4u6l"
-[ -f logs ]
-```
+| Operator | Evaluates To True If: | Example |
+| :--- | :--- | :--- |
+| **`-z`** | String length is zero (empty) | `[ -z "$var" ]` |
+| **`-n`** | String length is non-zero (not empty) | `[ -n "$var" ]` |
+| **`-s`** | File exists and has size greater than 0 | `[ -s "$file" ]` |
+| **`-f`** | Path exists and is a regular file | `[ -f "$file" ]` |
+| **`-d`** | Path exists and is a directory | `[ -d "$dir" ]` |
+| **`-e`** | Path exists (file, directory, socket, etc.) | `[ -e "$path" ]` |
+| **`-r`** | File exists and is readable | `[ -r "$file" ]` |
+| **`-w`** | File exists and is writable | `[ -w "$file" ]` |
+| **`-x`** | File exists and is executable | `[ -x "$script" ]` |
 
-→ FALSE (because logs is directory)
-
-Example:
-
-```bash id="ix4vnq"
-if [ -f a.txt ]; then
-   echo "This is a file"
-fi
-```
-
-
-Quick summary:
-
-| Operator | Meaning             | Example           |
-| -------- | ------------------- | ----------------- |
-| `-z`     | String is empty     | `[ -z "$name" ]`  |
-| `-s`     | File has content    | `[ -s file.txt ]` |
-| `-f`     | Regular file exists | `[ -f file.txt ]` |
-
-Some other common ones:
-
-```bash id="2bc4vv"
--d   → directory exists
--e   → file exists
--r   → readable
--w   → writable
--x   → executable
-```
-
+[⬆ Back to Top](#table-of-contents)
 
 ---
 
-10. what is set -euo pipefail
+## 16. Understanding `set -euo pipefail` (Bash Strict Mode)
 
-`set -euo pipefail` is a **Bash safety configuration**.
-It makes scripts fail fast and avoid hidden errors.
+`set -euo pipefail` is known as the **Bash Unofficial Strict Mode**. It prevents scripts from continuing after failures, catching bugs early before they cause data corruption or cascading errors.
 
-Your script:
-
-```bash id="6ntr4m"
-set -euo pipefail
-```
-
-is equivalent to:
-
-```bash id="g7ig2z"
+It is equivalent to configuring:
+```bash
 set -e
 set -u
 set -o pipefail
 ```
 
-Let's break it down.
-
-
-## 1. `set -e`
-
-### Exit immediately if a command fails.
-
-Example:
-
-```bash id="dy2jpj"
-echo "Start"
-
-mkdir test
-mkdir test
-
-echo "Done"
-```
-
-Without `-e`:
-
-```text id="iv6qmb"
-Start
-mkdir: File exists
-Done
-```
-
-Script continues.
-
-With `set -e`:
-
-```text id="w2xqrm"
-Start
-mkdir: File exists
-```
-
-Script stops immediately.
-
-
-## 2. `set -u`
-
-### Treat undefined variables as errors.
-
-Example:
-
-```bash id="x28lfn"
-echo "$username"
-```
-
-Without `-u`:
-
-Output:
-
-```text id="3i6q4u"
-```
-
-(empty)
-
-With `set -u`:
-
-```text id="fg7fq0"
-bash: username: unbound variable
-```
-
-Stops script.
-
-Useful to catch typos.
-
-Example:
-
-Wrong:
-
-```bash id="l70ivk"
-echo "$clustr"
-```
-
-instead of:
-
-```bash id="d5ly2k"
-echo "$cluster"
-```
-
-
-## 3. `set -o pipefail`
-
-### Detect failures inside pipelines (`|`)
-
-Example:
-
-```bash id="1m1m4w"
-cat missing.txt | grep abc
-```
-
-Without `pipefail`:
-
-Pipeline may appear successful because `grep` runs.
-
-With `pipefail`:
-
-If `cat` fails → whole pipeline fails.
-
-Example:
-
-```bash id="dkh3ck"
-cat missing.txt | wc -l
-```
-
-Without:
-
-```text id="4x4h6d"
-0
-```
-
-Looks successful.
-
-With `pipefail`:
-
-```text id="gg0cqf"
-cat: missing.txt
-Script stopped
-```
-
-
-### Why useful in your namespace deletion script?
-
-```bash id="j89lym"
-set -euo pipefail
-```
-
-Protects against:
-
-* `oc login` failure → stop
-* Missing variables → stop
-* CSV read issues → stop
-* Pipeline errors → stop
-
-
-### Interview explanation:
-
-> “I used `set -euo pipefail` to make the automation more reliable. It ensures the script exits on command failures, prevents execution with undefined variables, and catches failures inside piped commands to avoid partial or inconsistent operations.”
-
-
-`pipefail` is confusing initially because pipelines (`|`) behave unexpectedly.
-
-Think of a pipeline:
-
-```bash id="mx97w2"
-command1 | command2
-```
-
-Normally Bash checks **only the last command's result**.
-
-
-Example without `pipefail`:
-
-```bash id="zq8y4u"
-cat missing.txt | wc -l
-```
-
-What happens:
-
-Step 1:
-
-```bash id="mz7b3w"
-cat missing.txt
-```
-
-Fails:
-
-```text id="kx82af"
-cat: missing.txt: No such file
-```
-
-Step 2:
-`wc -l` still runs.
-
-Output:
-
-```text id="8qz9i5"
-0
-```
-
-Pipeline exit status = **success**
-
-Script thinks everything is okay ❌
-
-
-Now enable:
-
-```bash id="ptjlwm"
-set -o pipefail
-```
-
-Run again:
-
-```bash id="mbu5a5"
-cat missing.txt | wc -l
-```
-
-Result:
-
-```text id="4ef9d2"
-cat: missing.txt: No such file
-```
-
-Pipeline becomes **failed** ✅
-
-Because one command inside pipeline failed.
-
-
-Another example:
-
-Without `pipefail`:
-
-```bash id="mq7d4z"
-false | true
-
-echo $?
-```
-
-Output:
-
-```text id="sj8mbg"
-0
-```
-
-Why?
-
-Because last command (`true`) succeeded.
-
-
-With `pipefail`:
-
-```bash id="ylwbq9"
-set -o pipefail
-
-false | true
-
-echo $?
-```
-
-Output:
-
-```text id="73rpkv"
-1
-```
-
-Because first command failed.
-
-
-Relate to your script:
-
-```bash id="v92wrm"
-tail -n +2 "$CSV_FILE" | while read ...
-```
-
-Without `pipefail`:
-
-If:
-
-```bash id="j10p50"
-tail "$CSV_FILE"
-```
-
-fails,
-
-the `while` loop may still run and script may continue silently.
-
-With `pipefail`:
-
-Entire pipeline fails immediately.
-
-
-One-line interview explanation:
-
-> “`pipefail` ensures that if any command in a pipeline fails, the whole pipeline is marked as failed instead of checking only the last command.”
-
+### Breakdown of Each Flag:
+
+#### 1. `set -e` (Exit on error)
+Tells Bash to immediately exit if any command exits with a non-zero exit status.
+- **Without `-e`:** If `mkdir /root/backup` fails due to permissions, the script continues to `rm -rf /root/data`, potentially causing disaster.
+- **With `-e`:** The script terminates immediately upon the first failure.
+
+#### 2. `set -u` (Treat unset variables as errors)
+Tells Bash to treat unset/undefined variables as fatal errors and exit immediately.
+- **Without `-u`:** If you make a typo like `rm -rf /tmp/$drectory/`, and `$drectory` is unset, it evaluates to `rm -rf /tmp//`!
+- **With `-u`:** Bash exits with `bash: drectory: unbound variable`.
+
+#### 3. `set -o pipefail` (Pipeline failure detection)
+By default, Bash only checks the exit status of the **last command** in a pipeline.
+- **Without `pipefail`:**
+  ```bash
+  cat nonexistent.txt | wc -l
+  echo $?
+  # Output: 0 (wc -l succeeded, masking cat's failure!)
+  ```
+- **With `pipefail`:**
+  ```bash
+  set -o pipefail
+  cat nonexistent.txt | wc -l
+  echo $?
+  # Output: 1 (The entire pipeline fails because 'cat' failed)
+  ```
+
+> **Interview Explanation:**  
+> "I use `set -euo pipefail` in production automation scripts to enforce strict error handling. It ensures the script aborts immediately on command failures (`-e`), prevents execution with typos or undefined variables (`-u`), and surfaces errors from any stage of a pipeline (`pipefail`)."
+
+[⬆ Back to Top](#table-of-contents)
 
 ---
 
-11. What is trap command in linux ?
+## 17. Understanding the `trap` Command and Signal Handling
 
-`trap` in shell scripting is used to **catch signals/events and execute a command or function automatically**.
+The `trap` command in Bash allows you to **catch system signals or script exit events and execute cleanup or rollback logic automatically**.
 
-Think of it like:
-
-> “If something happens (CTRL+C, script exit, termination), run this cleanup code.”
-
-Syntax:
-
-```bash id="d0mqh9"
-trap 'command' SIGNAL
+### Syntax
+```bash
+trap 'command_or_function' SIGNAL [SIGNAL...]
 ```
 
-or
+### Common Signals Caught by `trap`
 
-```bash id="w8w3su"
-trap function_name SIGNAL
-```
+| Signal | Signal Number | Trigger Event |
+| :--- | :--- | :--- |
+| **`INT`** | 2 | Interrupt from keyboard (`Ctrl + C`) |
+| **`TERM`** | 15 | Termination signal (e.g., `kill <pid>`) |
+| **`EXIT`** | 0 | Normal or abnormal exit of the shell script |
+| **`ERR`** | - | Any command returning a non-zero exit code |
 
-
-## Example 1 — Catch CTRL+C
-
-Script:
-
-```bash id="xx4l5o"
+### Example 1: Catching `Ctrl + C` (INT) for Safe Cleanup
+```bash
 #!/bin/bash
 
 cleanup() {
-    echo "Cleaning temporary files..."
+    echo -e "\n[!] Script interrupted by user. Cleaning up temp files..."
+    rm -f /tmp/temp_data_$$.txt
+    exit 1
 }
 
+# Register the trap
 trap cleanup INT
 
-echo "Running..."
-
-while true
-do
-sleep 1
-done
+echo "Long-running process started. Press Ctrl+C to abort..."
+touch /tmp/temp_data_$$.txt
+sleep 60
 ```
 
-Run:
-
-```bash id="j68f7n"
-./test.sh
-```
-
-Press:
-
-```text id="syv54n"
-CTRL+C
-```
-
-Output:
-
-```text id="ymh8yq"
-Cleaning temporary files...
-```
-
-Without `trap`:
-
-Script simply stops.
-
-
-## Example 2 — Auto delete temp file
-
-```bash id="fzb40g"
+### Example 2: Automatic Cleanup on `EXIT`
+```bash
 #!/bin/bash
 
-touch temp.txt
+TEMP_DIR=$(mktemp -d)
+# Automatically remove the temporary directory when the script finishes or exits
+trap 'rm -rf "$TEMP_DIR"' EXIT
 
-trap "rm -f temp.txt" EXIT
-
-echo "Processing..."
+echo "Working inside temporary directory: $TEMP_DIR"
+# Work happens here...
 ```
 
-After script exits:
+### Real DevOps Interview Scenario: Rollback on Git Automation
 
-```text id="1jw95e"
-temp.txt deleted
-```
+In an automated Git release or decommission script, if the script is interrupted halfway through, you could leave an uncommitted branch or modified working tree. A `trap` ensures automatic rollback:
 
+```bash
+cleanup_branch() {
+    echo "[!] Interrupted! Rolling back git repository state..."
+    git checkout master
+    git branch -D "$branch_name" 2>/dev/null || true
+    git reset --hard origin/master
+    exit 1
+}
 
-## Your namespace deletion script
-
-You had:
-
-```bash id="e3v6mp"
 trap cleanup_branch INT TERM
 ```
 
-and:
+> **Interview Explanation:**  
+> "`trap` allows scripts to intercept signals such as `SIGINT` (Ctrl+C), `SIGTERM`, or `EXIT`. I use it to implement idempotent cleanup routines—such as deleting temporary directories, restoring Git branches, or closing active sessions—preventing orphaned resources or inconsistent states."
 
-```bash id="6jlwmw"
-cleanup_branch() {
-
-git checkout master
-
-git branch -D "$branch_name"
-
-git reset --hard origin/master
-}
-```
-
-Meaning:
-
-If user:
-
-```text id="hzjlwm"
-CTRL+C
-```
-
-or process gets terminated:
-
-Execute:
-
-```text id="h7bz0r"
-Switch to master
-Delete temporary branch
-Restore repo state
-```
-
-This prevents half-completed Git changes.
-
-
-## Common trap signals
-
-| Signal | Meaning            |
-| ------ | ------------------ |
-| INT    | Interrupt (CTRL+C) |
-| TERM   | Terminate          |
-| EXIT   | Script exits       |
-| HUP    | Terminal closed    |
-| ERR    | Command failure    |
-
-Examples:
-
-### Run on exit
-
-```bash id="2ixkga"
-trap cleanup EXIT
-```
-
-
-### Run on command failure
-
-```bash id="jjlwmr"
-trap cleanup ERR
-```
-
-
-### Run on CTRL+C
-
-```bash id="3vugjv"
-trap cleanup INT
-```
-
-# Real DevOps use cases
-
-### Cleanup temp files
-
-```bash id="0i8vxv"
-trap 'rm -rf /tmp/build' EXIT
-```
-
-
-### Rollback deployment
-
-```bash id="1m7qil"
-trap rollback ERR
-```
-
-
-### Logout cluster automatically
-
-```bash id="p0j57q"
-trap "oc logout" EXIT
-```
-
-
-### Interview explanation
-
-> `trap` is used in shell scripting to capture signals such as interruption, termination, or script exit and execute cleanup or rollback logic. In my project, I used `trap` to automatically restore the Git repository state and delete temporary branches if the script was interrupted.`
-
-
+[⬆ Back to Top](#table-of-contents)
 
 ---
 
-# What is IFS ?
+## 18. Understanding `IFS` (Internal Field Separator)
 
-`IFS` stands for **Internal Field Separator**.
+`IFS` (Internal Field Separator) is a special shell environment variable that defines **which character(s) Bash uses to split strings into words or fields** during word splitting and the `read` command.
 
-It tells Bash **how to split input into separate fields/words**.
+By default, `IFS` consists of whitespace characters:
+- Space (`' '`)
+- Tab (`'\t'`)
+- Newline (`'\n'`)
 
-By default, Bash splits using:
-
-```plaintext
-space
-tab
-newline
-```
-
----
-
-### Example 1 — Default IFS
-
+### Example 1: Default `IFS` Behavior
 ```bash
-name="John Doe"
-
-for i in $name
-do
-    echo "$i"
+names="Alice Bob Charlie"
+for name in $names; do
+    echo "$name"
 done
+# Splits on spaces:
+# Alice
+# Bob
+# Charlie
 ```
 
-Output:
+### Example 2: Parsing CSV Records (`IFS=','`)
+```bash
+line="production,us-east-1,payment-service"
 
-```plaintext
-John
-Doe
+IFS=',' read -r env region app <<< "$line"
+
+echo "Environment: $env"
+echo "Region:      $region"
+echo "Application: $app"
 ```
 
-Because default `IFS` splits on spaces.
+### Example 3: Processing CSV Files Row-by-Row
+```bash
+while IFS=',' read -r base cluster ns; do
+    echo "Cluster: $cluster, Namespace: $ns"
+done < clusters.csv
+```
+
+### Preserving Leading/Trailing Whitespace with `IFS=`
+When reading lines without wanting Bash to trim leading and trailing spaces:
+```bash
+while IFS= read -r line; do
+    echo "$line"
+done < indented_code.yaml
+```
+
+> **Interview One-Liner:**  
+> "`IFS` determines how Bash separates fields when tokenizing input. By temporarily setting `IFS=','` or `IFS=':'`, we can cleanly parse delimited files like CSVs or `/etc/passwd` without resorting to external utilities."
+
+[⬆ Back to Top](#table-of-contents)
 
 ---
 
-### Example 2 — CSV parsing (`IFS=','`)
+## 19. Difference Between `IFS` and `awk`
 
-```bash
-line="dev,cluster1,app1"
+While both `IFS` and `awk` are used to split and process structured text, they operate at fundamentally different levels:
 
-IFS=',' read -r base cluster ns <<< "$line"
+| Feature | `IFS` (Internal Field Separator) | `awk` |
+| :--- | :--- | :--- |
+| **What is it?** | A built-in shell variable in Bash | A standalone programming language & CLI tool |
+| **Execution** | Built directly into the shell (zero process overhead) | Spawns an external process (`/usr/bin/awk`) |
+| **Primary Use** | Splitting input strings/lines in `read` or loops | Advanced pattern matching, field math, filtering, formatting |
+| **Capabilities** | Simple field delimiter configuration | Conditions, loops, associative arrays, regex, built-in functions |
+| **Performance** | Best for lightweight, in-shell line iteration | Faster for processing large multi-megabyte log files |
 
-echo "$base"
-echo "$cluster"
-echo "$ns"
-```
+### When to Use Which?
+- **Use `IFS`:** When writing bash loops to iterate line-by-line over small-to-medium CSV files and running bash functions or commands on each field.
+- **Use `awk`:** When filtering, calculating, or transforming large structured datasets, log files, or command outputs before piping to other tools.
 
-Output:
+> **Interview One-Liner:**  
+> "`IFS` is a shell variable for controlling how the shell tokenizes words and reads lines into variables. `awk` is a full-featured text-processing engine designed for pattern scanning, arithmetic calculations, column extraction, and report formatting."
 
-```plaintext
-dev
-cluster1
-app1
-```
-
-Here:
-
-```bash
-IFS=','
-```
-
-means:
-
-> Split values using comma.
-
----
-
-### Your earlier example
-
-```bash
-while IFS=',' read -r base cluster ns
-do
-   echo "$base"
-done < file.csv
-```
-
-CSV:
-
-```csv
-dev,cluster1,app1
-prod,cluster2,app2
-```
-
-Iteration 1:
-
-```plaintext
-base=dev
-cluster=cluster1
-ns=app1
-```
-
-Iteration 2:
-
-```plaintext
-base=prod
-cluster=cluster2
-ns=app2
-```
-
----
-
-### Example 3 — Split using colon
-
-```bash
-line="user:password"
-
-IFS=':' read -r u p <<< "$line"
-
-echo "$u"
-echo "$p"
-```
-
-Output:
-
-```plaintext
-user
-password
-```
-
----
-
-### Why use `IFS=` (empty) sometimes?
-
-```bash
-while IFS= read -r line
-do
-   echo "$line"
-done < file.txt
-```
-
-Meaning:
-
-> Do not trim spaces.
-
-Example file:
-
-```plaintext
- hello
- world
-```
-
-Output preserves spaces.
-
-Without `IFS=`:
-
-```plaintext
-hello
-world
-```
-
-With `IFS=`:
-
-```plaintext
- hello
- world
-```
-
----
-
-### Common DevOps use cases
-
-Read CSV:
-
-```bash
-IFS=',' read col1 col2
-```
-
-Parse `/etc/passwd`:
-
-```bash
-IFS=':' read user uid
-```
-
-Read line exactly:
-
-```bash
-IFS= read -r line
-```
-
-Interview answer:
-
-> `IFS` (Internal Field Separator) controls how Bash splits input into multiple fields. By default it uses spaces, tabs, and newlines, but it is commonly customized for parsing CSV files, configuration files, or structured input.
-
-
----
-
-# Difference between IFS and awk 
-
-IFS is a shell variable used to split input into fields while reading data, whereas awk is a full text-processing tool used for filtering, parsing, transforming, and reporting structured data such as CSV or log files. Use IFS for simple field extraction and awk for advanced text processing.
-
-
----
-
+[⬆ Back to Top](#table-of-contents)
