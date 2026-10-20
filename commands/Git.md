@@ -23,7 +23,7 @@ git config --list --show-origin
 
 ---
 
-## 2. SSH Authentication & Key Setup
+## 2. SSH Authentication & GitHub Setup Walkthrough
 
 ### Step 1: Check for Existing SSH Keys
 
@@ -32,71 +32,164 @@ git config --list --show-origin
 ls -la ~/.ssh
 
 # Look for default public key filenames:
-# id_ed25519.pub, id_rsa.pub, id_ecdsa.pub
+# id_rsa.pub, id_ed25519.pub, id_ecdsa.pub
 ```
 
 ### Step 2: Generate a New SSH Key Pair
 
 ```bash
-# Recommended modern standard: Ed25519 (faster, more secure)
+# Standard RSA key pair (widely compatible)
+ssh-keygen -t rsa
+
+# Modern recommended alternative: Ed25519 (faster, compact)
 ssh-keygen -t ed25519 -C "devops@example.com"
-
-# Legacy fallback: RSA 4096-bit (for older systems/servers)
-ssh-keygen -t rsa -b 4096 -C "devops@example.com"
-
-# Press Enter to accept default location (~/.ssh/id_ed25519)
-# Optionally set a secure passphrase for key protection
 ```
 
-### Step 3: Start SSH Agent & Add Private Key
+**Interactive Prompts Walkthrough:**
+1. `Enter file in which to save the key (/home/<user>/.ssh/id_rsa):`  
+   → Press **`Enter`** to accept default file location (`~/.ssh/id_rsa`).
+2. `Enter passphrase (empty for no passphrase):`  
+   → Press **`Enter`** for no passphrase (or type a secure passphrase).
+3. `Enter same passphrase again:`  
+   → Press **`Enter`** again.
+
+Your private key is saved in `~/.ssh/id_rsa` and public key in `~/.ssh/id_rsa.pub`.
+
+### Step 3: View and Copy Public SSH Key
+
+```bash
+# Display the public SSH key to copy:
+cat ~/.ssh/id_rsa.pub
+
+# Or if using Ed25519:
+cat ~/.ssh/id_ed25519.pub
+
+# Or copy directly to clipboard using xclip (Linux):
+xclip -selection clipboard < ~/.ssh/id_rsa.pub
+```
+
+> [!TIP]
+> Copy the entire printed line starting with `ssh-rsa AAAA...` through your username/hostname.
+
+### Step 4: Add Public Key to GitHub Web UI
+
+1. Open [GitHub](https://github.com) and log in.
+2. Click your **Profile photo** (top-right corner) → **Settings**.
+3. In the left navigation menu under **Access**, select **SSH and GPG keys**.
+4. Click the green **New SSH key** button.
+5. In **Title**, enter a friendly label for your machine (e.g., `Workstation-Ubuntu` or `Sesha-PC`).
+6. Set **Key type** to `Authentication Key`.
+7. Paste your public key into the **Key** textarea.
+8. Click **Add SSH key** (confirm password/2FA if prompted).
+
+*(Other Git Providers & CLI:)*
+* **GitHub CLI shortcut:** `gh ssh-key add ~/.ssh/id_rsa.pub --title "DevOps Machine"`
+* **GitLab:** Profile Settings → SSH Keys → Add an SSH key
+* **Bitbucket:** Personal settings → SSH keys → Add key
+
+### Step 5: Switch Existing Repository Remote from HTTPS to SSH
+
+If your local repository was originally cloned via HTTPS, switch it to SSH:
+
+```bash
+# 1. Inspect current remote URLs
+git remote -v
+# Output:
+# origin  https://github.com/<username>/<repo>.git (fetch)
+# origin  https://github.com/<username>/<repo>.git (push)
+
+# 2. Update origin URL to use SSH syntax
+git remote set-url origin git@github.com:<username>/<repo>.git
+
+# 3. Verify the updated remote URL
+git remote -v
+# Output:
+# origin  git@github.com:<username>/<repo>.git (fetch)
+# origin  git@github.com:<username>/<repo>.git (push)
+```
+
+### Step 6: Test SSH Connection & Accept Host Fingerprint
+
+Test SSH authentication with GitHub:
+
+```bash
+ssh -T git@github.com
+```
+
+**First-Time Connection Prompt:**
+```text
+The authenticity of host 'github.com (20.207.73.82)' can't be established.
+ED25519 key fingerprint is SHA256:+DiY3wvvV6TuJJhbpZisF/zLDA0zPMSvHdkr4UvCOqU.
+Are you sure you want to continue connecting (yes/no/[fingerprint])? yes
+Warning: Permanently added 'github.com' (ED25519) to the list of known hosts.
+Hi <username>! You've successfully authenticated, but GitHub does not provide shell access.
+```
+
+> [!NOTE]
+> Type **`yes`** and press `Enter` to permanently add GitHub to your `~/.ssh/known_hosts`. When you see `Hi <username>! You've successfully authenticated...`, your SSH key is working.
+
+```bash
+# Test connection to other providers:
+ssh -T git@gitlab.com
+ssh -T git@bitbucket.org
+
+# Verbose debugging if authentication fails:
+ssh -vT git@github.com
+```
+
+### Step 7: Configure Git User Identity (Fix "Author identity unknown")
+
+If `git commit` fails with:
+> `Author identity unknown`  
+> `*** Please tell me who you are.`  
+> `fatal: empty ident name not allowed`
+
+Configure your global user identity:
+
+```bash
+# Configure your global Git username and email
+git config --global user.name "Your Name or Username"
+git config --global user.email "your-email@example.com"
+
+# Verify configured settings
+git config user.name
+git config user.email
+```
+
+### Step 8: Stage, Commit, and Push over SSH
+
+With SSH authentication and author identity configured, you can stage and push your commits:
+
+```bash
+# 1. Check working tree status
+git status
+
+# 2. Stage all changes
+git add .
+
+# 3. Commit staged changes
+git commit -m "first push"
+
+# 4. Push to remote main branch via SSH
+git push origin main
+```
+
+### Step 9: (Optional) Start SSH Agent & Add Private Key
 
 ```bash
 # Start ssh-agent in the background
 eval "$(ssh-agent -s)"
 
 # Add your private key to the ssh-agent
+ssh-add ~/.ssh/id_rsa
+# Or if using Ed25519:
 ssh-add ~/.ssh/id_ed25519
 
 # Verify that the key is loaded in ssh-agent
 ssh-add -l
 ```
 
-### Step 4: Add Public Key to Git Hosting Provider (GitHub / GitLab / Bitbucket)
-
-```bash
-# Display the public key to copy to clipboard
-cat ~/.ssh/id_ed25519.pub
-
-# Or copy directly to clipboard using xclip (Linux):
-xclip -selection clipboard < ~/.ssh/id_ed25519.pub
-
-# Alternatively, add SSH key to GitHub directly via GitHub CLI:
-gh ssh-key add ~/.ssh/id_ed25519.pub --title "DevOps Workstation $(date +%F)"
-```
-
-*In the Web UI:*
-* **GitHub:** Settings -> SSH and GPG keys -> New SSH key -> Paste key
-* **GitLab:** User Settings -> SSH Keys -> Add an SSH key
-* **Bitbucket:** Personal settings -> SSH keys -> Add key
-
-### Step 5: Test the SSH Connection
-
-```bash
-# Test connection to GitHub
-ssh -T git@github.com
-# Expected output: "Hi <username>! You've successfully authenticated..."
-
-# Test connection to GitLab
-ssh -T git@gitlab.com
-
-# Test connection to Bitbucket
-ssh -T git@bitbucket.org
-
-# Verbose debugging if authentication fails
-ssh -vT git@github.com
-```
-
-### Step 6: Configure `~/.ssh/config` for Multiple Accounts (Work vs Personal)
+### Step 10: (Optional) Configure `~/.ssh/config` for Multiple Accounts (Work vs Personal)
 
 ```ssh
 # Edit ~/.ssh/config:
@@ -104,7 +197,7 @@ ssh -vT git@github.com
 Host github.com
     HostName github.com
     User git
-    IdentityFile ~/.ssh/id_ed25519_personal
+    IdentityFile ~/.ssh/id_rsa
     IdentitiesOnly yes
 
 # Work GitHub Account
@@ -118,19 +211,6 @@ Host github-work
 ```bash
 # Clone using custom host alias:
 git clone git@github-work:my-company/infra-repo.git
-```
-
-### Step 7: Switch Existing Repo from HTTPS to SSH
-
-```bash
-# Check current remote URL
-git remote -v
-
-# Switch remote URL to SSH
-git remote set-url origin git@github.com:my-org/my-repo.git
-
-# Verify updated URL
-git remote -v
 ```
 
 ---
