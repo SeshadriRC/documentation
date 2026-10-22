@@ -4,7 +4,9 @@
 - Kubernetes
 - Docker
 - Jenkins
+- Hashicorp Vault
 - AWS
+- Openshift
 - ArgoCD
 - ELK
 - Prometheus
