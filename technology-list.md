@@ -1,4 +1,5 @@
 - Ansible
+- Datadog
 - Terraform
 - Kubernetes
 - Docker
