@@ -198,7 +198,8 @@ echo "Docker Image Cleanup Started: $(date)"     >> "$LOGFILE"
 # Collect image IDs
 IMAGES=$(docker images -q)
 
-if [[ -n "$IMAGES" ]]; then
+# n checks string is not empty
+if [[ -n "$IMAGES" ]]; then 
     # Force remove all Docker images and redirect both stdout and stderr to the log
     docker rmi -f $IMAGES >> "$LOGFILE" 2>&1
     echo "Docker images removed successfully." >> "$LOGFILE"
