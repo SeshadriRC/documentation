@@ -22,6 +22,7 @@ A comprehensive reference for cluster operations, application deployment, debugg
 - [12. Storage: PV, PVC & StorageClass](#12-storage-pv-pvc--storageclass)
 - [13. Apply, Delete & Dry-Run Manifest Generation](#13-apply-delete--dry-run-manifest-generation)
 - [14. RBAC, Service Accounts & Security](#14-rbac-service-accounts--security)
+- [15. Kubectl Autocompletion & Bash Alias Setup](#15-kubectl-autocompletion--bash-alias-setup)
 
 ---
 
@@ -457,5 +458,71 @@ kubectl get serviceaccounts -n <namespace>
 kubectl get roles,rolebindings -n <namespace>
 kubectl get clusterroles,clusterrolebindings
 ```
+
+[Back to Top ↑](#table-of-contents)
+
+---
+
+## 15. Kubectl Autocompletion & Bash Alias Setup
+
+Configure Bash autocompletion for `kubectl` and the shorthand alias `k` (supporting completion for both resource types like `deploy` and specific resource names like `frontend-deploy`).
+
+> [!NOTE]
+> If Bash throws an error that it cannot find the completion function `__start_kubectl`, it indicates the completion handler was registered for alias `k` before the Kubernetes completion script was loaded into the shell. The completion script must always be sourced before executing `complete`.
+
+### Step 1: Load Kubernetes Completion
+
+Load the official Kubernetes Bash completion script into the current shell session:
+
+```bash
+source <(kubectl completion bash)
+```
+
+Verify that the completion function is loaded:
+
+```bash
+type __start_kubectl
+# Output should confirm: __start_kubectl is a function
+```
+
+### Step 2: Enable Completion for Alias `k`
+
+Ensure your alias is created and register `__start_kubectl` as the completion handler for `k`:
+
+```bash
+alias k=kubectl
+complete -o default -F __start_kubectl k
+```
+
+### Step 3: Test Resource-Name Completion
+
+Test tab-completion for resources by typing the following and pressing <kbd>Tab</kbd>:
+
+```bash
+k get deploy front
+```
+
+Bash should automatically complete `front` to the matching resource name (e.g., `frontend-deploy`).
+
+### Step 4: Make Configuration Permanent in `~/.bashrc`
+
+Add the configuration to `~/.bashrc` in this exact order (the completion script **must** load before the `complete` command):
+
+```bash
+# 1. Alias kubectl to k
+echo 'alias k=kubectl' >> ~/.bashrc
+
+# 2. Source kubectl completion script (must precede completion registration)
+echo 'source <(kubectl completion bash)' >> ~/.bashrc
+
+# 3. Register completion for the alias k
+echo 'complete -o default -F __start_kubectl k' >> ~/.bashrc
+
+# 4. Reload ~/.bashrc into current shell
+source ~/.bashrc
+```
+
+> [!IMPORTANT]
+> The completion-loading command (`source <(kubectl completion bash)`) **must** run before the `complete -o default -F __start_kubectl k` line in `~/.bashrc`.
 
 [Back to Top ↑](#table-of-contents)
