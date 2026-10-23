@@ -48,6 +48,9 @@ kubectl config use-context kind-<cluster-name>
 kubectl config use-context kind-basic-mlflow-cluster
 kubectl config use-context kind-observability-cluster
 
+# get default namespace
+kubectl config get-contexts
+
 # Set default namespace for the current context (avoids typing -n <namespace> on every command)
 kubectl config set-context --current --namespace=app1-ns
 kubectl config set-context --current --namespace=employee-app
