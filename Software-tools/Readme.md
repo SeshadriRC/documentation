@@ -12,6 +12,8 @@
 - Install CLI on linux, follow [this](https://docs.docker.com/engine/install/ubuntu/#install-using-the-repository)
 
 ```bash
+sudo apt install docker-compose
+
 sudo usermod -aG docker $USER
 newgrp docker
 ```
