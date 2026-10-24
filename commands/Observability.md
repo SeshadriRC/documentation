@@ -144,7 +144,7 @@ curl -i -X POST http://localhost:4318/v1/metrics \
 ```bash
 # Discover KQL
 
-# log file errors
+# filter logs by using below query
 log.file.path : "/var/log/containers/valkey-cart-75c49b45c6-m82kr_otel-demo_valkey-cart-680f2874b49ab4228c7e5c20866e57cdb1e5cbc5938281d4f0a854f42a8d97c5.log" 
 
 ```
